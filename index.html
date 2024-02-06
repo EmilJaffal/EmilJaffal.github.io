@@ -21,11 +21,25 @@
     
 		<!-- Header -->
 			<header id="header">
-				<div class="inner">
-					<a href="#" class="image avatar"><img src="images/avatar.jpg" alt="" /></a>
-					<h1><strong>I'm Emil,<br />
-					 a research chemist @ ICL</strong><br /><br />
-					<span class="smaller-font">B.S., Chemistry — Fordham University<br /></span>
+			<style>
+  /* Define styles for smaller screens */
+  @media screen and (max-width: 600px) {
+    /* Apply CSS to enforce line breaks */
+    .inner h1 br, .inner span br {
+      display: block;
+      content: "";
+      margin-top: 10px; /* Adjust this value as needed */
+    }
+  }
+</style>
+
+<div class="inner">
+  <a href="#" class="image avatar"><img src="images/avatar.jpg" alt="" /></a>
+  <h1><strong>I'm Emil,<br />
+    a research chemist @ ICL<br /></strong>
+    <span class="smaller-font">B.S.,<br /> chemistry — Fordham University<br /></span>
+</div>
+
 					
 					
 					
