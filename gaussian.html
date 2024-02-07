@@ -12,39 +12,46 @@
     <link rel="stylesheet" href="assets/css/main.css" />
     <style>
         body {
+            margin: 0;
+            padding: 0;
             display: flex;
             justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+            align-items: flex-start;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
         }
-        .content {
+        header {
+            width: 100%;
             text-align: center;
+            padding: 2em 0;
         }
-        .section-break {
+        .section {
+            width: 80%;
             margin-top: 2em;
-            margin-bottom: 2em;
             text-align: center;
+        }
+        .section h2 {
+            font-size: 2em;
+            margin-bottom: 1em;
+        }
+        .section p {
+            font-size: 1em;
         }
     </style>
 </head>
-<body class="is-preload">
+<body>
 
-<!-- One -->
-<section id="one">
-    <div class="content">
-        <header class="major">
-            <h2>Gaussian how-to</h2>
-        </header>
-        <footer class="major">
-            <ul class="actions">
-                <li><a href="https://emiljaffal.github.io" class="button">Go to Home Page</a></li>
-            </ul>
-        </footer>
-    </div>
+<header>
+    <h1>Using Gaussian for density functional theory (DFT)</h1>
+</header>
+
+<!-- Section One -->
+<section class="section" id="one">
+    <h2>Gaussian how-to</h2>
+    <p><a href="https://emiljaffal.github.io/gaussian.html" class="button">Go to Gaussian Tutorial</a></p>
 </section>
 
-<!-- Section Breaks with Random Text Blocks -->
+<!-- Section Breaks -->
 <div class="section-break">
     <p>This is a short text block for section break.</p>
 </div>
@@ -56,6 +63,29 @@
 <div class="section-break">
     <p>And one more for good measure.</p>
 </div>
+
+<!-- Section Two -->
+<section class="section" id="two">
+    <h2>Recent Work</h2>
+    <div class="row">
+        <!-- Add your recent work items here -->
+    </div>
+</section>
+
+<!-- Section Breaks -->
+<div class="section-break">
+    <p>This is a short text block for section break.</p>
+</div>
+
+<!-- Section Three -->
+<section class="section" id="three">
+    <h2>Visiting affiliation</h2>
+    <h3>City University of New York, Hunter College</h3>
+    <p>Currently working with <a href="https://hunter.cuny.edu/people/anton-oliynyk/" target="_blank">Dr. Anton Oliynyk</a> on developing 
+    an open-source Python tool for high-throughput extraction of crystal structure features. This tool generates multiple elemental and 
+    structural-based features specifically tailored to crystal structures to improve the interpretability 
+    and predictive capabilities of machine learning models in the field of solid-state materials.</p>
+</section>
 
 </body>
 </html>
