@@ -101,12 +101,13 @@
     }
     li {
         margin-bottom: 10px; /* Adjust the spacing between list items */
-        display: flex; /* Make list items flex containers */
-        align-items: center; /* Align content vertically centered within the flex container */
+        position: relative; /* Set the position of the list item relative */
     }
     li::before {
         content: "•"; /* Use a bullet character as content */
         margin-right: 10px; /* Adjust spacing between bullet point and text */
+        position: absolute; /* Set the position of the bullet point absolute */
+        left: 0; /* Position the bullet point at the start of the list item */
     }
 </style>
 
