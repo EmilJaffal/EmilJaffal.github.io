@@ -93,29 +93,27 @@
      <p> 
  <a href="images/Palmetto_input.png"><img src="images/Palmetto_input.png" alt="Palmetto Input" width="600" height="600" /></a>
     </p>  
-    <p> 
-    Then you're gonna want to setup the actual job file. In our case, it's the molecule input below (which is lacking the input coordinates, 
-    referring to Gaussian is going to be a consistent cop-out for me). 
-    </p> 
+    
     <p>
      <a href="images/molecule_input.png"><img src="images/molecule_input.png" alt="molecule Input" width="500" height="300" /></a>
     </p>    
-    <p>
+    
+     <p>
     Each job specification is different, a geometry optimization input is going to be different from a molecular orbital input and so on. 
     The only consistency is the output of the geometry optimization being the input to any further 
     calculations, for the reasons we mentioned above. You're also gonna want to keep the method/basis set consistent for the same reasons. 
     Picking one is dependent on literature in your field. In my case, I looked into literature of benchmark calculations comparing different
     methods and basis sets for organic semiconducting molecules. Lots of publications are pretty good on citing them as well, so you'll be put on a good path.
-    </p>   
+   I'll elaborate on this shortly. </p>   
     
     <p>
-      Let's say you were working with a huge molecule, namely this one:
+      Then you're gonna want to setup the actual job file. Let's say you were working with a huge molecule, namely this one:
       </p> 
       <p>
      <a href="images/animation.gif"><img src="images/animation.gif" alt="animation" width="900" height="400" /></a>
     </p>    
     <p>
-     Here's what the molecule file would look like:
+     Here's what the molecule input file would look like:
     </p>    
       
 </section>
