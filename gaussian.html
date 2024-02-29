@@ -94,18 +94,27 @@
  <a href="images/Palmetto_input.png"><img src="images/Palmetto_input.png" alt="Palmetto Input" width="600" height="600" /></a>
     </p>   
     
+<style>
+    ul {
+        list-style-type: disc; /* Specify the type of bullet point */
+        margin-left: 20px; /* Adjust the margin on the left side */
+        padding-left: 0; /* Remove default padding */
+    }
+    li {
+        margin-bottom: 10px; /* Adjust the spacing between list items */
+    }
+</style>
+
 <p>
     For the actual input file of the molecule, it's important to keep the following in mind:
     <ul>
         <li>Each job specification is different, a geometry optimization input is going to be different from a molecular orbital input and so on.</li>
         <li>Keep the output coordinates of the geometry optimization. They will be used as the input for any further calculations, for the reasons we mentioned above.</li>
         <li>You're also gonna want to keep the method/basis set consistent for the same reasons.</li>
-        <li>Picking a method/basis set is dependent on literature in your field. In my case, I looked into literature of benchmark calculations comparing different methods and basis sets for organic semiconducting molecules. 
-        Lots of publications are pretty good on citing them as well, so you'll be put on a good path. I'll elaborate on this shortly.</li>
+        <li>Picking a method/basis set is dependent on literature in your field. In my case, I looked into literature of benchmark calculations comparing different methods and basis sets for organic semiconducting molecules. Lots of publications are pretty good on citing them as well, so you'll be put on a good path. I'll elaborate on this shortly.</li>
     </ul>
 </p>
 
-    
     <p>
       Let's say you were working with a huge molecule, namely this one:
       </p> 
