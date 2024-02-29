@@ -96,13 +96,17 @@
     
 <style>
     ul {
-        list-style-type: disc; /* Specify the type of bullet point */
+        list-style-type: none; /* Remove default bullet points */
         padding-left: 0; /* Remove default padding */
     }
     li {
         margin-bottom: 10px; /* Adjust the spacing between list items */
         display: flex; /* Make list items flex containers */
         align-items: flex-start; /* Align content at the start of the flex container */
+    }
+    li::before {
+        content: "•"; /* Use a bullet character as content */
+        margin-right: 10px; /* Adjust spacing between bullet point and text */
     }
 </style>
 
