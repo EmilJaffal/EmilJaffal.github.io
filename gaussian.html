@@ -87,12 +87,21 @@
      <p> Firstly, you have to setup the batch file in order to allocate proper resources, among other things. Each cluster
      has their own documentation. Palmetto's is 
      <a href="https://docs.rcd.clemson.edu/palmetto/jobs/submit/" target="_blank">here</a>. If I remember correctly, the documentation was on Github but I might
-     be wrong. I feel like it wasn't this well documented a year ago. Anyways, I used a setup like this which pretty much hits everything someone might need:  
+     be wrong. I feel like it wasn't this well documented a year ago. Keep in mind I used the template below a year ago as well, so node names might have changed.
+     Anyways, I used a setup like this which pretty much hits everything someone might need:  
      </p>
+     <p> 
  <a href="images/Palmetto_input.png"><img src="images/Palmetto_input.png" alt="Palmetto Input" width="600" height="600" /></a>
-    
     </p>  
-                 
+    <p> 
+    Then you're gonna want to setup the actual job file. In our case, it's the molecule input. Each job specification is different, a geometry optimization input
+    is going to be different from a molecular orbital input and so on. The only consistency is the output of the geometry optimization being the input to any further 
+    calculations, for the reasons we mentioned above. You're also gonna want to keep the method/basis set consistent for the same reasons. Picking one is dependent
+    on literature in your field.
+    </p> 
+    <p>
+     <a href="images/molecule_input.png"><img src="images/molecule_input.png" alt="molecule Input" width="600" height="600" /></a>
+    </p>          
 </section>
 
 <div class="section-divider"></div>
