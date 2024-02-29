@@ -101,11 +101,8 @@
     }
     li {
         margin-bottom: 10px; /* Adjust the spacing between list items */
-    }
-    li::before {
-        content: ""; /* Add an empty content before the bullet point */
-        display: inline-block;
-        width: 1em; /* Adjust the width of the space before the bullet point */
+        display: flex; /* Make list items flex containers */
+        align-items: flex-start; /* Align content at the start of the flex container */
     }
 </style>
 
@@ -118,6 +115,7 @@
         <li>Picking a method/basis set is dependent on literature in your field. In my case, I looked into literature of benchmark calculations comparing different methods and basis sets for organic semiconducting molecules. Lots of publications are pretty good on citing them as well, so you'll be put on a good path. I'll elaborate on this shortly.</li>
     </ul>
 </p>
+
 
     <p>
       Let's say you were working with a huge molecule, namely this one:
