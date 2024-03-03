@@ -130,8 +130,6 @@
      Here's what the molecule input file would look like:
     </p>    
       
-      
-      
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -253,10 +251,40 @@ P2n2 all c H
  H                     1.35301  -3.07762  -0.58812 
  H                    -0.81273  -1.97941  -0.15758 
  H                    -0.94781   0.49315   0.187 
+ ***put a blank line here***
 </pre>
 </body>
 </html>
-    
+
+<style>
+    ul {
+        list-style-type: none; /* Remove default bullet points */
+        padding-left: 0; /* Remove default padding */
+        text-align: left; /* Align the list to the left */
+    }
+    li {
+        margin-bottom: 10px; /* Adjust the spacing between list items */
+    }
+    li::before {
+        content: "•"; /* Use a bullet character as content */
+        margin-right: 10px; /* Adjust spacing between bullet point and text */
+    }
+</style>
+
+<p>
+    So what does this entail?
+    <ul>
+  <li>Line 1: instructs Gaussian to use 4 processors in a single node for our calculation.</li>
+<li>Line 2: provides the Gaussian route, i.e. the instruction specifying the calculation(s) to be performed.
+#t indicates terse output, producing a leaner output file.
+B3LYP/6-31G indicates the type of calculation (DFT hybrid functional B3LYP) and the basis set (6-31G) to be used.
+Opt specifies a geometry optimisation calculation.</li>
+<li>Line 4: contains the calculation title.</li>
+<li>Line 6: specifies charge and multiplicity.</li>
+<li>Lines 7-15: starting-point geometry, in XYZ format. Each line corresponds to a new atom, indicating atom type and coordinates.</li>
+    </ul>
+</p>
+
 </section>
 
 <div class="section-divider"></div>
