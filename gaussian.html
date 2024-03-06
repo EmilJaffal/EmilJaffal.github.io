@@ -82,11 +82,13 @@
      </p>
      
      <p> I would then import it into a visualizer like WebMO to get the coordinates. If it was a small structure that would compute in less than an hour, 
-     I'd just do it there. Otherwise, for most of my structures I'd use a cluster like Clemson University's Palmetto Cluster.
+     I'd just do it there. Otherwise, for most of my structures I'd use a cluster like Clemson University's Palmetto Cluster and take advantage of the 
+     available number of CPUs to speed up the process.
      </p>
      <p> Firstly, you have to setup the batch file in order to allocate proper resources, among other things. Each cluster
      has their own documentation. Palmetto's is 
-     <a href="https://docs.rcd.clemson.edu/palmetto/jobs/submit/" target="_blank">here</a>. If I remember correctly, the documentation was on Github but I might
+     <a href="https://docs.rcd.clemson.edu/palmetto/jobs/submit/" target="_blank">here</a>. If I remember correctly, the documentation was on Github when I 
+     first started out but I might
      be wrong. I feel like it wasn't this well documented a year ago. Keep in mind I used the template below a year ago as well, so node names might have changed.
      Anyways, I used a setup like this which pretty much hits everything someone might need:  
      </p>
@@ -274,8 +276,8 @@ P2n2 all c H
 <p>
     So what does this entail?
     <ul>
-  <li>Line 1: instructs Gaussian to have a maximum storage of 30 gigabytes</li>
-  <li>Line 2: instructs Gaussian to keep a checkpoint of the following name</li>
+<li>Line 1: instructs Gaussian to have a maximum storage of 30 gigabytes</li>
+<li>Line 2: instructs Gaussian to keep a checkpoint of the following name</li>
 <li>Line 3: provides the Gaussian route, i.e. the instruction specifying the calculation(s) to be performed.
 B3LYP/6-31G(d,p) indicates the type of calculation (DFT hybrid functional B3LYP) and the basis set (6-31G(d,p)) to be used.
 Opt specifies a geometry optimization calculation.</li>
@@ -307,10 +309,10 @@ This is what you end up seeing in the raw output, pretty far down, among all the
 </head>
 <body>
 <pre>
-Zero-point correction=                           0.660608 (Hartree/Particle)
-Thermal correction to Energy=                    0.705269
-Thermal correction to Enthalpy=                  0.706214
-Thermal correction to Gibbs Free Energy=         0.583073
+Zero-point correction=                               0.660608 (Hartree/Particle)
+Thermal correction to Energy=                  	     0.705269
+Thermal correction to Enthalpy=                 	 0.706214
+Thermal correction to Gibbs Free Energy=         	 0.583073
 Sum of electronic and zero-point Energies=          -2961.959009
 Sum of electronic and thermal Energies=             -2961.914347
 Sum of electronic and thermal Enthalpies=           -2961.913403
@@ -319,7 +321,10 @@ Sum of electronic and thermal Free Energies=        -2962.036543
 </body>
 </html>
 
-<p>but [talk about GaussView, WebMo, and picture of how output looks...]</p>
+<p>You can avoid sorting through the mess of the output file by having access to graphical interface 
+softwares like GaussView, WebMo or the free counterpart, Avogadro. Usually, you'll have access without having to pay through your educational
+institution. All that entails is saving the output file the Gaussian calculation and importing it into the respective software. WebMo has some pretty good 
+documentation so it's easy to follow. Once you import it, all the necessary output data is organized into nice tables, like the one you see below.</p>
   <p> <a href="images/WebMo.png"><img src="images/WebMo.png" alt="animation" width="384" height="616.2" /></a></p>
 
 </section>
