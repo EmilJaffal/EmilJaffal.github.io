@@ -277,29 +277,39 @@ P2n2 all c H
   <li>Line 1: instructs Gaussian to have a maximum storage of 30 gigabytes</li>
   <li>Line 2: instructs Gaussian to keep a checkpoint of the following name</li>
 <li>Line 3: provides the Gaussian route, i.e. the instruction specifying the calculation(s) to be performed.
-B3LYP/6-31G indicates the type of calculation (DFT hybrid functional B3LYP) and the basis set (6-31G) to be used.
+B3LYP/6-31G(d,p) indicates the type of calculation (DFT hybrid functional B3LYP) and the basis set (6-31G(d,p)) to be used.
 Opt specifies a geometry optimization calculation.</li>
 <li>Line 5: contains the calculation title.</li>
 <li>Line 7: specifies charge and multiplicity.</li>
-<li>Lines 8-on: starting-point geometry, in XYZ format. Each line corresponds to a new atom, indicating atom type and coordinates.</li>
-<li>Final line: keep blank, otherwise the calculation won't happen.</li>
+<li>Lines 8-99: starting-point geometry, in XYZ format. Each line corresponds to a new atom, indicating atom type and coordinates.</li>
+<li>Line 100: keep blank, otherwise the calculation won't happen.</li>
     </ul>
+This is what you end up seeing in the raw output, filtered of course:
 </p>
-
+<body>
+Zero-point correction=                           0.660608 (Hartree/Particle)
+Thermal correction to Energy=                    0.705269
+Thermal correction to Enthalpy=                  0.706214
+Thermal correction to Gibbs Free Energy=         0.583073
+Sum of electronic and zero-point Energies=          -2961.959009
+Sum of electronic and thermal Energies=             -2961.914347
+Sum of electronic and thermal Enthalpies=           -2961.913403
+Sum of electronic and thermal Free Energies=        -2962.036543
+<pre>
 </section>
 
 <div class="section-divider"></div>
 
 <section class="section" id="molecular-orbital">
     <h2>Molecular Orbital/Bandgap Calculations</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vehicula scelerisque lectus, vel sodales turpis dictum id. Fusce id augue nec lectus convallis tincidunt. Sed nec diam eu nisi vestibulum ultricies. Nullam tempus, libero a tempus lacinia, tortor odio tincidunt justo, in commodo lectus arcu ac odio. Curabitur eleifend consectetur erat, et malesuada nisi dapibus non. Nullam in mauris feugiat, aliquet nisi nec, consequat mauris. Maecenas quis aliquet libero, nec ultrices est. Aliquam id pretium ligula.</p>
+    <p>Check back soon!</p>
 </section>
 
 <div class="section-divider"></div>
 
 <section class="section" id="pbc-calculations">
     <h2>PBC Calculations</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vehicula scelerisque lectus, vel sodales turpis dictum id. Fusce id augue nec lectus convallis tincidunt. Sed nec diam eu nisi vestibulum ultricies. Nullam tempus, libero a tempus lacinia, tortor odio tincidunt justo, in commodo lectus arcu ac odio. Curabitur eleifend consectetur erat, et malesuada nisi dapibus non. Nullam in mauris feugiat, aliquet nisi nec, consequat mauris. Maecenas quis aliquet libero, nec ultrices est. Aliquam id pretium ligula.</p>
+	<p>Check back soon!</p>
 </section>
 
 <div class="section-divider"></div>
