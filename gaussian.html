@@ -92,9 +92,62 @@
      be wrong. I feel like it wasn't this well documented a year ago. Keep in mind I used the template below a year ago as well, so node names might have changed.
      Anyways, I used a setup like this which pretty much hits everything someone might need:  
      </p>
-     <p> 
- <a href="images/Palmetto_input.png"><img src="images/Palmetto_input.png" alt="Palmetto Input" width="600" height="600" /></a>
-    </p>   
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bash Script</title>
+    <style>
+        pre {
+            background-color: #f4f4f4;
+            padding: 5px;
+            border-radius: 2px;
+            overflow-x: auto;
+            font-family: monospace;
+            margin-left: 20px; /* Set a left margin */
+            text-align: left; /* Align the content to the left */
+            font-size: 0.75em; /* Adjust the font size */
+        }
+    </style>
+</head>
+<body>
+<pre>
+#PBS -N g16
+#PBS -q skystd
+#PBS -1 select=1:ncpus=20:men=40gb,walltime=3:00:00
+#PBS -M [email]
+#PBS -m abe
+
+input=[name].inp 
+
+module load gaussian/g16-sky-avx2 
+
+filename='basename $input .inp' 
+cd $PBS_0_WORKDIR
+
+export GAUSS_LFLAGS='-opt "Isnet.Node.lindarsharg: ssh"'
+
+nodes='cat $PBS_NODEFILE | uniq'
+scratch="/local_scratch/pbs.$PBS_JOBID"
+
+pbsdsh sleep 10
+
+export GAUSS_SCRDIR=$scratch 
+
+tmpinput=${filename}_tmp.inp
+nodelist='cat $PBS_NODEFILE | uniq | tr '\n' "," | sed 's|,$||''
+echo "%NProcShared=" $0MP_NUM_THREADS > $tmpinput
+echo "%LindaWorkers=" $nodelist >> $tmpinput
+cat $input >> $tmpinput
+
+g16 $tmpinput
+
+rm $tmpinput
+mv ${filename}_tmp.log ${filename}.log
+</pre>
+</body>
+</html>
     
 <style>
     ul {
