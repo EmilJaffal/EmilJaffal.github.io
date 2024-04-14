@@ -2620,7 +2620,7 @@ input, select, textarea {
 			-webkit-flex-grow: 1;
 			-ms-flex-grow: 1;
 			flex-grow: 1;
-			margin: 0 0 1em 0;
+			margin: 0 0 2em 0;
 		}
 
 		#header strong, #header b {
@@ -3061,7 +3061,7 @@ input, select, textarea {
 				position: relative;
 				text-align: center;
 				top: auto;
-				width: 100%;
+				width: 75%;
 				display: block;
 			}
 
