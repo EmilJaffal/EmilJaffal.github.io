@@ -3026,7 +3026,7 @@ input, select, textarea {
 		/* Main */
 
 			#main {
-				margin-left: 20%;
+				margin-left: 10%;
 				max-width: none;
 				padding: 3em 3em 3em 3em;
 				width: calc(100% - 25%);
