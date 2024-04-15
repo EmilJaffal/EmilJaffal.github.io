@@ -2998,7 +2998,7 @@ input, select, textarea {
 
 			#header {
 				padding: 6em 3em 3em 3em;
-				width: 30%;
+				width: 25%;
 			}
 
 				#header h1 {
@@ -3029,7 +3029,7 @@ input, select, textarea {
 				margin-left: 20%;
 				max-width: none;
 				padding: 6em 3em 3em 3em;
-				width: calc(100% - 30%);
+				width: calc(100% - 25%);
 			}
 
 	}
