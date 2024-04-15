@@ -2604,7 +2604,7 @@ input, select, textarea {
 		position: fixed;
 		text-align: right;
 		top: 0;
-		width: 25%;
+		width: 20%;
 	}
 
 		#header > * {
@@ -3172,12 +3172,15 @@ input, select, textarea {
 
 		/* Main */
 
-		#main {
-    padding-top: 2.25em; /* Top padding */
-    padding-right: 1.5em; /* Right padding */
-    padding-bottom: 0.25em; /* Bottom padding */
-    padding-left: 1em; /* Left padding */
-}
+			#main {
+				padding: 2.25em 1.5em 0.25em 1.5em;
+			}
+
+				#main > section {
+					margin: 2.25em 0 0 0;
+					padding: 2.25em 0 0 0;
+				}
+
 		/* Poptrox */
 
 			.poptrox-popup {
