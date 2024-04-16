@@ -1768,6 +1768,7 @@ input, select, textarea {
 		color: #b2b2b2;
 		position: relative;
 		margin: 0 0 1.5em 0;
+		font
 	}
 
 	header h2 + p {
@@ -2687,7 +2688,7 @@ input, select, textarea {
 		margin-left: 30%;
 		margin-right: 30%;
 		max-width: 60em;
-		padding: 3em 4em 4em 4em;
+		padding: 2em 4em 2em 4em;
 		width: calc(100% - 35%);
 	}
 
