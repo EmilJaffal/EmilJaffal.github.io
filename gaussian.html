@@ -5,10 +5,12 @@
     Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
+
 <head>
     <title>Using Gaussian for density functional theory (DFT)</title>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <style>
         body {
@@ -21,37 +23,50 @@
             min-height: 100vh;
             font-family: Arial, sans-serif;
         }
+
         header {
             width: 100%;
             text-align: center;
             padding: 2em 0;
-            margin-bottom: 0; /* Remove margin */
+            margin-bottom: 0;
+            /* Remove margin */
         }
+
         .main-title {
-            font-size: 2.5em; /* Increase font size */
+            font-size: 2.5em;
+            /* Increase font size */
         }
+
         .section {
             width: 80%;
-            margin-top: 0.5em; /* Adjust margin */
+            margin-top: 0.5em;
+            /* Adjust margin */
             text-align: center;
         }
+
         .section h2 {
-            font-size: 2em; /* Increase font size */
-            margin-bottom: 0.2em; /* Decrease margin */
+            font-size: 2em;
+            /* Increase font size */
+            margin-bottom: 0.2em;
+            /* Decrease margin */
         }
+
         .section p {
             font-size: 1em;
         }
+
         footer {
             width: 100%;
             text-align: center;
             padding: 1em 0;
             background-color: #f5f5f5;
         }
+
         footer a {
             text-decoration: none;
             color: #333;
         }
+
         .section-divider {
             width: 100%;
             height: 1px;
@@ -61,58 +76,87 @@
         }
     </style>
 </head>
+
 <body>
 
-<header>
-    <h1 class="main-title">Using Gaussian for density functional theory (DFT)</h1>
-</header>
+    <header>
+        <h1 class="main-title">Using Gaussian for density functional theory
+            (DFT)</h1>
+    </header>
 
-<section class="section" id="geometry-optimization">
-    <h2>Geometry Optimization</h2>
-    <p>This is the first step before anything is done. To get accurate calculations on anything, you have to first optimize
-    the structure to its lowest energy (and therefore most stable) structure. You can read more about optimization methods 
-    <a href="https://spindynamics.org/documents/cqc_lecture_6.pdf" target="_blank">here</a>. There's also some nice video lectures by Dr. David 
-    Sherrill <a href="https://www.youtube.com/watch?v=QGyfGCZT110" target="_blank">here</a> and by Dr. Chris Cramer 
-    <a href="https://www.youtube.com/watch?v=ofyr1GyEZsU" target="_blank">here</a>. General information for Gaussian setups can be found
-    <a href="https://gaussian.com/opt/" target="_blank">here</a>.
-	</p>
-    
-    <p>Firstly, you want to begin with building your structure. I found it easiest to build it on ChemDraw to make sure it looks good in regards to
-    visualizing the number of hydrogens, single/double/triple bonds, etc. From there I would export it as SMILES. You can export it as an inchi key as well.
-     </p>
-     
-     <p> I would then import it into a visualizer like WebMO to get the coordinates. If it was a small structure that would compute in less than an hour, 
-     I'd just do it there. Otherwise, for most of my structures I'd use a cluster like Clemson University's Palmetto Cluster and take advantage of the 
-     available number of CPUs to speed up the process.
-     </p>
-     <p> Firstly, you have to setup the batch file in order to allocate proper resources, among other things. Each cluster
-     has their own documentation. Palmetto's is 
-     <a href="https://docs.rcd.clemson.edu/palmetto/jobs/submit/" target="_blank">here</a>. If I remember correctly, the documentation was on Github when I 
-     first started out but I might
-     be wrong. I feel like it wasn't this well documented a year ago. Keep in mind I used the template below a year ago as well, so node names might have changed.
-     Anyways, I used a setup like this which pretty much hits everything someone might need:  
-     </p>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bash Script</title>
-    <style>
-        pre {
-            background-color: #f4f4f4;
-            padding: 5px;
-            border-radius: 2px;
-            overflow-x: auto;
-            font-family: monospace;
-            margin-left: 20px; /* Set a left margin */
-            text-align: left; /* Align the content to the left */
-            font-size: 0.75em; /* Adjust the font size */
-        }
-    </style>
-</head>
-<body>
-<pre>
+    <section class="section" id="geometry-optimization">
+        <h2>Geometry Optimization</h2>
+        <p>This is the first step before anything is done. To get accurate
+            calculations on anything, you have to first optimize
+            the structure to its lowest energy (and therefore most stable)
+            structure. You can read more about optimization methods
+            <a href="https://spindynamics.org/documents/cqc_lecture_6.pdf"
+                target="_blank">here</a>. There's also some nice video lectures
+            by Dr. David
+            Sherrill <a href="https://www.youtube.com/watch?v=QGyfGCZT110"
+                target="_blank">here</a> and by Dr. Chris Cramer
+            <a href="https://www.youtube.com/watch?v=ofyr1GyEZsU"
+                target="_blank">here</a>. General information for Gaussian
+            setups can be found
+            <a href="https://gaussian.com/opt/" target="_blank">here</a>.
+        </p>
+
+        <p>Firstly, you want to begin with building your structure. I found it
+            easiest to build it on ChemDraw to make sure it looks good in
+            regards to
+            visualizing the number of hydrogens, single/double/triple bonds,
+            etc. From there I would export it as SMILES. You can export it as
+            an inchi key as well.
+        </p>
+
+        <p> I would then import it into a visualizer like WebMO to get the
+            coordinates. If it was a small structure that would compute in less
+            than an hour,
+            I'd just do it there. Otherwise, for most of my structures I'd use
+            a cluster like Clemson University's Palmetto Cluster and take
+            advantage of the
+            available number of CPUs to speed up the process.
+        </p>
+        <p> Firstly, you have to setup the batch file in order to allocate
+            proper resources, among other things. Each cluster
+            has their own documentation. Palmetto's is
+            <a href="https://docs.rcd.clemson.edu/palmetto/jobs/submit/"
+                target="_blank">here</a>. If I remember correctly, the
+            documentation was on Github when I
+            first started out but I might
+            be wrong. I feel like it wasn't this well documented a year ago.
+            Keep in mind I used the template below a year ago as well, so node
+            names might have changed.
+            Anyways, I used a setup like this which pretty much hits everything
+            someone might need:
+        </p>
+        <!DOCTYPE html>
+        <html lang="en">
+
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport"
+                content="width=device-width, initial-scale=1.0">
+            <title>Bash Script</title>
+            <style>
+                pre {
+                    background-color: #f4f4f4;
+                    padding: 5px;
+                    border-radius: 2px;
+                    overflow-x: auto;
+                    font-family: monospace;
+                    margin-left: 20px;
+                    /* Set a left margin */
+                    text-align: left;
+                    /* Align the content to the left */
+                    font-size: 0.75em;
+                    /* Adjust the font size */
+                }
+            </style>
+        </head>
+
+        <body>
+            <pre>
 #PBS -N g16
 #PBS -q skystd
 #PBS -1 select=1:ncpus=20:men=40gb,walltime=3:00:00
@@ -146,67 +190,94 @@ g16 $tmpinput
 rm $tmpinput
 mv ${filename}_tmp.log ${filename}.log
 </pre>
-</body>
-</html>
-    
-<style>
-    ul {
-        list-style-type: none; /* Remove default bullet points */
-        padding-left: 0; /* Remove default padding */
-        text-align: left; /* Align the list to the left */
-    }
-    li {
-        margin-bottom: 10px; /* Adjust the spacing between list items */
-    }
-    li::before {
-        content: "•"; /* Use a bullet character as content */
-        margin-right: 10px; /* Adjust spacing between bullet point and text */
-    }
-</style>
+        </body>
 
-<p>
-    For the actual input file of the molecule, it's important to keep the following in mind:
-    <ul>
-        <li>Each job specification is different, a geometry optimization input is going to be different from a molecular orbital input and so on.</li>
-        <li>Keep the output coordinates of the geometry optimization. They will be used as the input for any further calculations, for the reasons we mentioned above.</li>
-        <li>You're also gonna want to keep the method/basis set consistent for the same reasons.</li>
-        <li>Picking a method/basis set is dependent on literature in your field. In my case, I looked into literature of benchmark calculations comparing different methods and basis sets for organic semiconducting molecules. Lots of publications are pretty good on citing them as well, so you'll be put on a good path. I'll elaborate on this shortly.</li>
-    </ul>
-</p>
+        </html>
+
+        <style>
+            ul {
+                list-style-type: none;
+                /* Remove default bullet points */
+                padding-left: 0;
+                /* Remove default padding */
+                text-align: left;
+                /* Align the list to the left */
+            }
+
+            li {
+                margin-bottom: 10px;
+                /* Adjust the spacing between list items */
+            }
+
+            li::before {
+                content: "•";
+                /* Use a bullet character as content */
+                margin-right: 10px;
+                /* Adjust spacing between bullet point and text */
+            }
+        </style>
+
+        <p>
+            For the actual input file of the molecule, it's important to keep
+            the following in mind:
+        <ul>
+            <li>Each job specification is different, a geometry optimization
+                input is going to be different from a molecular orbital input
+                and so on.</li>
+            <li>Keep the output coordinates of the geometry optimization. They
+                will be used as the input for any further calculations, for the
+                reasons we mentioned above.</li>
+            <li>You're also gonna want to keep the method/basis set consistent
+                for the same reasons.</li>
+            <li>Picking a method/basis set is dependent on literature in your
+                field. In my case, I looked into literature of benchmark
+                calculations comparing different methods and basis sets for
+                organic semiconducting molecules. Lots of publications are
+                pretty good on citing them as well, so you'll be put on a good
+                path. I'll elaborate on this shortly.</li>
+        </ul>
+        </p>
 
 
-    <p>
-      Let's say you were working with a huge molecule, namely this one:
-      </p> 
-      <p>
-     <a href="images/animation.gif"><img src="images/animation.gif" alt="animation" width="900" height="400" /></a>
-    </p>    
-    <p>
-     Here's what the molecule input file would look like:
-    </p>    
-      
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bash Script</title>
-    <style>
-        pre {
-            background-color: #f4f4f4;
-            padding: 5px;
-            border-radius: 2px;
-            overflow-x: auto;
-            font-family: monospace;
-            margin-left: 20px; /* Set a left margin */
-            text-align: left; /* Align the content to the left */
-            font-size: 0.75em; /* Adjust the font size */
-        }
-    </style>
-</head>
-<body>
+        <p>
+            Let's say you were working with a huge molecule, namely this one:
+        </p>
+        <p>
+            <a href="images/animation.gif"><img src="images/animation.gif"
+                    alt="animation" width="900" height="400" /></a>
+        </p>
+        <p>
+            Here's what the molecule input file would look like:
+        </p>
 
-<pre>
+        <!DOCTYPE html>
+        <html lang="en">
+
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport"
+                content="width=device-width, initial-scale=1.0">
+            <title>Bash Script</title>
+            <style>
+                pre {
+                    background-color: #f4f4f4;
+                    padding: 5px;
+                    border-radius: 2px;
+                    overflow-x: auto;
+                    font-family: monospace;
+                    margin-left: 20px;
+                    /* Set a left margin */
+                    text-align: left;
+                    /* Align the content to the left */
+                    font-size: 0.75em;
+                    /* Adjust the font size */
+                }
+            </style>
+        </head>
+
+        <body>
+
+            <pre>
  %mem=30gb
  %chk=P2n2ccH
  #n B3LYP/6-31G** OPT FREQ
@@ -308,60 +379,83 @@ P2n2 all c H
  H                    -0.94781   0.49315   0.187 
  ***put a blank line at the end here***
 </pre>
-</body>
-</html>
+        </body>
 
-<style>
-    ul {
-        list-style-type: none; /* Remove default bullet points */
-        padding-left: 0; /* Remove default padding */
-        text-align: left; /* Align the list to the left */
-    }
-    li {
-        margin-bottom: 10px; /* Adjust the spacing between list items */
-    }
-    li::before {
-        content: "•"; /* Use a bullet character as content */
-        margin-right: 10px; /* Adjust spacing between bullet point and text */
-    }
-</style>
+        </html>
 
-<p>
-    So what does this entail?
-    <ul>
-<li>Line 1: instructs Gaussian to have a maximum storage of 30 gigabytes</li>
-<li>Line 2: instructs Gaussian to keep a checkpoint of the following name</li>
-<li>Line 3: provides the Gaussian route, i.e. the instruction specifying the calculation(s) to be performed.
-B3LYP/6-31G(d,p) indicates the type of calculation (DFT hybrid functional B3LYP) and the basis set (6-31G(d,p)) to be used.
-Opt specifies a geometry optimization calculation.</li>
-<li>Line 5: contains the calculation title.</li>
-<li>Line 7: specifies charge and multiplicity.</li>
-<li>Lines 8-99: starting-point geometry, in XYZ format. Each line corresponds to a new atom, indicating atom type and coordinates.</li>
-<li>Line 100: keep blank, otherwise the calculation won't happen.</li>
-    </ul>
-This is what you end up seeing in the raw output, pretty far down, among all the other optimization details:
-</p>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bash Script</title>
-    <style>
-        pre {
-            background-color: #f4f4f4;
-            padding: 5px;
-            border-radius: 2px;
-            overflow-x: auto;
-            font-family: monospace;
-            margin-left: 20px; /* Set a left margin */
-            text-align: left; /* Align the content to the left */
-            font-size: 0.75em; /* Adjust the font size */
-        }
-    </style>
-</head>
-<body>
-<pre>
+        <style>
+            ul {
+                list-style-type: none;
+                /* Remove default bullet points */
+                padding-left: 0;
+                /* Remove default padding */
+                text-align: left;
+                /* Align the list to the left */
+            }
+
+            li {
+                margin-bottom: 10px;
+                /* Adjust the spacing between list items */
+            }
+
+            li::before {
+                content: "•";
+                /* Use a bullet character as content */
+                margin-right: 10px;
+                /* Adjust spacing between bullet point and text */
+            }
+        </style>
+
+        <p>
+            So what does this entail?
+        <ul>
+            <li>Line 1: instructs Gaussian to have a maximum storage of 30
+                gigabytes</li>
+            <li>Line 2: instructs Gaussian to keep a checkpoint of the
+                following name</li>
+            <li>Line 3: provides the Gaussian route, i.e. the instruction
+                specifying the calculation(s) to be performed.
+                B3LYP/6-31G(d,p) indicates the type of calculation (DFT hybrid
+                functional B3LYP) and the basis set (6-31G(d,p)) to be used.
+                Opt specifies a geometry optimization calculation.</li>
+            <li>Line 5: contains the calculation title.</li>
+            <li>Line 7: specifies charge and multiplicity.</li>
+            <li>Lines 8-99: starting-point geometry, in XYZ format. Each line
+                corresponds to a new atom, indicating atom type and
+                coordinates.</li>
+            <li>Line 100: keep blank, otherwise the calculation won't happen.
+            </li>
+        </ul>
+        This is what you end up seeing in the raw output, pretty far down,
+        among all the other optimization details:
+        </p>
+        <!DOCTYPE html>
+        <html lang="en">
+
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport"
+                content="width=device-width, initial-scale=1.0">
+            <title>Bash Script</title>
+            <style>
+                pre {
+                    background-color: #f4f4f4;
+                    padding: 5px;
+                    border-radius: 2px;
+                    overflow-x: auto;
+                    font-family: monospace;
+                    margin-left: 20px;
+                    /* Set a left margin */
+                    text-align: left;
+                    /* Align the content to the left */
+                    font-size: 0.75em;
+                    /* Adjust the font size */
+                }
+            </style>
+        </head>
+
+        <body>
+            <pre>
 Zero-point correction=                               0.660608 (Hartree/Particle)
 Thermal correction to Energy=                  	     0.705269
 Thermal correction to Enthalpy=                  0.706214
@@ -371,61 +465,84 @@ Sum of electronic and thermal Energies=             -2961.914347
 Sum of electronic and thermal Enthalpies=           -2961.913403
 Sum of electronic and thermal Free Energies=        -2962.036543
 </pre>
+        </body>
+
+        </html>
+
+        <p>You can avoid sorting through the mess of the output file by having
+            access to graphical interface
+            softwares like GaussView, WebMo or the free counterpart, Avogadro.
+            Usually, you'll have access without having to pay through your
+            educational
+            institution. All that entails is saving the output file the
+            Gaussian calculation and importing it into the respective software.
+            WebMo has some pretty good
+            documentation so it's easy to follow. Once you import it, all the
+            necessary output data is organized into nice tables, like the one
+            you see below.</p>
+        <p> <a href="images/WebMo.png"><img src="images/WebMo.png"
+                    alt="animation" width="384" height="616.2" /></a></p>
+
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="section" id="molecular-orbital">
+        <h2>Molecular Orbital/Bandgap Calculations</h2>
+        <p>Check back soon!</p>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="section" id="pbc-calculations">
+        <h2>PBC Calculations</h2>
+        <p>Check back soon!</p>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="section" id="Transition State Searching">
+        <h2>Transition State Searching</h2>
+        <p>For this, I'll defer to the following site
+            <a href="https://sites.google.com/site/rangsiman1993/comp-chem/techniques/gaussian-trick-find-ts#"
+                target="_blank">here</a>
+            by PhD student
+            <a href="https://rangsimanketkaew.github.io"
+                target="_blank">Rangsiman Ketkaew</a>.
+        </p>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="section" id="Troubleshooting">
+        <h2>Troubleshooting</h2>
+        <p>I suggest cross-referencing my inputs in the calculation files as
+            well as using the following
+            <a href="https://docs.alliancecan.ca/wiki/Gaussian_error_messages"
+                target="_blank">website</a>
+            or this <a
+                href="https://github.com/liyuanhe211/Solution_for_Every_Gaussian_Error_Message#2300"
+                target="_blank">repo</a>
+            to troubleshoot. The Gaussian documentation also helps with a lot
+            of formatting issues. For example,
+            <a href="https://gaussian.com/qst2/" target="_blank">this</a> would
+            benefit someone looking
+            for instructions to set up a transition state search with only a
+            product and reactant as an input.
+            But I would say the best support for this sort of thing comes
+            mainly from trial-and-error.
+            Most of what I included above should be more than enough of getting
+            on a good path.
+        </p>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <footer>
+        <a href="https://emiljaffal.github.io" class="button">Go to Home
+            Page</a>
+    </footer>
+
 </body>
-</html>
 
-<p>You can avoid sorting through the mess of the output file by having access to graphical interface 
-softwares like GaussView, WebMo or the free counterpart, Avogadro. Usually, you'll have access without having to pay through your educational
-institution. All that entails is saving the output file the Gaussian calculation and importing it into the respective software. WebMo has some pretty good 
-documentation so it's easy to follow. Once you import it, all the necessary output data is organized into nice tables, like the one you see below.</p>
-  <p> <a href="images/WebMo.png"><img src="images/WebMo.png" alt="animation" width="384" height="616.2" /></a></p>
-
-</section>
-
-<div class="section-divider"></div>
-
-<section class="section" id="molecular-orbital">
-    <h2>Molecular Orbital/Bandgap Calculations</h2>
-    <p>Check back soon!</p>
-</section>
-
-<div class="section-divider"></div>
-
-<section class="section" id="pbc-calculations">
-    <h2>PBC Calculations</h2>
-	<p>Check back soon!</p>
-</section>
-
-<div class="section-divider"></div>
-
-<section class="section" id="Transition State Searching">
-    <h2>Transition State Searching</h2>
-    <p>For this, I'll defer to the following site
-    <a href="https://sites.google.com/site/rangsiman1993/comp-chem/techniques/gaussian-trick-find-ts#" target="_blank">here</a>
-    by PhD student 
-    <a href="https://rangsimanketkaew.github.io" target="_blank">Rangsiman Ketkaew</a>.
-    </p>
-</section>
-
-<div class="section-divider"></div>
-
-<section class="section" id="Troubleshooting">
-    <h2>Troubleshooting</h2>
-    <p>I suggest cross-referencing my inputs in the calculation files as well as using the following 
-    <a href="https://docs.alliancecan.ca/wiki/Gaussian_error_messages" target="_blank">website</a>
-    or this <a href="https://github.com/liyuanhe211/Solution_for_Every_Gaussian_Error_Message#2300" target="_blank">repo</a> 
-to troubleshoot. The Gaussian documentation also helps with a lot of formatting issues. For example,
-<a href="https://gaussian.com/qst2/" target="_blank">this</a> would benefit someone looking
-for instructions to set up a transition state search with only a product and reactant as an input.
- But I would say the best support for this sort of thing comes mainly from trial-and-error.
-    Most of what I included above should be more than enough of getting on a good path. </p>
-</section>
-
-<div class="section-divider"></div>
-
-<footer>
-    <a href="https://emiljaffal.github.io" class="button">Go to Home Page</a>
-</footer>
-
-</body>
 </html>
