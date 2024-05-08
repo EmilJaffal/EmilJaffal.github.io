@@ -1,58 +1,64 @@
 <!DOCTYPE html>
-<!--
-    Strata by HTML5 UP
-    html5up.net | @ajlkn
-    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Using VASP for density functional theory (DFT)</title>
-    <meta charset="utf-8" />
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/main.css">
     <style>
         body {
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
             font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            /* Light gray background */
+            color: #333;
+            /* Dark gray text color */
         }
 
         header {
             width: 100%;
             text-align: center;
             padding: 2em 0;
-            margin-bottom: 0;
-            /* Remove margin */
         }
 
         .main-title {
             font-size: 2.5em;
-            /* Increase font size */
+            margin-bottom: 0.5em;
+            font-weight: bold;
         }
 
         .section {
             width: 80%;
-            margin-top: 0.5em;
-            /* Adjust margin */
-            text-align: center;
+            margin-top: 2em;
+            margin-left: 10%;
+            /* Align left */
+            text-align: left;
+            /* Align left */
+            background-color: #fff;
+            /* White background */
+            padding: 2em;
+            border-radius: 10px;
+            /* Rounded corners */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            /* Soft shadow */
         }
 
         .section h2 {
             font-size: 2em;
-            /* Increase font size */
-            margin-bottom: 0.2em;
-            /* Decrease margin */
+            margin-bottom: 1em;
+            color: black;
+            /* Black heading color */
+            text-align: center;
+            /* Center align */
         }
 
         .section p {
-            font-size: 1em;
+            font-size: 1.1em;
+            margin-bottom: 1em;
+            line-height: 1.6;
+            /* Improved line spacing */
         }
 
         footer {
@@ -80,47 +86,547 @@
 <body>
 
     <header>
-        <h1 class="main-title">Using VASP for density functional theory (DFT)</h1>
+        <h1 class="main-title">Using VASP for density functional theory (DFT)
+        </h1>
     </header>
 
-    <section class="section" id="geometry-optimization">
-        <h2>Geometry Optimization</h2>
-        <p>Check back soon!</p>
+    <section class="section" id="SSH-Notes">
+        <h2>SSH notes</h2>
+
+        <p>Login: <code>ssh [username]@[serverIP]</code></p>
+
+        <p>Password: <code>[password]</code></p>
+
+        <p>Copying a file from your local machine to the destination server:
+            <code>scp ~/[local file path] [username]@[serverIP]:~</code>
+        </p>
+
+        <p>Copying a file from the server to your local machine:
+            <code>scp [username]@[serverIP]:~/[server file path]
+                ~/[local file path]</code>
+        </p>
+
+        <p>Copying a folder from your local machine to the destination
+            server: <code>scp -r ~/[local file path] [username]@[serverIP]:~
+            </code></p>
+
+        <p>Check CPU% of server and status of files: <code>top</code> or
+            <code>htop</code>
+        </p>
+
+        <p>Finding a job directory from PID #: <code>pwdx [PID#]</code> </p>
+
         <div class="section-divider"></div>
     </section>
+
+    <section class="section" id="files">
+        <h2>Creating the necessary files</h2>
+
+        <h3>POSCAR file</h3>
+        <ol>
+            <li>Open CIF files with VESTA</li>
+            <li>Export structure as fractional coordinate (rename the files as
+                POSCAR in a folder with whatever naming convention you prefer)
+                <ul>
+                    <li>On Macbook, it’s only saved as POSCAR.vasp – you can
+                        only remove the .vasp</li>
+                </ul>
+            <li>Move POSCAR files from local computer to folder on destination
+                server with bash
+                <ul>
+                    <li>For example: <code>scp
+                            ~/Desktop/REFeSi2/Ce-CeNiSi2/POSCAR.vasp
+                            aoliynyk@149.61.96.14:~/ejaffal/REFeSi2Opts/Ce-CeNiSi2/POSCAR</code>
+                    </li>
+                </ul>
+            <li>I name the first folder as [structure group]+Opts and will have
+                the specific composition named as composition or structure
+                type, depending on what I’m doing, such as Ce-CeNiSi2. However,
+                everyone works their own way, just make sure to keep a detailed
+                record and notes.</li>
+            </li>
+        </ol>
+        </li>
+        </ol>
+
+        <h3>POTCAR file</h3>
+        <ol>
+            <li>Check order of POSCAR molecules for the potcreate command
+                <ul>
+                    <li>For example: <code>potcreate Si Fe Ce</code> in command
+                        line, which matches the order of molecules in the
+                        POSCAR file</li>
+                </ul>
+            <li>Check available element potentials like this: <code>potshow
+                    Si</code></li>
+        </ol>
+        </li>
+        </ol>
+
+        <h3>INCAR file</h3>
+        <ol>
+            <li>Copy INCAR from this template below:
+                <ul>
+                    <div style="border: 1px solid #ccc; padding: 10px;">
+                        <code>
+                            ### INCAR-Template for VASP Calculations - Martin
+                            Changed 2015-12-22<br>
+                            ## General Parameters/Electronic Relaxation<br>
+                            PREC =Accurate # Precision<br>
+                            ENCUT = 500 # cutoff energy for the planewave basis set
+                            in eV.<br>
+                            EDIFF = 1E-6 # convergence condition for the electronic
+                            loop<br>
+                            NELM = 150 # maximum number of electronic
+                            iterations<br>
+                            NELMIN = 4 # minimum number of electronic
+                            iterations<br>
+                            KPAR = 2 # no. of nodes (max. no. of k-points)<br>
+                            NCORE = 4 # no. of cores per node<br>
+                            #LWAVE = .FALSE.# Do not write WAVECAR<br>
+                            ## Structure Optimization (or static for NSW=0)<br>
+                            EDIFFG = 1E-5 # convergence criterion for ionic loops
+                            (pos=energy; neg=forces)<br>
+                            NSW = 1000 # number of ionic steps<br>
+                            IBRION = 1 # ionic update: 1:QN, 2:CG (for bad
+                            guesses)<br>
+                            ISIF = 3 # freedom: 2=ions; 4=ions,shape;
+                            3=ions,shape,vol<br>
+                            MAXMIX = 80 # max number steps stored in Broyden mixer,
+                            when negative: resets after ionic step<br>
+                            ISMEAR = 1 # smearing: -5-insul/scond/DOS 0-large
+                            systems (with SIGMA 0.05) 1-metals (with SIGMA 0.2)<br>
+                            ## DOS and Band Structure Calcuations (for ICHARG=11
+                            prev. CHGCAR required)<br>
+                            #NEDOS = 1001 # number of DOS gridpoints<br>
+                            #LORBIT = 10 # DOSCAR and PROCAR are written<br>
+                            #ISMEAR = -5 # smearing: -5-insul/scond/DOS 0-large
+                            systems 1-metals (with SIGMA)<br>
+                            ## Bader Charge and Electron localization function<br>
+                            #LAECHG = .TRUE.<br>
+                            #LELF=.TRUE.<br>
+                            #NPAR = 1<br>
+                            ## COHP Analysis (via LOBSTER)<br>
+                            #LWAVE = .TRUE.<br>
+                            #NSW = 0<br>
+                            #ISYM = -1<br>
+                            #NBANDS = 600 ! should equal the total number of
+                            orbitals<br>
+                            #LORBIT = 12<br>
+                            #ISTART = 0<br>
+                            ## Phonon Dispersion via finite displacements<br>
+                            #EDIFF = 1E-8 # delete other EDIFF tags!!!<br>
+                            #ISMEAR = 0<br>
+                            #SIGMA = 0.01<br>
+                            #ADDGRID = .TRUE.<br>
+                            ## Hybrid Calculations<br>
+                            LHFCALC=.TRUE. # use of HF/DFT hybrid functionals<br>
+                            AEXX = 0.25 # fraction of exact exchange<br>
+                            AGGAX = 0.75 # fraction of GGA<br>
+                            ALGO = Damped # electronic minimisation algorithm
+                            (damped velocity friction algo.)<br>
+                            TIME = 0.05 # time step for ALGO<br>
+                            PRECFOCK = FAST # controls FFT grid for the exact
+                            exchange<br>
+                            HFSCREEN = 0.2 # determines the range separation
+                            parameter<br>
+                            NKREDX = 2 # grid reduction factors<br>
+                            NKREDY = 2 # grid reduction factors<br>
+                            NKREDZ = 2 # grid reduction factors<br>
+                            ## Stress Tensor Calculation<br>
+                            #ENCUT = 600 # delete other ENCUT tags!!!<br>
+                            #IBRION = 6<br>
+                            #ISIF = 6<br>
+                            #NSW = 1<br>
+                            #NFREE = 2<br>
+                            ## additionally for DFPT:<br>
+                            #IBRION = 8<br>
+                            #NWRITE = 3<br>
+                            #NSW = 1<br>
+                            ## Supercell (band offset) calculations<br>
+                            #LVHAR = .TRUE.<br>
+                            #AMIN = 0.1<br>
+                            ## Born Effective Charge<br>
+                            #LEPSILON = .TRUE. ! dielectric matrix<br>
+                            #LOPTICS = .TRUE. ! DFPT including empty bands for
+                            hybrid functionals<br>
+                            ## Spin-orbing Coupling<br>
+                            #LSORBIT = .TRUE.<br>
+                            #LNONCOLLINEAR = .TRUE.<br>
+                            ##GGA+U, Coulomb interaction energy<br>
+                            #LDAU = .TRUE.<br>
+                            #LDAUTYPE = 1 !1 = Liechtenstein et al.; 2 = Dudarev's
+                            approach, only the difference (U-J) is meaningfull<br>
+                            #LDAUPRINT = 0<br>
+                            #LDAUU = 0 3.71 0 0<br>
+                            #LDAUJ = 0 0 0 0<br>
+                            #LASPH = .TRUE.<br>
+                        </code>
+                    </div>
+                    <li>Adjust accordingly per your calculation of course. The
+                        above template indicates a structure optimization, as
+                        it's not commented out with '#'</li>
+                </ul>
+            </li>
+        </ol>
+        
+
+        <h3>KPOINTS file</h3>
+        <ol>
+            <li>Copy KPOINTS from this template below:</li>
+            <code>
+                K-Points<br>
+                0<br>
+                Gamma<br>
+                8 2 8<br>
+                0 0 0<br>
+            </code>
+            <li>This file is an attempt to solve Schrodinger's equation… which
+                is technically an infinite attempt as you have a guess and set
+                up the cutoff and wanted precision in POSCAR file
+                <ul>
+                    <li><strong>K-Points:</strong> This line indicates the type
+                        of k-points generation scheme being used. In this case,
+                        it's set to "Gamma", meaning a single k-point at the
+                        center of the Brillouin zone.</li>
+                    <li><strong>0:</strong> This value typically denotes the
+                        number of k-points to be generated. Here, "0" implies a
+                        single k-point.</li>
+                    <li><strong>Gamma:</strong> Specifies the center of the
+                        Brillouin zone where the k-point is placed.</li>
+                    <li><strong>8 2 8:</strong> Defines the mesh size, i.e.,
+                        the number of k-points along each reciprocal lattice
+                        vector direction. "8 2 8" indicates 8 k-points along
+                        the first lattice vector, 2 along the second, and 8
+                        along the third.</li>
+                    <li><strong>0 0 0:</strong> Specifies any fractional shifts
+                        applied to the k-point grid. In this example, there are
+                        no shifts applied.</li>
+                </ul>
+            </li>
+        </ol>
+    </section>
+
+    <section class="section" id="geometry-optimization">
+        <h2>Geometry optimization</h2>
+        <ol>
+            <li>Once all the above files are created, you’re ready to go with
+                optimizing. You MUST do this before anything else. It is
+                pertinent to start any calculations with an optimized and most
+                thermodynamically stable geometry.</li>
+            <li>Run <code>mpirun -np 16 vasp_std&gt;1&amp;</code> in the
+                command line while in the directory of the folder with your
+                files. "1" indicates the first run, "2" indicates the second,
+                and "3" indicates the third. I do this to keep track of
+                everything, but you can just repeat the same command after
+                copying CONTCAR to POSCAR.</li>
+            <li>Can view status of calculation/warnings with the following
+                command:
+                <ul>
+                    <li><code>Vim + 1</code></li>
+                    <li><code>tail 1</code> (only displays last couple of
+                        lines)</li>
+                </ul>
+            </li>
+            <li>Can view energy with the following command:
+                <ul>
+                    <li><code>grep TOTEN OUTCAR</code></li>
+                </ul>
+            </li>
+            <li>If ‘reached required accuracy - stopping structural energy
+                minimisation’ is displayed at the bottom of file 1, this
+                indicates it has reached your threshold of accuracy, indicated
+                by EDIFF in the INCAR file. Copy the optimized structure to the
+                structure input file with:
+                <ul>
+                    <li><code>cp CONTCAR POSCAR</code></li>
+                </ul>
+            </li>
+            <li>Continue with the second run:
+                <ul>
+                    <li><code>mpirun -np 4 vasp_std&gt;2&amp;</code></li>
+                </ul>
+            </li>
+            <li>If ‘reached required accuracy - stopping structural energy
+                minimisation’ is displayed at the bottom of file 2, copy the
+                optimized structure to the structure input file with:
+                <ul>
+                    <li><code>cp CONTCAR POSCAR</code></li>
+                </ul>
+            </li>
+            <li>Continue with the third run:
+                <ul>
+                    <li><code>mpirun -np 4 vasp_std&gt;3&amp;</code></li>
+                </ul>
+            </li>
+            <li>If ‘reached required accuracy - stopping structural energy
+                minimisation’ is displayed at the bottom of file 3, copy the
+                optimized structure to the structure input file with:
+                <ul>
+                    <li><code>cp CONTCAR POSCAR</code></li>
+                </ul>
+            </li>
+        </ol>
+
+        <h3>For hybrid calculations</h3>
+        <ol>
+            <li>If a certain potential cannot converge no matter what, you need to enable the section for the hybrid calculations in the INCAR file.  The optimization will take much longer, up to weeks in some cases.
+            </li>
+            <li>In case there’s a problem with convergence, the way to fix that would be changing TIME = 0.2 to 0.1 in the INCAR file.
+            </li>
+            <li>Setting an easier convergence criterion, namely 10^-6 and 10^-5 for electronic and ionic loop respectively may help with stubborn structures.
+            </li>
+        </ol>
+
+        <div class="section-divider"></div>
+    </section>
+
+
+    <section class="section" id="data-accrual">
+        <h2>Data accrual</h2>
+        <ol>
+            <li>
+                <strong>For free energy:</strong>
+                <ul>
+                    <li>While in the structure directory, run <code>grep TOTEN OUTCAR</code> to see the final energy of the optimized structure, which is the last iterated value at the bottom.</li>
+                    <li>Looks like this:</li>
+                    <img src="images/data_accrual_1.png" alt="Free Energy Image Placeholder">
+                </ul>
+            </li>
+            <li>
+                <strong>For optimized parameters:</strong>
+                <ul>
+                    <li>While in the structure directory, run <code>vim POSCAR</code></li>
+                    <li>This is why we run <code>cp CONTCAR POSCAR</code> at the end of our third optimization iteration.</li>
+                    <li>One can also just run <code>vim CONTCAR</code>, but we want to export POSCAR later for further calculations – so it’s best to do the first command in 1.</li>
+                    <li>Looks like this:</li>
+                    <img src="images/data_accrual_2.png" alt="Optimized Parameters Image Placeholder">
+                    <li>After opening the file in the vim editor, you will see the optimized parameters as displayed in the image above.</li>
+                    <li>Where the first line with values indicates parameter A, second indicates B, and third indicates C (in Angstroms).</li>
+                    <ul>
+                        <li>In this case, we have a matrix representation of a non-orthogonal unit cell. It is monoclinic. You will notice that there are more than one value in each line.</li>
+                        <img src="images/data_accrual_3.png" alt="Optimized Parameters Matrix Image Placeholder">
+                        <li>To deal with this and convert it to A, B, and C parameters, we have angles to report as well.</li>
+                        <li>Import the optimized POSCAR to VESTA and read the A, B and C cell parameters in the summary, and report the β Angle (°) as well.</li>
+                        <ul>
+                            <li><img src="images/data_accrual_4.png" alt="VESTA Summary Image Placeholder"></li>
+                        </ul>
+                    </ul>
+                </ul>
+            </li>
+        </ol>
+        <div class="section-divider"></div>
+    </section>
+    
+
 
     <section class="section" id="2">
-        <h2>Magnetic Moment</h2>
-        <p>Check back soon!</p>
+        <h2>Density of states & magnetic moment</h2>
+        <ol>
+            <li>To get a sense of what polarization DOS analysis looks like you can check out <a href="https://www.degruyter.com/document/doi/10.1515/znb-2021-0143/html">this paper</a></li>
+            <li>I make a new folder entitled [structure group]+Mag_Dos_Elf as all of the calculations after optimization can be done in the same folder and you just adjust the INCAR.</li>
+            <li>I remake the filenames, then copy the POTCAR, INCAR, KPOINTS and (optimized) POSCAR files over to this folder from the [structure group]+opt folder by running <code>cp ~/ejaffal/ReCo2InOpts/CeCo2In/{POTCAR,INCAR,KPOINTS,POSCAR} ~/ejaffal/ReCo2InMag_Dos_Elf/CeCo2In</code></li>
+            <li>Uncomment </i>DOS & band structure</i> and </i>General Parameters</i> (never <code>LWAVE = .FALSE.</code>) in INCAR</li>
+            <li>Non-spin polarized DOSCAR
+                <ul>
+                    <li>Add the following to the INCAR</li>
+                    <ul>
+                        <li>ISTART = 0</li>
+                    </ul>
+                    <li>Run with <code>mpirun -np 16 vasp_std&gt;Dos1&amp;</code></li>
+                    <li>Retrieve DOSCAR files to local desktop for analysis when converged with running <code>scp aoliynyk@149.61.96.14:~/ejaffal/REFeSi2Opts/Gd_3-CeNiSi2/DOSCAR ~/Desktop/REFeSi2/Gd_3-CeNiSi2/</code> in the command line</li>
+                    <li>From here, import DOSCAR file into wxDragon and plot the following:</li>
+                    <ul>
+                        <li>Each iteration of the same elemental contributions (command + click for individuals or click + shift + click for multiple). In the case of ErCo2In, I verified the order with POSCAR and saved the following as</li>
+                        <ul>
+                            <li>DOS-Total (all atoms)</li>
+                            <li>DOS-Er (atoms 1-2)</li>
+                            <li>DOS-Co (atoms 3-6)</li>
+                            <li>DOS-In (atoms 7-8)</li>
+                        </ul>
+                    </ul>
+                </ul>
+            </li>
+            <li>Spin-polarized DOSCAR (only if magnetism is expected here, otherwise you can ignore this)
+                <ul>
+                    <li>Add the following to the INCAR:</li>
+                    <ul>
+                        <li>ISPIN = 2</li>
+                        <li>MAGMOM = ie.) 4*0 4*1 OR 0 0 0 0 1 1 1 1</li>
+                        <ul>
+                            <li>This can only be full integers</li>
+                            <li>This is your prediction, the OUTCAR file will give you the software's guess</li>
+                        </ul>
+                    </ul>
+                    <li>Run with <code>mpirun -np 8 vasp_std&gt;Dos2&amp;</code></li>
+                    <ul>
+                        <li>Rerun until the OUTCAR charges are the same as your input MAGMOM prediction, as it gets better with better predictions</li>
+                        <ul>
+                            <li>As in they’re all positive numbers or negative numbers with respect to your entry. The output does not have to match besides it being positive or negative, usually.</li>
+                        </ul>
+                    </ul>
+                    <li>Retrieve DOSCAR file when converged</li>
+                    <li>From there, plot the same elemental contributions in wxDragon like before</li>
+                </ul>
+            </li>
+            <li>From there, plot the same elemental contributions in wxDragon like before</li>
+        </ol>
         <div class="section-divider"></div>
     </section>
-
+    
+    
     <section class="section" id="3">
-        <h2>Density of States</h2>
-        <p>Check back soon!</p>
+        <h2>Electron localization function</h2>
+        <ol>
+            <li>Uncomment <i>Bader Charge and Electron localization function</i>
+                    and <i>General Parameters</i> in INCAR</li>
+            <li>Run with <code>mpirun -np 16 vasp_std>Elf&</code></li>
+            <li>Import ELFCAR file into local computer and drag into VESPA to
+                view
+                <ul>
+                    <li>Adjust element colors
+                        <ul>
+                            <li>Transition metals – grey</li>
+                            <li>Post-transition metals – pink</li>
+                            <li>Rare earth metals – blue</li>
+                        </ul>
+                    </li>
+                    <li>Electron density settings
+                        <ul>
+                            <li>Isosurfaces, isosurface level = 0.55 (change
+                                based on your own discretion)</li>
+                        </ul>
+                    </li>
+                    <li>Export settings
+                        <ul>
+                            <li>X scale = 3</li>
+                            <li>Transparent background</li>
+                        </ul>
+                    </li>
+                    <li>Plane view information in <i>about ELFCAR and charges -
+                        part 2.mp4</i> timestamps:
+                        <ul>
+                            <li>3:45, 5:25, 7:10, 9:00</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ol>
         <div class="section-divider"></div>
     </section>
 
     <section class="section" id="4">
-        <h2>Charges</h2>
-        <p>Check back soon!</p>
+        <h2>Bader charges</h2>
+        <ol>
+            <li>Uncomment Bader Charge and Electron localization function and General Parameters in INCAR, comment out KPAR</li>
+            <li>Run with mpirun -np 8 vasp_std>Bader&</li>
+            <li>When converged run chgsum.pl AECCAR0 AECCAR2 - Combines core and valence electrons</li>
+            <li>Run bader CHGCAR -ref  CHGCAR_sum
+                <ul>
+                    <li>Looks like this:</li>
+                    <img src="images/bader_1.png" alt="Bader Charges Image Placeholder">
+                </ul>
+                <li>Import ACF.dat to local machine</li>
+            </li>
+            <li>Run grep ZVAL POTCAR
+                <ul>
+                    <li>Looks like this:</li>
+                    <img src="images/bader_2.png" alt="Bader Charges Image Placeholder">
+                </ul>
+                <li>Run vim POSCAR if you forget the order of the molecules to determine which charge is which molecule</li>
+            </li>
+            <li>Use above values as the initial charge, see the VASP output in ACF.dat to determine difference, or actual charge</li>
+        </ol>
         <div class="section-divider"></div>
     </section>
-
-    <section class="section" id="5">
-        <h2>ELF</h2>
-        <p>Check back soon!</p>
-        <div class="section-divider"></div>
-    </section>
+    
 
     <section class="section" id="6">
-        <h2>COHP/COOP</h2>
-        <p>Check back soon!</p>
+        <h2>Crystal orbital hamilton/overlap populations (COHP/COOP)</h2>
+        <ol>
+            <li>Uncomment COHP Analysis (via LOBSTER) and General Parameters in INCAR</li>
+            <li>Copy lobsterin template below</li>
+            <code>
+                ! First, enter the energetic window in eV (relative to the Fermi level):<br>
+                COHPstartEnergy -10<br>
+                COHPendEnergy 5<br>
+                !<br>
+                ! Then, specify which types of valence orbitals to use:<br>
+                includeorbitals s p d<br>
+                ! You can also specify the basis functions per element manually, e.g.:<br>
+                ! basisfunctions Ga 4s 4p<br>
+                ! basisfunctions Sr 5s 4s 4p ! Sr_sv potential<br>
+                !<br>
+                ! Now define the pairs for which COHP analysis etc. should be done.<br>
+                ! The atoms are numbered as per order in the PAW-code control file.<br>
+                !cohpbetween atom 1 atom 10<br>
+                !<br>
+                ! If you are interested in single orbital COHPs, you can get all the pairs ! like s-s, s-p_x, ..., p_z-p_z. Uncomment this line to switch it on:<br>
+                ! cohpbetween atom 1 atom 2 orbitalwise<br>
+                !<br>
+                ! If you want to generate the COHPPairs automatically, use this to include ! all pairs in a given distance range (in Angstrom, not in atomic units):<br>
+                cohpGenerator from 1 to 2.5 type Si type Fe<br>
+                cohpGenerator from 1 to 3.3 type Gd type Si<br>
+                cohpGenerator from 1 to 3.3 type Gd type Fe<br>
+                cohpGenerator from 1 to 2.6 type Si type Si<br>
+                ! and in the latter case only between the specified elements<br>
+                - of course adjust accordingly to your atomic interactions and optimized structure's bond distances.<br>
+                - I like using VESTA (link to here https://jp-minerals.org/vesta/en/) to visualize this<br>
+            </code>
+            <li>run mpirun -np 20 vasp_std>COHP&</li>
+            <li>Export wavecar file if needed</li>
+            <li>Run lobster-5.0.0 </li>
+            <li>Import COOPCAR.lobster, COHPCAR.lobster, ICOOPLIST.lobster, ICOHPLIST.lobster to local machine as needed for plotting</li>
+            <li>Open wxDragon, drag COOPCAR/COHPCAR files to analyze the files</li>
+            <li>Plot and save each of the same pairwise elemental interaction, following the same steps as before in the DOS steps. This time, the pairwise interactions are labelled.</li>
+        </ol>
         <div class="section-divider"></div>
     </section>
+    
+    <section class="section" id="8">
+        <h2>Processor considerations</h2>
+        <div class="section-divider"></div>
+        <ol>
+            <li>More processors doesn’t necessarily mean faster computations!</li>
+            <ul>
+                <li>Increasing the number of processors may not significantly accelerate the process due to several factors.</li>
+                <li>Efficiency of parallelization parameters: It's important to optimize parameters like NCORE. For instance, setting NCORE=8 can enhance parallel performance when using 72 processors.</li>
+                <li>Hardware limitations: The computer I utilized has 44 physical cores. Utilizing hyperthreading, the difference between running 2 threads versus one core is only about a 15% improvement.</li>
+                <li>Diminishing returns: In this scenario, utilizing more than 32 cores may not substantially expedite the computation.</li>
+                <li>Despite these considerations, it's worthwhile to experiment with different processor configurations to assess performance.</li>
+            </ul>
+        </ol>
+    </section>
+    
+    <section class="section" id="7">
+        <h2>Troubleshooting</h2>
+        <ol>
+            <li>ERROR FEXCP: supplied exchange-correlation table is too small, maximal index: 5536
+                <ul>
+                    <li>Solved by adding the following to INCAR:</li>
+                    <ul>
+                        <li>IBRION=1</li>
+                        <li>ISIF=2</li>
+                    </ul>
+                </ul>
+            </li>
+            <li>To calculate NBANDS:
+                <ul>
+                    <li># of bands = (# of electrons/2) + (# of ions*2)</li>
+                    <ul>
+                        <li>Running grep NELECT OUTCAR after an optimization will give you the number of electrons, and grep NIONS OUTCAR will give you the number of ions</li>
+                        <li>Running grep VRHFIN POTCAR may also give you the number of bands (not certain, have to double check)</li>
+                    </ul>
+                </ul>
+            </li>
+        </ol>
+        <div class="section-divider"></div>
+    </section>
+    
 
     <footer>
-        <a href="https://emiljaffal.github.io" class="button">Go to Home Page</a>
+        <a href="https://emiljaffal.github.io" class="button">Go to the home
+            page</a>
     </footer>
 
 </body>

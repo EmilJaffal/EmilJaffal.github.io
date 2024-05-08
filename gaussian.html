@@ -1,58 +1,61 @@
-<!DOCTYPE html>
-<!--
-    Strata by HTML5 UP
-    html5up.net | @ajlkn
-    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Using Gaussian for density functional theory (DFT)</title>
-    <meta charset="utf-8" />
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/main.css">
     <style>
         body {
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
             font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            /* Light gray background */
+            color: #333;
+            /* Dark gray text color */
         }
 
         header {
             width: 100%;
             text-align: center;
             padding: 2em 0;
-            margin-bottom: 0;
-            /* Remove margin */
         }
 
         .main-title {
             font-size: 2.5em;
-            /* Increase font size */
+            margin-bottom: 0.5em;
+            font-weight: bold;
         }
 
         .section {
             width: 80%;
-            margin-top: 0.5em;
-            /* Adjust margin */
-            text-align: center;
+            margin-top: 2em;
+            margin-left: 10%;
+            /* Align left */
+            text-align: left;
+            /* Align left */
+            background-color: #fff;
+            /* White background */
+            padding: 2em;
+            border-radius: 10px;
+            /* Rounded corners */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            /* Soft shadow */
         }
 
         .section h2 {
             font-size: 2em;
-            /* Increase font size */
-            margin-bottom: 0.2em;
-            /* Decrease margin */
+            margin-bottom: 1em;
+            color: black;
+            /* Black heading color */
+            text-align: center;
+            /* Center align */
         }
 
         .section p {
-            font-size: 1em;
+            font-size: 1.1em;
+            margin-bottom: 1em;
+            line-height: 1.6;
+            /* Improved line spacing */
         }
 
         footer {
@@ -458,8 +461,8 @@ P2n2 all c H
             <pre>
 Zero-point correction=                               0.660608 (Hartree/Particle)
 Thermal correction to Energy=                  	     0.705269
-Thermal correction to Enthalpy=                  0.706214
-Thermal correction to Gibbs Free Energy=         0.583073
+Thermal correction to Enthalpy=                      0.706214
+Thermal correction to Gibbs Free Energy=             0.583073
 Sum of electronic and zero-point Energies=          -2961.959009
 Sum of electronic and thermal Energies=             -2961.914347
 Sum of electronic and thermal Enthalpies=           -2961.913403
@@ -480,8 +483,9 @@ Sum of electronic and thermal Free Energies=        -2962.036543
             documentation so it's easy to follow. Once you import it, all the
             necessary output data is organized into nice tables, like the one
             you see below.</p>
-        <p> <a href="images/WebMo.png"><img src="images/WebMo.png"
-                    alt="animation" width="384" height="616.2" /></a></p>
+        <p style="text-align: center;"> <a href="images/WebMo.png"><img
+                    src="images/WebMo.png" alt="animation" width="384"
+                    height="616.2" /></a></p>
 
     </section>
 
