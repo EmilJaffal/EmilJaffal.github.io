@@ -91,7 +91,7 @@
     </header>
 
     <section class="section" id="SSH-Notes">
-        <h2>SSH notes</h2>
+        <h2>SSH Notes</h2>
 
         <p>Login: <code>ssh [username]@[serverIP]</code></p>
 
@@ -120,7 +120,7 @@
     </section>
 
     <section class="section" id="files">
-        <h2>Creating the necessary files</h2>
+        <h2>Before You Start: Creating the Necessary Files</h2>
 
         <h3>POSCAR file</h3>
         <ol>
@@ -318,7 +318,7 @@
     </section>
 
     <section class="section" id="geometry-optimization">
-        <h2>Geometry optimization</h2>
+        <h2>Geometry Optimization</h2>
         <ol>
             <li>Once all the above files are created, you’re ready to go with
                 optimizing. You MUST do this before anything else. It is
@@ -399,7 +399,7 @@
 
 
     <section class="section" id="data-accrual">
-        <h2>Data accrual</h2>
+        <h2>Data Accrual</h2>
         <ol>
             <li>
                 <strong>For free energy:</strong>
@@ -439,15 +439,14 @@
                             each line.</li>
                         <img src="images/data_accrual_3.png"
                             alt="Optimized Parameters Matrix Image Placeholder">
-                        <li>To deal with this and convert it to A, B, and C
-                            parameters, we have angles to report as well.</li>
-                        <li>Import the optimized POSCAR to VESTA and read the
-                            A, B and C cell parameters in the summary, and
-                            report the β Angle (°) as well.</li>
-                        <ul>
-                            <li><img src="images/data_accrual_4.png"
-                                    alt="VESTA Summary Image Placeholder"></li>
-                        </ul>
+                        <li>To deal with this and convert it to appropriate
+                            parameters as well as angles, import the
+                            optimized POSCAR to VESTA and report the
+                            A, B and C cell parameters as well as the β Angle
+                            (°) in the summary section. <br>
+                            <img src="images/data_accrual_4.png"
+                                alt="VESTA Summary Image Placeholder">
+                        </li>
                     </ul>
                 </ul>
             </li>
@@ -458,7 +457,7 @@
 
 
     <section class="section" id="2">
-        <h2>Density of states & magnetic moment</h2>
+        <h2>Density of States & Magnetic Moment</h2>
         <ol>
             <li>To get a sense of what polarization DOS analysis looks like you
                 can check out <a
@@ -484,7 +483,7 @@
                     <li>Run with <code>mpirun -np 16
                             vasp_std&gt;Dos1&amp;</code></li>
                     <li>Retrieve DOSCAR files to local desktop for analysis
-                        when converged with running <code>scp
+                        when converged with running <br><code>scp
                             aoliynyk@149.61.96.14:~/ejaffal/REFeSi2Opts/Gd_3-CeNiSi2/DOSCAR
                             ~/Desktop/REFeSi2/Gd_3-CeNiSi2/</code> in the
                         command line</li>
@@ -544,7 +543,7 @@
 
 
     <section class="section" id="3">
-        <h2>Electron localization function</h2>
+        <h2>Electron Localization Function</h2>
         <ol>
             <li>Uncomment <i>Bader Charge and Electron localization
                     function</i>
@@ -585,7 +584,7 @@
     </section>
 
     <section class="section" id="4">
-        <h2>Bader charges</h2>
+        <h2>Bader Charges</h2>
         <ol>
             <li>Uncomment Bader Charge and Electron localization function and
                 General Parameters in INCAR, comment out KPAR</li>
@@ -617,7 +616,7 @@
 
 
     <section class="section" id="6">
-        <h2>Crystal orbital hamilton/overlap populations (COHP/COOP)</h2>
+        <h2>Crystal Orbital Hamilton/Overlap Populations (COHP/COOP)</h2>
         <ol>
             <li>Uncomment COHP Analysis (via LOBSTER) and General Parameters in
                 INCAR</li>
@@ -675,7 +674,7 @@
     </section>
 
     <section class="section" id="8">
-        <h2>Processor considerations</h2>
+        <h2>Processor Considerations</h2>
         <div class="section-divider"></div>
         <ol>
             <li>More processors doesn’t necessarily mean faster computations!
