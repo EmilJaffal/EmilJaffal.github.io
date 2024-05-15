@@ -128,17 +128,11 @@
             <li>Export structure as fractional coordinate (rename the files as
                 POSCAR in a folder with whatever naming convention you prefer)
                 <ul>
-                    <li>On Macbook, it’s only saved as POSCAR.vasp – you can
-                        only remove the .vasp</li>
+                    <li>On Macbook, it can only saved as POSCAR.vasp so you can't just delete it. You can
+                        only remove the .vasp with the command <code>mv POSCAR.vasp POSCAR</code></li>
                 </ul>
             <li>Move POSCAR files from local computer to folder on destination
                 server with bash
-                <ul>
-                    <li>For example: <code>scp
-                            ~/Desktop/REFeSi2/Ce-CeNiSi2/POSCAR.vasp
-                            aoliynyk@149.61.96.14:~/ejaffal/REFeSi2Opts/Ce-CeNiSi2/POSCAR</code>
-                    </li>
-                </ul>
             <li>I name the first folder as [structure group]+Opts and will have
                 the specific composition named as composition or structure
                 type, depending on what I’m doing, such as Ce-CeNiSi2. However,
@@ -468,9 +462,7 @@
                 same folder and you just adjust the INCAR.</li>
             <li>I remake the filenames, then copy the POTCAR, INCAR, KPOINTS
                 and (optimized) POSCAR files over to this folder from the
-                [structure group]+opt folder by running <code>cp
-                    ~/ejaffal/ReCo2InOpts/CeCo2In/{POTCAR,INCAR,KPOINTS,POSCAR}
-                    ~/ejaffal/ReCo2InMag_Dos_Elf/CeCo2In</code></li>
+                [structure group]+opt folder</li>
             <li>Uncomment </i>DOS & band structure</i> and </i>General
                 Parameters</i> (never <code>LWAVE = .FALSE.</code>) in INCAR
             </li>
@@ -482,11 +474,8 @@
                     </ul>
                     <li>Run with <code>mpirun -np 16
                             vasp_std&gt;Dos1&amp;</code></li>
-                    <li>Retrieve DOSCAR files to local desktop for analysis
-                        when converged with running <br><code>scp
-                            aoliynyk@149.61.96.14:~/ejaffal/REFeSi2Opts/Gd_3-CeNiSi2/DOSCAR
-                            ~/Desktop/REFeSi2/Gd_3-CeNiSi2/</code> in the
-                        command line</li>
+                    <li>Copy DOSCAR files to local desktop for analysis
+                        when converged</li>
                     <li>From here, import DOSCAR file into wxDragon and plot
                         the following:</li>
                     <ul>
@@ -588,9 +577,10 @@
         <ol>
             <li>Uncomment Bader Charge and Electron localization function and
                 General Parameters in INCAR, comment out KPAR</li>
-            <li>Run with mpirun -np 8 vasp_std>Bader&</li>
-            <li>When converged run chgsum.pl AECCAR0 AECCAR2 - Combines core
-                and valence electrons</li>
+            <li>Run with <code>-np 8 vasp_std>Bader&</code></li>
+            <li>When converged run <code>chgsum.pl AECCAR0 AECCAR2</code>
+                <ul><li>This combines core
+                and valence electrons</ul></li>
             <li>Run bader CHGCAR -ref CHGCAR_sum
                 <ul>
                     <li>Looks like this:</li>
@@ -599,13 +589,13 @@
                 </ul>
             <li>Import ACF.dat to local machine</li>
             </li>
-            <li>Run grep ZVAL POTCAR
+            <li>Run <code>grep ZVAL POTCAR</code>
                 <ul>
                     <li>Looks like this:</li>
                     <img src="images/bader_2.png"
                         alt="Bader Charges Image Placeholder">
                 </ul>
-            <li>Run vim POSCAR if you forget the order of the molecules to
+            <li>Run <code>vim POSCAR</code> if you forget the order of the molecules to
                 determine which charge is which molecule</li>
             </li>
             <li>Use above values as the initial charge, see the VASP output in
@@ -659,9 +649,9 @@
                 - I like using VESTA (link to here
                 https://jp-minerals.org/vesta/en/) to visualize this<br>
             </code>
-            <li>run mpirun -np 20 vasp_std>COHP&</li>
+            <li>run <code>mpirun -np 20 vasp_std>COHP&</code></li>
             <li>Export wavecar file if needed</li>
-            <li>Run lobster-5.0.0 </li>
+            <li>Run <code>lobster-5.0.0</code></li>
             <li>Import COOPCAR.lobster, COHPCAR.lobster, ICOOPLIST.lobster,
                 ICOHPLIST.lobster to local machine as needed for plotting</li>
             <li>Open wxDragon, drag COOPCAR/COHPCAR files to analyze the files
