@@ -99,6 +99,9 @@
 
         <p>Copying a file from your local machine to the destination server:
             <code>scp ~/[local file path] [username]@[serverIP]:~</code>
+            <ul>
+                <li>Note that moving files between your local computer and the server 
+            must be done within a terminal without being logged into the server</li>
         </p>
 
         <p>Copying a file from the server to your local machine:
@@ -115,6 +118,18 @@
         </p>
 
         <p>Finding a job directory from PID #: <code>pwdx [PID#]</code> </p>
+
+        <p>See files in the working directory: <code>ls</code></p>
+        <p>Delete files: <code>rm [filename]</code></p>
+        <p>Delete folders + contents: <code>rm -r [foldername]</code></p>
+        <p>Make a directory: <code>mkdir [foldername]</code></p>
+        <p>Copy folders + contents: <code>cp [foldername] [destinationfolder]</code></p>
+        <p>View & edit a file: <code>vim [filename]</code></p>
+            <ul>
+                <li>To enter insert mode, click esc</li>
+                <li>To save and exit, type esc (to leave insert mode) + <code>:wq</code> + enter</li>
+                <li>To exit without saving after typing, type esc (to leave insert mode) + :q! + enter</li>
+            </ul>
 
         <div class="section-divider"></div>
     </section>
@@ -707,10 +722,10 @@
                 <ul>
                     <li># of bands = (# of electrons/2) + (# of ions*2)</li>
                     <ul>
-                        <li>Running grep NELECT OUTCAR after an optimization
+                        <li>Running <code>grep NELECT OUTCAR</code> after an optimization
                             will give you the number of electrons, and grep
                             NIONS OUTCAR will give you the number of ions</li>
-                        <li>Running grep VRHFIN POTCAR may also give you the
+                        <li>Running <code>grep VRHFIN POTCAR</code> may also give you the
                             number of bands (not certain, have to double check)
                         </li>
                     </ul>
