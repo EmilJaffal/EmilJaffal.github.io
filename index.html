@@ -258,15 +258,22 @@
             <h2> Selected posters</h2>
 
             <div class="publication">
-                <a href="images/2024-GRC-poster.pdf" class="image fit thumb">
-                    <img src="images/2024-GRC-poster.jpg" alt="Thumbnail for 2024 GRC Poster" />
-                </a>
                 <div class="date">Jul 2024</div>
                 <p>
                     <strong><a href="images/2024-GRC-poster.pdf" target="_blank">Gordon Research Conference</a></strong> - <em>Newry, ME</em>
                 </p>
                 <p>Materials Informatics: Binary/Ternary Composition and Structure Featurizer for ML Models</p>
-            </div>            
+                <a href="images/2024-GRC-poster.pdf" class="image thumb">
+                    <img src="images/2024-GRC-poster.jpg" alt="Thumbnail for 2024 GRC Poster" />
+                </a>
+            </div>
+
+            .publication .thumb img {
+                display: block;
+                margin: 10px auto; /* Centers the thumbnail */
+                width: 100px; /* Adjust this to control the size */
+                height: auto; /* Maintains the aspect ratio */
+            }            
         
         </section>
 
