@@ -238,37 +238,43 @@
         </style>
 
         <style>
+        .pub-wrapper {
+            display: flex;
+            flex-wrap: wrap; /* Allows wrapping when screen width is small */
+            gap: 20px; /* Adds space between boxes */
+            justify-content: flex-start; /* Aligns items from the left */
+        }
+
         .pub-container {
-            border: 2px solid #ccc; /* Adds a light gray border */
-            border-radius: 10px; /* Optional: rounded corners */
-            padding: 15px; /* Adds spacing inside the box */
-            width: 280px; /* Adjust width to fit image and text nicely */
-            display: inline-block; /* Keeps elements in line */
-            vertical-align: top; /* Aligns items properly */
-            margin: 10px 15px 20px 0; /* Adds spacing between boxes */
+            border: 2px solid #ccc; /* Light gray border */
+            border-radius: 10px; /* Rounded corners */
+            padding: 15px;
+            width: 320px; /* Adjust size for better readability */
             background-color: #f9f9f9; /* Light background for contrast */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Align text and image to the left */
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1); /* Adds a slight shadow */
         }
 
         .pub-image {
-            width: 100%; /* Makes image fit within the container */
+            width: 100%; /* Makes image fill the box */
             height: auto;
-            border-radius: 5px; /* Optional: rounded corners */
+            border-radius: 5px; /* Rounded corners */
         }
 
-        .pub-container p {
-            text-align: left; /* Keeps text aligned */
-            margin-top: 10px; /* Adds spacing above the text */
-            font-size: 14px;
-        }
-
+        .pub-container p, 
         .pub-container a {
-            text-decoration: none;
-            color: #0073e6; /* A nice blue for links */
-            font-weight: bold;
+            text-align: left;
+            margin-top: 10px;
+            font-size: inherit; /* Matches the site's font size */
+        }
+
+        .pub-container .smaller-font {
+            font-size: inherit; /* Ensures consistency with the rest of the website */
         }
         </style>
         
-
         <!-- Three -->
         <section id="pub">
             <h2> 
@@ -277,38 +283,35 @@
                 </a>
             </h2>
 
-            <div class="publication">
+            <div class="pub-wrapper">
                 <div class="pub-container">
                     <a href="https://pubs.rsc.org/en/Content/ArticleLanding/2024/DD/D4DD00332B" target="_blank">
                         <img src="images/DD2.jpeg" alt="Digital Discovery Paper Cover" class="pub-image">
                     </a>
-                    <p>
+                    <p class="smaller-font">
                         <strong><a href="https://pubs.rsc.org/en/Content/ArticleLanding/2024/DD/D4DD00332B" target="_blank">
                             Composition and Structure Analyzer/Featurizer for Explainable ML Models to Predict Solid State Structures
                         </a></strong>
                     </p>
-                    <p>Digital Discovery.</p>
-                    <p><strong>Jaffal E.I.</strong>, Shiryaev D., Vtorov A., Lee S., Barua N.K. & Oliynyk A.O.</p>
+                    <p class="smaller-font">Digital Discovery.</p>
+                    <p class="smaller-font"><strong>Jaffal E.I.</strong>, Shiryaev D., Vtorov A., Lee S., Barua N.K. & Oliynyk A.O.</p>
                 </div>
-            </div>
 
-            <div class="publication">
                 <div class="pub-container">
                     <a href="https://pubs.acs.org/doi/10.1021/acs.orglett.4c03523" target="_blank">
                         <img src="images/OL.jpg" alt="Organic Letters Paper Cover" class="pub-image">
                     </a>
-                    <p>
+                    <p class="smaller-font">
                         <strong><a href="https://pubs.acs.org/doi/10.1021/acs.orglett.4c03523" target="_blank">
                             Synthesis of Pyrene Diimide Isomers with Tunable Excimer Formation
                         </a></strong>
                     </p>
-                    <p>Organic Letters.</p>
-                    <p>Johnston K., McCostis A., Mikita E., <strong>Jaffal E.</strong> & Schneider J.A.</p>
+                    <p class="smaller-font">Organic Letters.</p>
+                    <p class="smaller-font">Johnston K., McCostis A., Mikita E., <strong>Jaffal E.</strong> & Schneider J.A.</p>
                 </div>
             </div>
 
         </section>
-
         
         <!-- Three -->
         <section id="pub">
