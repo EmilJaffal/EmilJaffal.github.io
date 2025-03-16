@@ -212,19 +212,6 @@
         </section>
 
         <style>
-            .pub-image {
-                width: 250px; /* Adjust size as needed */
-                height: auto;
-                display: block;
-                margin: 10px 0; /* Centers the image */
-                border-radius: 5px; /* Optional: rounded corners */
-            }
-            .publication p {
-                text-align: left; /* Centers the title */
-            }
-            </style>
-
-        <style>
             #pub h2 {
                 margin-bottom: 5px; /* Reduce space below the title */
             }
@@ -250,6 +237,38 @@
         }
         </style>
 
+        <style>
+        .pub-container {
+            border: 2px solid #ccc; /* Adds a light gray border */
+            border-radius: 10px; /* Optional: rounded corners */
+            padding: 15px; /* Adds spacing inside the box */
+            width: 280px; /* Adjust width to fit image and text nicely */
+            display: inline-block; /* Keeps elements in line */
+            vertical-align: top; /* Aligns items properly */
+            margin: 10px 15px 20px 0; /* Adds spacing between boxes */
+            background-color: #f9f9f9; /* Light background for contrast */
+        }
+
+        .pub-image {
+            width: 100%; /* Makes image fit within the container */
+            height: auto;
+            border-radius: 5px; /* Optional: rounded corners */
+        }
+
+        .pub-container p {
+            text-align: left; /* Keeps text aligned */
+            margin-top: 10px; /* Adds spacing above the text */
+            font-size: 14px;
+        }
+
+        .pub-container a {
+            text-decoration: none;
+            color: #0073e6; /* A nice blue for links */
+            font-weight: bold;
+        }
+        </style>
+        
+
         <!-- Three -->
         <section id="pub">
             <h2> 
@@ -259,37 +278,37 @@
             </h2>
 
             <div class="publication">
-                <div>Jan 2025</div>
-                <a href="https://pubs.rsc.org/en/Content/ArticleLanding/2024/DD/D4DD00332B" target="_blank">
-                    <img src="images/DD2.jpeg" alt="Digital Discovery Paper Cover" class="pub-image">
-                </a>
-                <p>
-                    <strong><a href="https://pubs.rsc.org/en/Content/ArticleLanding/2024/DD/D4DD00332B" target="_blank">
-                        Composition and Structure Analyzer/Featurizer for Explainable ML Models to Predict Solid State Structures
-                    </a></strong>
-                </p>
-                <p>
-                    Digital Discovery. <br>
-                    <strong>Jaffal E.I.</strong>, Shiryaev D., Vtorov A., Lee S., Barua N.K. & Oliynyk A.O.
-                </p>
+                <div class="pub-container">
+                    <a href="https://pubs.rsc.org/en/Content/ArticleLanding/2024/DD/D4DD00332B" target="_blank">
+                        <img src="images/DD2.jpeg" alt="Digital Discovery Paper Cover" class="pub-image">
+                    </a>
+                    <p>
+                        <strong><a href="https://pubs.rsc.org/en/Content/ArticleLanding/2024/DD/D4DD00332B" target="_blank">
+                            Composition and Structure Analyzer/Featurizer for Explainable ML Models to Predict Solid State Structures
+                        </a></strong>
+                    </p>
+                    <p>Digital Discovery.</p>
+                    <p><strong>Jaffal E.I.</strong>, Shiryaev D., Vtorov A., Lee S., Barua N.K. & Oliynyk A.O.</p>
+                </div>
             </div>
 
             <div class="publication">
-                <div>Jan 2025</div>
-                <a href="https://pubs.acs.org/doi/10.1021/acs.orglett.4c03523" target="_blank">
-                    <img src="images/OL.jpg" alt="Organic Letters Paper Cover" class="pub-image">
-                </a>
-                <p>
-                    <strong><a href="https://pubs.acs.org/doi/10.1021/acs.orglett.4c03523" target="_blank">
-                        Synthesis of Pyrene Diimide Isomers with Tunable Excimer Formation
-                    </a></strong>. Organic Letters.
-                </p>
-                <p>
-                    Johnston K., McCostis A., Mikita E., <strong>Jaffal E.</strong> & Schneider J.A.
-                </p>
+                <div class="pub-container">
+                    <a href="https://pubs.acs.org/doi/10.1021/acs.orglett.4c03523" target="_blank">
+                        <img src="images/OL.jpg" alt="Organic Letters Paper Cover" class="pub-image">
+                    </a>
+                    <p>
+                        <strong><a href="https://pubs.acs.org/doi/10.1021/acs.orglett.4c03523" target="_blank">
+                            Synthesis of Pyrene Diimide Isomers with Tunable Excimer Formation
+                        </a></strong>
+                    </p>
+                    <p>Organic Letters.</p>
+                    <p>Johnston K., McCostis A., Mikita E., <strong>Jaffal E.</strong> & Schneider J.A.</p>
+                </div>
             </div>
-            
+
         </section>
+
         
         <!-- Three -->
         <section id="pub">
