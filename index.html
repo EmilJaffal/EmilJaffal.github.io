@@ -238,45 +238,50 @@
         </style>
 
         <style>
-        .pub-wrapper {
-            display: flex;
-            flex-wrap: wrap; /* Allows wrapping when screen width is small */
-            gap: 20px; /* Adds space between boxes */
-            justify-content: flex-start; /* Aligns items from the left */
-        }
+            .pub-wrapper {
+                display: flex;
+                flex-wrap: wrap; /* Allows wrapping when screen width is small */
+                gap: 20px; /* Adds space between boxes */
+                justify-content: flex-start; /* Aligns items from the left */
+            }
 
-        .pub-container {
-            border: 2px solid #ccc; /* Light gray border */
-            border-radius: 10px; /* Rounded corners */
-            padding: 15px;
-            width: 340px; /* Adjust size for better readability */
-            background-color: #f9f9f9; /* Light background for contrast */
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start; /* Align text and image to the left */
-            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1); /* Adds a slight shadow */
-        }
+            .pub-container {
+                border: 2px solid #ccc; /* Light gray border */
+                border-radius: 10px; /* Rounded corners */
+                padding: 15px;
+                width: 320px; /* Adjust size for better readability */
+                background-color: #f9f9f9; /* Light background for contrast */
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start; /* Align text and image to the left */
+                box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1); /* Adds a slight shadow */
+                height: 100%; /* Ensures all boxes are equal height */
+            }
 
-        .pub-container p:last-child {
-             margin-bottom: 0;
-        }
+            /* Ensures the image stays at the top */
+            .pub-image {
+                width: 100%; /* Makes image fill the box */
+                height: auto;
+                border-radius: 5px; /* Rounded corners */
+            }
 
-        .pub-image {
-            width: 100%; /* Makes image fill the box */
-            height: auto;
-            border-radius: 5px; /* Rounded corners */
-        }
+            /* Wraps the title and allows it to expand */
+            .pub-content {
+                flex-grow: 1; /* Pushes authors down */
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between; /* Ensures even spacing */
+            }
 
-        .pub-container p, 
-        .pub-container a {
-            text-align: left;
-            margin-top: 10px;
-            font-size: inherit; /* Matches the site's font size */
-        }
+            /* Ensures the authors' names align at the bottom */
+            .pub-authors {
+                margin-top: auto; /* Pushes authors' names to the bottom */
+            }
 
-        .pub-container .smaller-font {
-            font-size: inherit; /* Ensures consistency with the rest of the website */
-        }
+            /* Removes extra space below the last paragraph */
+            .pub-container p:last-child {
+                margin-bottom: 0;
+            }
         </style>
         
         <!-- Three -->
@@ -297,7 +302,7 @@
                             Composition and Structure Analyzer/Featurizer for Explainable ML Models to Predict Solid State Structures
                         </a></strong>
                     </p>
-                    <p class="smaller-font"><strong>Jaffal E.I.</strong>, Shiryaev D., Vtorov A., Lee S., Barua N.K. & Oliynyk A.O.</p>
+                    <p class="smaller-font pub-authors"><strong>Jaffal E.I.</strong>, Shiryaev D., Vtorov A., Lee S., Barua N.K. & Oliynyk A.O.</p>
                 </div>
 
                 <div class="pub-container">
@@ -309,7 +314,7 @@
                             Synthesis of Pyrene Diimide Isomers with Tunable Excimer Formation
                         </a></strong>
                     </p>
-                    <p class="smaller-font">Johnston K., McCostis A., Mikita E., <strong>Jaffal E.</strong> & Schneider J.A.</p>
+                    <p class="smaller-font pub-authors">Johnston K., McCostis A., Mikita E., <strong>Jaffal E.</strong> & Schneider J.A.</p>
                 </div>
             </div>
 
