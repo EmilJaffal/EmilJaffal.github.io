@@ -1,0 +1,295 @@
+\documentclass[11pt, letterpaper]{article}
+
+% Packages:
+\usepackage[
+    ignoreheadfoot,
+    top=1 cm,
+    bottom=1 cm,
+    left=2 cm,
+    right=2 cm,
+    footskip=1.0 cm,
+]{geometry}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage[dvipsnames]{xcolor}
+\definecolor{primaryColor}{RGB}{0, 79, 144}
+\usepackage{enumitem}
+\usepackage{fontawesome5}
+\usepackage{amsmath}
+\usepackage[
+    pdftitle={Your Name's Resume},
+    pdfauthor={Your Name},
+    pdfcreator={LaTeX with RenderCV},
+    colorlinks=true,
+    urlcolor=primaryColor
+]{hyperref}
+\usepackage[pscoord]{eso-pic}
+\usepackage{calc}
+\usepackage{bookmark}
+\usepackage{lastpage}
+\usepackage{changepage}
+\usepackage{paracol}
+\usepackage{ifthen}
+\usepackage{needspace}
+\usepackage{iftex}
+
+% Ensure that generate pdf is machine readable/ATS parsable:
+\ifPDFTeX
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+    \usepackage[utf8]{inputenc}
+    \usepackage{lmodern}
+\fi
+
+% Some settings:
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt}
+\pagestyle{empty}
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\topskip}{0pt}
+\setlength{\columnsep}{0cm}
+\makeatletter
+\let\ps@customFooterStyle\ps@plain
+\makeatother
+\definecolor{LightBlue}{rgb}{0.1, 0.6, 1}
+
+\titleformat{\section}{\needspace{4\baselineskip}\bfseries\large}{}{0pt}{}[\vspace{-1pt}\titlerule]
+
+\titlespacing{\section}{
+    -1pt
+}{
+    0.1 cm
+}{
+    0.1 cm
+}
+
+\renewcommand\labelitemi{$\circ$}
+\newenvironment{highlights}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=0.4 cm + 10pt
+    ]
+}{
+    \end{itemize}
+}
+
+\newenvironment{highlightsforbulletentries}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=10pt
+    ]
+}{
+    \end{itemize}
+}
+
+\newenvironment{onecolentry}{
+    \begin{adjustwidth}{
+        0.01 cm 
+    }{
+        0.01 cm 
+    }
+}{
+    \end{adjustwidth}
+}
+
+\newenvironment{twocolentry}[2][]{
+    \onecolentry
+    \def\secondColumn{#2}
+    \setcolumnwidth{\fill, 3.75 cm}
+    \begin{paracol}{2}
+}{
+    \switchcolumn \raggedleft \secondColumn
+    \end{paracol}
+    \endonecolentry
+}
+
+\newenvironment{header}{
+    \setlength{\topsep}{0pt}\par\kern\topsep\centering\linespread{1.25}
+}{
+    \par\kern\topsep
+}
+
+\newcommand{\placelastupdatedtext}{% \placetextbox{<horizontal pos>}{<vertical pos>}{<stuff>}
+  \AddToShipoutPictureFG*{% Add <stuff> to current page foreground
+    \put(
+        \LenToUnit{\paperwidth-2 cm-0.2 cm+0.05cm},
+        \LenToUnit{\paperheight-1.0 cm}
+    ){\vtop{{\null}\makebox[0pt][c]{
+    }}}%
+  }%
+}%
+
+% save the original href command in a new command:
+\let\hrefWithoutArrow\href
+
+% new command for external links:
+\renewcommand{\href}[2]{\hrefWithoutArrow{#1}{\ifthenelse{\equal{#2}{}}{ }{#2 }\raisebox{.15ex}{\footnotesize \faExternalLink*}}}
+
+\begin{document}
+    \newcommand{\AND}{\unskip
+        \cleaders\copy\ANDbox\hskip\wd\ANDbox
+        \ignorespaces
+    }
+    \newsavebox\ANDbox
+    \sbox\ANDbox{}
+
+    \placelastupdatedtext
+    \begin{header}
+        \textbf{\fontsize{24 pt}{24 pt}\selectfont Your Name}
+
+        \vspace{-0.3 cm}
+
+        \normalsize
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{mailto:your_email@example.com}{\color{black}\faEnvelope[regular]\hspace*{0.13cm}\fcolorbox{LightBlue}{white}{\footnotesize your_email@example.com}}}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{https://orcid.org/your-orcid}{\color{black}\faOrcid\hspace*{0.13cm}\fcolorbox{LightBlue}{white}{\footnotesize your_orcid}}}%
+        \kern 0.25 cm%        
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{https://yourwebsite.com}{\color{black}\faGlobe\hspace*{0.13cm}\fcolorbox{LightBlue}{white}{\footnotesize yourwebsite.com}}}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{https://linkedin.com/in/yourprofile}{\color{black}\faLinkedinIn\hspace*{0.13cm}\fcolorbox{LightBlue}{white}{\footnotesize yourprofile}}}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{https://github.com/yourgithub}{\color{black}\faGithub\hspace*{0.13cm}\fcolorbox{LightBlue}{white}{\footnotesize yourgithub}}}%
+        
+    \end{header}
+
+    \vspace{0.3 cm - 0.3 cm}
+
+    \section{Education}
+        
+    \begin{twocolentry}{
+        Expected YYYY}
+            \textbf{Your University}, Your Campus
+
+            \textit{Your Degree, Your Field}
+    \end{twocolentry}
+
+        \begin{twocolentry}{
+
+        YYYY – YYYY}
+            \textbf{Your Previous Institution}, Your Campus
+
+            \textit{Your Degree, Your Field}
+        \end{twocolentry}
+
+    \section{Research experience}
+
+        \begin{twocolentry}{
+        \textit{City, State}    
+        
+        YYYY – Present}
+            \textbf{Your Position}
+            
+            \textit{Your Institution}
+        \end{twocolentry}
+
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Highlight 1
+                \item Highlight 2
+            \end{highlights}
+        \end{onecolentry}        
+
+        \begin{twocolentry}{
+            \textit{City, State}    
+                
+            YYYY – YYYY}
+                \textbf{Your Position}
+                
+                \textit{Your Institution}
+            \end{twocolentry}
+    
+            \begin{onecolentry}
+            \begin{highlights}
+                    \item Highlight 1
+                    \item Highlight 2
+                \end{highlights}
+            \end{onecolentry}
+
+    \section{Professional experience}
+
+        \begin{twocolentry}{
+        \textit{City, State}    
+            
+        YYYY – YYYY}
+            \textbf{Your Position}
+
+            \textit{Your Company}
+        \end{twocolentry}
+
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Highlight 1
+                \item Highlight 2
+            \end{highlights}
+        \end{onecolentry}
+    
+    \section{Publications}
+        
+        \begin{samepage}
+            \begin{twocolentry}{
+                YYYY
+            }
+                Title of Publication. \textit{Journal Name}.
+                \hrefWithoutArrow{https://doi.org/your-doi}{DOI: your-doi}
+            \end{twocolentry}
+        \end{samepage}
+
+    \section{Selected presentations}
+        \begin{samepage}
+
+            \begin{twocolentry}{
+                YYYY}
+                \textbf{\hrefWithoutArrow{https://link-to-event}{Event Name}} – {\textit{City, State}}
+                
+                Presentation Title           
+            \end{twocolentry}
+
+        \end{samepage}
+
+    \section{Posters}
+        \begin{samepage}
+            \begin{twocolentry}{
+                YYYY}
+                \textbf{\hrefWithoutArrow{https://link-to-event}{Event Name}} – {\textit{City, State}}
+
+                Poster Title            
+            \end{twocolentry}
+        \end{samepage}
+
+    \section{Patents}
+        
+        \begin{samepage}
+            \begin{twocolentry}{
+                YYYY
+            }
+                \textbf{Patent Title}. {\textit{Patent Number}}.
+            \end{twocolentry}
+        \end{samepage}
+
+    \section{Service}
+        
+        \begin{samepage}
+            \begin{twocolentry}{
+                YYYY – YYYY}
+                Organization Name – \textit{Your Role}
+            \end{twocolentry}
+
+        \end{samepage}        
+
+\end{document}
