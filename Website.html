@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creating a Website with GitHub</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <style>
+        /* Reduce horizontal space for the .box class */
+        .box {
+            width: 90%; /* Adjusted from 80% to 90% for less margin */
+            margin: 20px auto; /* Centered with reduced horizontal space */
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Center the footer icons */
+        #footer .inner {
+            text-align: center;
+        }
+
+        #footer .icons {
+            display: inline-flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        #footer .icons a {
+            color: black; /* Set icons to black for better visibility */
+            font-size: 1.5em;
+        }
+
+        /* Center the home page button */
+        .home-button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        footer a.button {
+            display: inline-block;
+            margin: 0 auto;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <section id="intro" class="box">
+        <h2>Introduction</h2>
+        <p>
+            Check back soon!
+        </p>
+    </section>
+
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+                <li><a href="https://www.linkedin.com/in/emil-jaffal/" class="icon brands fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+                <li><a href="https://github.com/EmilJaffal" class="icon brands fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+                <li><a href="mailto:ejaffal@gradcenter.cuny.edu" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <div class="home-button-container">
+        <a href="https://emiljaffal.github.io" class="button">Go to the home page</a>
+    </div>
+</body>
+
+</html>
