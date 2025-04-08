@@ -2074,8 +2074,8 @@ input, select, textarea {
 				-webkit-transition: opacity 0.2s ease-in-out;
 				-ms-transition: opacity 0.2s ease-in-out;
 				transition: opacity 0.2s ease-in-out;
-				border-radius: 0.35em;
-				border: solid 3px rgba(255, 255, 255, 0.5);
+				border-radius: 0.15em;
+				border: solid 2px rgba(255, 255, 255, 0.5);
 				color: #fff;
 				content: 'View';
 				display: inline-block;
@@ -2085,7 +2085,7 @@ input, select, textarea {
 				line-height: 2.25em;
 				margin: -1.25em 0 0 -3em;
 				opacity: 0;
-				padding: 0 1.5em;
+				padding: 0 .5em;
 				position: absolute;
 				text-align: center;
 				text-decoration: none;
@@ -2580,6 +2580,43 @@ input, select, textarea {
 			margin: 0;
 		}
 
+/* Wrapper for posters */
+.poster-wrapper {
+    display: flex;
+    flex-wrap: wrap; /* Allows wrapping when screen width is small */
+    gap: 30px; /* Adds space between poster containers */
+    justify-content: flex-start; /* Aligns posters to the left */
+    margin-top: 20px; /* Adds spacing above the posters */
+}
+
+/* Individual poster container */
+.poster-container {
+    border: 2px solid #ccc; /* Light gray border */
+    border-radius: 10px; /* Rounded corners */
+    padding: 15px;
+    width: 450px; /* Reduced width to 75% of the original 600px */
+    background-color: #f9f9f9; /* Light background for contrast */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Aligns content to the left */
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1); /* Adds a slight shadow */
+}
+
+/* Poster image styling */
+.poster-image {
+    width: 100%; /* Makes the image fill the container */
+    height: auto; /* Maintains aspect ratio */
+    border-radius: 5px; /* Rounded corners */
+    margin-bottom: 10px; /* Adds spacing below the image */
+}
+
+/* Poster text styling */
+.poster-container p {
+    text-align: left; /* Aligns the text to the left */
+    margin: 0; /* Removes default margins */
+    font-size: 16px; /* Adjusts font size for readability */
+}
+
 /* Header */
 
 	#header {
@@ -2690,11 +2727,11 @@ input, select, textarea {
 /* Main */
 
 	#main {
-		margin-left: 30%; /* Keep the left margin as is */
+		margin-left: 28%; /* Keep the left margin as is */
 		margin-right: 10%; /* Reduce the right margin to extend the content area */
 		max-width: 70em; /* Increase the max-width to allow more columns */
 		padding: 2em 4em 2em 4em;
-		width: calc(100% - 40%); /* Adjust the width calculation */
+		width: calc(100% - 30%); /* Adjust the width calculation */
 	}
 
 		#main > section {
