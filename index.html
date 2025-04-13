@@ -327,7 +327,32 @@
             </div>
 
         </section>
-        
+        <style>
+            .poster-wrapper {
+                display: flex;
+                flex-wrap: wrap; /* Allows wrapping for smaller screens */
+                gap: 20px; /* Adds space between posters */
+                justify-content: flex-start; /* Centers the posters */
+            }
+
+            .poster-container {
+                width: 65%; /* Adjusts size to fit two in a row */
+                max-width: 400px; /* Ensures consistent thumbnail size */
+                text-align: center; /* Centers text and images */
+            }
+
+            .poster-image {
+                width: 100%; /* Makes the image responsive */
+                height: auto; /* Maintains aspect ratio */
+                border-radius: 5px; /* Optional: Adds rounded corners */
+            }
+
+            @media (max-width: 768px) {
+                .poster-container {
+                    width: 100%; /* Stacks posters on smaller screens */
+                }
+            }
+        </style>
         <!-- Some Posters Section -->
         <section id="pub">
             <h2>Some Posters</h2>
@@ -338,6 +363,15 @@
                     </a>
                     <p>
                         <strong><a href="images/2024-GRC-poster.pdf" target="_blank">Gordon Research Conference</a></strong><br />
+                        <em>Newry, ME</em> — Jul 2024 <br />
+                    </p>
+                </div>
+                <div class="poster-container">
+                    <a href="images/2024-GRC_2.pdf" target="_blank">
+                        <img src="images/2024-GRC_2.jpeg" alt="Thumbnail for 2024 GRC Poster" class="poster-image">
+                    </a>
+                    <p>
+                        <strong><a href="images/2024-GRC_2.pdf" target="_blank">Gordon Research Conference</a></strong><br />
                         <em>Newry, ME</em> — Jul 2024 <br />
                     </p>
                 </div>
