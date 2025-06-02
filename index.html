@@ -38,6 +38,33 @@
         }
     }
 
+    /* Make the header stack above main content on small screens */
+@media (max-width: 900px) {
+    #header {
+        position: relative !important;
+        width: 100% !important;
+        float: none !important;
+        left: 0 !important;
+        top: 0 !important;
+        margin: 0 0 2em 0 !important;
+        text-align: center !important;
+        min-width: 0 !important;
+        max-width: 100vw !important;
+    }
+    #main {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    body {
+        overflow-x: hidden !important;
+    }
+}
     </style>
 
     <!-- Header -->
@@ -111,7 +138,7 @@
                     href="https://www.fordham.edu/academics/departments/chemistry/faculty/joshua-schrier/"
                     target="_blank">Dr. Joshua Schrier</a> to
                 investigate these molecules computationally with density
-                functional theory. We recently presented
+                functional theory. Our work was recently presented
                 <a href="https://www.mrs.org/meetings-events/fall-meetings-exhibits/2023-mrs-fall-meeting"
                     target="_blank">here</a>
                 on
@@ -120,6 +147,12 @@
                 and
                 <a href="https://www.mrs.org/meetings-events/presentation/2023_mrs_fall_meeting/2023_mrs_fall_meeting-3957914"
                     target="_blank">this</a>
+                as well as
+                <a href="https://www.cheminst.ca/conference/canadian-chemistry-conference-and-exhibition-csc-2025/"
+                    target="_blank">here</a>
+                on
+                  <a href="https://www.xcdsystem.com/cic/program/3NP1X0F/index.cfm?pgid=3066&sid=29701&abid=114145"
+                    target="_blank">this</a>              
                 .
             </p>
 
@@ -164,9 +197,8 @@
                     <h3><a
                         href="https://github.com/EmilJaffal/Site-Analysis"
                         target="_blank">CIF Site Analysis</a></h3>
-                    <p style="font-size: 16px;">Contributed to developing SA, a user-interactive Python script that parses .cif files based on 
-                        structure type and creates a CSV table with site compositions, and heat maps for each site (up to 5 sites) and a 
-                        heat map for compositions.
+                    <p style="font-size: 16px;">Contributed to developing a user-interactive Python script that parses .cif files based on 
+                        structure type and creates a CSV table with compositions and heat maps for each site.
                     </p>
                 </article>
 
@@ -177,7 +209,7 @@
                     <h3><a
                         href="https://github.com/bobleesj/composition-analyzer-featurizer"
                         target="_blank">Composition Analyzer/Featurizer</a></h3>
-                    <p style="font-size: 16px;">Contributed to developing CAF, a user-interactive Python script that offers tools 
+                    <p style="font-size: 16px;">Contributed to developing a user-interactive Python script that offers tools 
                         for generating compositional features. It also provides interactive tools 
                         used for tasks such as filtering, sorting chemical formulas, and merging Excel files.
                     </p>
@@ -193,10 +225,10 @@
                         troubleshooting with this project by
                         <a href="https://bobleesj.github.io"
                             target="_blank">Bob Lee</a>,
-                        a peer of mine at Columbia University.
-                        CBA is an interactive, command-line Python application
-                        designed for high-throughput extraction of minimum
-                        bond length and atomic mixing information from CIF
+                        a peer of mine at Stanford.
+                        CBA is an interactive Python app
+                        designed for high-throughput extraction of
+                        bond lengths and atomic mixing information from CIF
                         files, used in solid-state chemistry.
                     </p>
                     <section id="two">
@@ -210,7 +242,7 @@
                         href="https://notebookarchive.org/2023-05-475ui96"
                         target="_blank">Hückel Theory</a></h3>
                     <p style="font-size: 16px;">Used Hückel theory to explore
-                        isomeric dimers by analyzing frontier orbitals and
+                        isomers by analyzing frontier orbitals and
                         their orbital energies. This approach simplifies electron
                         behavior, assuming sigma and pi electrons can be
                         separated, and helps discern differences in bonding and 
@@ -250,50 +282,46 @@
         <style>
             .pub-wrapper {
                 display: flex;
-                flex-wrap: wrap; /* Allows wrapping when screen width is small */
-                gap: 20px; /* Adds space between boxes */
-                justify-content: flex-start; /* Aligns items from the left */
+                flex-wrap: wrap;
+                gap: 20px;
+                justify-content: flex-start;
             }
 
             .pub-container {
-                border: 2px solid #ccc; /* Light gray border */
-                border-radius: 10px; /* Rounded corners */
+                border: 2px solid #ccc;
+                border-radius: 10px;
                 padding: 15px;
-                width: 320px; /* Adjust size for better readability */
-                background-color: #f9f9f9; /* Light background for contrast */
+                width: 320px;
+                background-color: #f9f9f9;
                 display: flex;
                 flex-direction: column;
-                align-items: flex-start; /* Align text and image to the left */
-                box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1); /* Adds a slight shadow */
-                height: 100%; /* Ensures all boxes are equal height */
+                align-items: flex-start;
+                box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+                box-sizing: border-box;
+                flex: 0 0 320px; /* Fixed width, no grow/shrink */
             }
 
-            /* Ensures the image stays at the top */
             .pub-image {
-                width: 100%; /* Makes image fill the box */
+                width: 100%;
                 height: auto;
-                border-radius: 5px; /* Rounded corners */
+                max-width: 100%;
+                display: block;
+                border-radius: 6px;
             }
 
-            /* Wraps the title and allows it to expand */
-            .pub-content {
-                flex-grow: 1; /* Pushes authors down */
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between; /* Ensures even spacing */
-            }
-
-            /* Ensures the authors' names align at the bottom */
-            .pub-authors {
-                margin-top: auto; /* Pushes authors' names to the bottom */
-            }
-
-            /* Removes extra space below the last paragraph */
-            .pub-container p:last-child {
-                margin-bottom: 0;
+            /* Responsive: stack containers on small screens */
+            @media (max-width: 700px) {
+                .pub-wrapper {
+                    justify-content: center;
+                    gap: 10px;
+                }
+                .pub-container {
+                    width: 95vw;
+                    max-width: 340px;
+                    flex: 1 1 95vw;
+                }
             }
         </style>
-        
         <!-- Three -->
         <section id="pub">
             <h2> 
@@ -301,8 +329,18 @@
                     Some Publications
                 </a>
             </h2>
-            
-        	<div class="pub-wrapper">
+        
+            <div class="pub-wrapper">
+                <div class="pub-container">
+                    <a href="https://link.springer.com/article/10.1007/s40192-025-00400-x#citeas" target="_blank">
+                        <img src="images/IMMI.png" alt="IMMI Paper Cover" class="pub-image">
+                    </a>
+                    <p>
+                        <strong><a href="https://link.springer.com/article/10.1007/s40192-025-00400-x#citeas" target="_blank">
+                            Materials Informatics Tools to Analyze Crystal Structures: Crystal Structure of the Novel Ternary Indide ErCo<sub>2</sub>In
+                        </a></strong>
+                    </p>
+                </div>
                 <div class="pub-container">
                     <a href="https://pubs.acs.org/doi/10.1021/jacs.5c03510" target="_blank">
                         <img src="images/JACS.jpg" alt="JACS Paper Cover" class="pub-image">
@@ -313,8 +351,6 @@
                         </a></strong>
                     </p>
                 </div>
-
-            <div class="pub-wrapper">
                 <div class="pub-container">
                     <a href="https://pubs.rsc.org/en/Content/ArticleLanding/2024/DD/D4DD00332B" target="_blank">
                         <img src="images/DD2.jpeg" alt="Digital Discovery Paper Cover" class="pub-image">
@@ -325,7 +361,6 @@
                         </a></strong>
                     </p>
                 </div>
-
                 <div class="pub-container">
                     <a href="https://pubs.acs.org/doi/10.1021/acs.orglett.4c03523" target="_blank">
                         <img src="images/OL.jpg" alt="Organic Letters Paper Cover" class="pub-image">
@@ -337,7 +372,6 @@
                     </p>
                 </div>
             </div>
-
         </section>
         <style>
             .poster-wrapper {

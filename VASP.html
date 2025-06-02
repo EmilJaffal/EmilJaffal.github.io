@@ -326,6 +326,45 @@
         </ol>
     </section>
 
+
+<!-- DFT Notes
+- Gamma -> Monkhorst pack?
+- KPOINTS consistency? 
+	- Mesh & Gamma v. Monkhorst
+- Run both & see the difference… 
+
+What Γ centered means is that the offsets are all 0. For some systems it may be beneficial to use non-centered grids to reduce the total number of k-points due to symmetries. 
+the shift away from Gamma was originally meant to reduce the grid size. one reason for using Gamma-centered sampling sometimes is that shifted grids may overlook "important" band character may near Gamma (often there is a gap there in semiconductors, e.g.) if your sampling is coarse. so the choice depends on your application. notice that in metals Gamma-centered sampling (NOT sampling Gamma only!) is often a better choice (a faster-converging choice, let us say) than the shifted grid.
+also, let me point you to the original paper (by my own supervisor ;) on special points: http://journals.aps.org/prb/abstract/10.1103/PhysRevB.7.5212
+We strongly recommend to use only Gamma centered grids for hexagonal lattices. Many tests we have performed indicate that the energy converges significantly faster with Gama centered grids than with standard Monkhorst Pack grids. Grids generated with the M setting in the third line, in fact do not have full hexagonal symmerty.
+- See The Role of Non-Stoichiometry in the Functional Properties of Oxide Materials
+In principle, so mathematically both ways of generating the grid would converge at the same pace with the increasing number of k points if the function to be integrated was arbitrary: They both are equi-distance samplings of a random function with the same distance between the sampling points. The difference and possible preference of one over the other are:
+- As stated in the communication between Monkhorst and Pack and Chadi and Cohen on the other hand, the original sets of Monkhorst-Pack grids did not include the Gamma point, and they had a lower symmetry in some cells - in particular the hexagonal one - than the maximum symmetry of the cell (after the Comment by Chadi and Cohen on their original article Monkhorst and Pack devised the present Monkhorst-Pack algorithm where the whole grid of points can be translated - for example so that one of the points hits the Gamma point); this leads to either asymmetric sets of k points and thus a breaking of the symmetries, or, like probably in most codes, to a generation of many more k points that would be in the original set in order to preserve the symmetries. So if there are symmetries, like C_3v in many hexagonal systems, it is more economic and symmetric to use the Gamma-centred sets of Monkhorst-Pack grids
+- The underlying function to be integrated is not fully random, rather it contains regularity - what we call bands. In the band structure at the Gamma point is always (well, except maybe with spin-orbit coupling, but in general) the bands have their extrema, either a local minimum or maximum (the bands arrive at the Gamma point with zero derivative). So when people could only afford few k points in their calculations they first had the special points - like the Baldereschi point - that all avoided the Gamma point, as the band structure was thought to be more accurately averaged/integrated over if one did not take the Gamma point but a point that was away from the Gamma, kind of averaging over bands better than at Gamma, where one has those local minima and maxima. When one has enough k points it naturally does no longer matter whether one includes the Gamma point or not, as the weight of the Gamma (and possibly other points at the boundaries of the first Brillouin zone) diminishes
+So in general, if one has a hexagonal cell and symmetries in the atomistic structure, it is better to take the Gamma-centred Monkhorst-Pack sets, as one gets all symmetries included with fewer k points that the translated ones. Overall the convergence depends on the underlying band structure, in exotic cases (Kohn anomalies, Dirac point like in graphene, ...) one might need to adjust case by case. But, in "normal" cells with "normal" band structure the difference between the two kinds of choice in the speed of convergence with the number of k points and thus computational speed is probably small.
+
+Gamma Only: A k-point mesh (grid) only includes (samples) the gamma point of the Brillouin zone.
+
+Gamma Centred: A k-point mesh (grid) that is centred around the gamma point of the Brillouin zone, and includes other points (often equally spaced, though not always). A gamma centred k-point grid often reduces computation cost, and contains important information with regard to band-gaps. However, a gamma centred k-point grid can fail to describe metallic ground-states. In general, a gamma k-point grid is often more advantages (although check your system).
+
+For instance, in relation to surface calculations (from Efficient creation and convergence of surface slabs): One must also be mindful that the k-point sampling accurately reflects the reciprocal Bravais lattice of the surface Brillouin zone — for example, the (111) surfaces of FCC and BCC crystals are hexagonal and require a gamma-centered odd k-point grid.
+
+Monkhorst-Pack: A special type of k-point mesh (grid). The sampling k-points are distributed homogeneously in the Brillouin zone, with rows or columns of k-points running parallel to the reciprocal lattice vectors that span the Brillouin zone.
+
+From the original paper Special points for Brillouin-zone integrations: A method is given for generating sets of special points in the Brillouin zone which provides an efficient means of integrating periodic functions of the wave vector. The integration can be over the entire Brillouin zone or over specified portions thereof.
+
+the Gamma grid is indeed made with the Monkhorst-Pack scheme, but after the generation the grid is shifted so that one of the k-points lies on the gamma point.
+
+Or in other words, for a grid with odd divisors, there is no difference between the Gamma and MP scheme. They produce exactly the same result.
+
+Coarse mesh optimization, fine mesh calculations
+
+For grids centred on the Gamma-point, even grids sometimes have better convergence than odd grids. This is precisely because they avoid the gamma-point itself, which is a very high symmetry point and not a good representative sampling point.
+For systems with hexagonal symmetry, however, you should basically *never* use an even-grid (gamma-centred) because the hexagonal symmetry operations applied to an even grid generate points outside the Brillouin zone (see the papers of Chadi and Cohen for details; link below).
+You may find this discussion useful:
+https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_irreducible_Brilloiun_zone_that_is_necessary_for_good_calculations_of_bulk_total_energy
+ -->
+
     <section class="section" id="geometry-optimization">
         <h2>Geometry Optimization</h2>
         <ol>
