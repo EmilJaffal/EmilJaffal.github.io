@@ -14,58 +14,13 @@
     <link rel="stylesheet" href="assets/css/main.css" />
 </head>
 
-
-<body class="is-preload">
-
-    <style>
-        .smaller-font {
-            font-size: 70%;
-            /* Adjust the percentage as needed */
-        }
-
-        #header h1 {
-    line-height: 2.0; /* Adjusts spacing between lines for readability */
+<style>
+.smaller-font {
+    font-size: 0.85em; /* or adjust as needed, e.g. 0.75em */
+    display: block;
+    margin-top: 10px;
 }
-
-    .smaller-font {
-        display: block;
-        margin-top: 20px; /* Adds a bit of spacing between sections */
-    }
-
-    @media (max-width: 768px) {
-        #header h1 {
-            text-align: middle; /* Ensures better alignment on smaller screens */
-        }
-    }
-
-    /* Make the header stack above main content on small screens */
-@media (max-width: 900px) {
-    #header {
-        position: relative !important;
-        width: 100% !important;
-        float: none !important;
-        left: 0 !important;
-        top: 0 !important;
-        margin: 0 0 2em 0 !important;
-        text-align: center !important;
-        min-width: 0 !important;
-        max-width: 100vw !important;
-    }
-    #main {
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        width: 100% !important;
-        max-width: 100vw !important;
-        min-width: 0 !important;
-        box-sizing: border-box !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-    }
-    body {
-        overflow-x: hidden !important;
-    }
-}
-    </style>
+</style>
 
     <!-- Header -->
     <header id="header">
@@ -77,10 +32,7 @@
                 <strong>I'm Emil,&nbsp;<br />
                     a Ph.D. student @ CUNY<br /></strong>
                 <span class="smaller-font">
-                    Ph.D. student, chemistry —<br />
-                    City University of New York<br />
-                    B.Sc., chemistry —<br />
-                    Fordham University<br />
+                    <em>the laws of physics do not apply to man</em>
                 </span>
             </h1>
         </div>
@@ -131,7 +83,7 @@
 
             <p>In undergrad I worked alongside <a
                     href="https://www.fordham.edu/academics/departments/chemistry/faculty/julia-schneider/"
-                    target="_blank">Dr. Julia Schneider</a> to
+                    target="_blank">Dr. Julia Schneider</a> at Fordham University to
                 synthesize both single molecule and polymeric organic
                 semiconductors
                 and <a
@@ -253,152 +205,61 @@
             </div>
         </section>
 
-        <style>
-            #pub h2 {
-                margin-bottom: 5px; /* Reduce space below the title */
-            }
-
-            #pub .publication {
-                margin-top: 10px; /* Reduce space between each publication */
-            }
-
-            #pub .publication .date {
-                margin-bottom: 2px; /* Reduce space below the date */
-                font-weight: bold;
-            }
-
-            #pub .publication p {
-                margin: 2px 0; /* Reduce space above and below paragraphs */
-            }
-
-            .publication .thumb img {
-            display: block;
-            margin: 10px auto; /* Centers the thumbnail */
-            width: 275px; /* Adjust this to control the size */
-            height: auto; /* Maintains the aspect ratio */
-        }
-        </style>
-
-        <style>
-            .pub-wrapper {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 20px;
-                justify-content: flex-start;
-            }
-
-            .pub-container {
-                border: 2px solid #ccc;
-                border-radius: 10px;
-                padding: 15px;
-                width: 320px;
-                background-color: #f9f9f9;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
-                box-sizing: border-box;
-                flex: 0 0 320px; /* Fixed width, no grow/shrink */
-            }
-
-            .pub-image {
-                width: 100%;
-                height: auto;
-                max-width: 100%;
-                display: block;
-                border-radius: 6px;
-            }
-
-            /* Responsive: stack containers on small screens */
-            @media (max-width: 700px) {
-                .pub-wrapper {
-                    justify-content: center;
-                    gap: 10px;
-                }
-                .pub-container {
-                    width: 95vw;
-                    max-width: 340px;
-                    flex: 1 1 95vw;
-                }
-            }
-        </style>
-        <!-- Three -->
-        <section id="pub">
-            <h2> 
-                <a href="https://scholar.google.com/citations?user=Nt1fM10AAAAJ&hl=en" target="_blank">
-                    Some Publications
-                </a>
-            </h2>
-        
-            <div class="pub-wrapper">
-                <div class="pub-container">
-                    <a href="https://link.springer.com/article/10.1007/s40192-025-00400-x#citeas" target="_blank">
-                        <img src="images/IMMI.png" alt="IMMI Paper Cover" class="pub-image">
+        <!-- Three -->  
+            <section id="pub">
+                <h2>
+                    <a href="https://scholar.google.com/citations?user=Nt1fM10AAAAJ&hl=en" target="_blank">
+                        Some Publications
                     </a>
-                    <p>
-                        <strong><a href="https://link.springer.com/article/10.1007/s40192-025-00400-x#citeas" target="_blank">
-                            Materials Informatics Tools to Analyze Crystal Structures: Crystal Structure of the Novel Ternary Indide ErCo<sub>2</sub>In
-                        </a></strong>
-                    </p>
+                </h2>
+                <div class="pub-list">
+                    <div class="pub-card">
+                        <img src="images/IMMI.png" alt="IMMI Paper Cover" class="pub-card-img">
+                        <div class="pub-card-content">
+                            <div class="pub-card-title">
+                                <a href="https://link.springer.com/article/10.1007/s40192-025-00400-x#citeas" target="_blank">
+                                    Materials Informatics Tools to Analyze Crystal Structures: Crystal Structure of the Novel Ternary Indide ErCo<sub>2</sub>In
+                                </a>
+                            </div>
+                            <div class="pub-card-meta"><em>IMMI, 2025</em></div>
+                        </div>
+                    </div>
+                    <div class="pub-card">
+                        <img src="images/JACS.jpg" alt="JACS Paper Cover" class="pub-card-img">
+                        <div class="pub-card-content">
+                            <div class="pub-card-title">
+                                <a href="https://pubs.acs.org/doi/10.1021/jacs.5c03510" target="_blank">
+                                    Unsupervised Machine Learning Prediction of Novel 1:3 Intermetallic Phase with the Synthesis of TbIr<sub>3</sub> (PuNi<sub>3</sub>-type) as Experimental Validation
+                                </a>
+                            </div>
+                            <div class="pub-card-meta"><em>JACS, 2025</em></div>
+                        </div>
+                    </div>
+                    <div class="pub-card">
+                        <img src="images/DD2.jpeg" alt="Digital Discovery Paper Cover" class="pub-card-img">
+                        <div class="pub-card-content">
+                            <div class="pub-card-title">
+                                <a href="https://pubs.rsc.org/en/Content/ArticleLanding/2024/DD/D4DD00332B" target="_blank">
+                                    Composition and Structure Analyzer/Featurizer for Explainable ML Models to Predict Solid State Structures
+                                </a>
+                            </div>
+                            <div class="pub-card-meta"><em>Digital Discovery, 2025</em></div>
+                        </div>
+                    </div>
+                    <div class="pub-card">
+                        <img src="images/OL.jpg" alt="Organic Letters Paper Cover" class="pub-card-img">
+                        <div class="pub-card-content">
+                            <div class="pub-card-title">
+                                <a href="https://pubs.acs.org/doi/10.1021/acs.orglett.4c03523" target="_blank">
+                                    Synthesis of Pyrene Diimide Isomers with Tunable Excimer Formation
+                                </a>
+                            </div>
+                            <div class="pub-card-meta"><em>Organic Letters, 2025</em></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="pub-container">
-                    <a href="https://pubs.acs.org/doi/10.1021/jacs.5c03510" target="_blank">
-                        <img src="images/JACS.jpg" alt="JACS Paper Cover" class="pub-image">
-                    </a>
-                    <p>
-                        <strong><a href="https://pubs.acs.org/doi/10.1021/jacs.5c03510" target="_blank">
-                            Unsupervised Machine Learning Prediction of Novel 1:3 Intermetallic Phase with the Synthesis of TbIr<sub>3</sub> (PuNi<sub>3</sub>-type) as Experimental Validation
-                        </a></strong>
-                    </p>
-                </div>
-                <div class="pub-container">
-                    <a href="https://pubs.rsc.org/en/Content/ArticleLanding/2024/DD/D4DD00332B" target="_blank">
-                        <img src="images/DD2.jpeg" alt="Digital Discovery Paper Cover" class="pub-image">
-                    </a>
-                    <p>
-                        <strong><a href="https://pubs.rsc.org/en/Content/ArticleLanding/2024/DD/D4DD00332B" target="_blank">
-                            Composition and Structure Analyzer/Featurizer for Explainable ML Models to Predict Solid State Structures
-                        </a></strong>
-                    </p>
-                </div>
-                <div class="pub-container">
-                    <a href="https://pubs.acs.org/doi/10.1021/acs.orglett.4c03523" target="_blank">
-                        <img src="images/OL.jpg" alt="Organic Letters Paper Cover" class="pub-image">
-                    </a>
-                    <p>
-                        <strong><a href="https://pubs.acs.org/doi/10.1021/acs.orglett.4c03523" target="_blank">
-                            Synthesis of Pyrene Diimide Isomers with Tunable Excimer Formation
-                        </a></strong>
-                    </p>
-                </div>
-            </div>
-        </section>
-        <style>
-            .poster-wrapper {
-                display: flex;
-                flex-wrap: wrap; /* Allows wrapping for smaller screens */
-                gap: 20px; /* Adds space between posters */
-                justify-content: flex-start; /* Centers the posters */
-            }
+            </section>
 
-            .poster-container {
-                width: 65%; /* Adjusts size to fit two in a row */
-                max-width: 400px; /* Ensures consistent thumbnail size */
-                text-align: center; /* Centers text and images */
-            }
-
-            .poster-image {
-                width: 100%; /* Makes the image responsive */
-                height: auto; /* Maintains aspect ratio */
-                border-radius: 5px; /* Optional: Adds rounded corners */
-            }
-
-            @media (max-width: 768px) {
-                .poster-container {
-                    width: 100%; /* Stacks posters on smaller screens */
-                }
-            }
-        </style>
         <!-- Some Posters Section -->
         <section id="pub">
             <h2>Some Posters</h2>
@@ -432,7 +293,7 @@
                 <a href="https://emiljaffal.github.io/gaussian.html" class="button">Using Gaussian</a>
                 <a href="https://emiljaffal.github.io/VASP.html" class="button">Using VASP</a>
                 <a href="https://emiljaffal.github.io/Resume.html" class="button">Crafting a Resume & CV</a>
-                <a href="https://emiljaffal.github.io/Github.html" class="button">Using Github</a>
+                <a href="https://scikit-package.github.io/scikit-package/support/frequently-asked-questions.html#github-workflow" class="button">Using Github</a>
                 <a href="https://emiljaffal.github.io/Website.html" class="button">Crafting a Website</a>
             </div>
         </section>
