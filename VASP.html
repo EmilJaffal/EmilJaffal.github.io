@@ -125,6 +125,7 @@
         <p>Make a directory: <code>mkdir [foldername]</code></p>
         <p>Copy folders + contents: <code>cp [foldername] [destinationfolder]</code></p>
         <p>View & edit a file: <code>vim [filename]</code></p>
+        <p>Rename a file: <code>mv [oldfilename] [newfilename]</code></p>
             <ul>
                 <li>To enter insert mode, click esc</li>
                 <li>To save and exit, type esc (to leave insert mode) + <code>:wq</code> + enter</li>
@@ -139,20 +140,19 @@
 
         <h3>POSCAR file</h3>
         <ol>
-            <li>Open CIF files with VESTA</li>
+            <li>Open CIF files with VESTA, which you can download <a href="https://jp-minerals.org/vesta/en/download.html" target="_blank" rel="noopener">here</a>.</li>
             <li>Export structure as fractional coordinate (rename the files as
                 POSCAR in a folder with whatever naming convention you prefer)
                 <ul>
                     <li>On Macbook, it can only saved as POSCAR.vasp so you can't just delete it. You can
                         only remove the .vasp with the command <code>mv POSCAR.vasp POSCAR</code></li>
                 </ul>
-            <li>Move POSCAR files from local computer to folder on destination
-                server with bash
-            <li>I name the first folder as [structure group]+Opts and will have
+            <li>Move POSCAR files from local computer to your folder on the destination
+                server with terminal/powershell using the above keys
+            <li>I name the first folder as [composition-structure] and will have
                 the specific composition named as composition or structure
-                type, depending on what I’m doing, such as Ce-CeNiSi2. However,
-                everyone works their own way, just make sure to keep a detailed
-                record and notes.</li>
+                type, depending on what I’m doing, such as CeRuSi2-CeNiSi2. However,
+                everyone works their own way, just make sure to keep detailed notes.</li>
             </li>
         </ol>
         </li>
@@ -161,20 +161,31 @@
         <h3>POTCAR file</h3>
         <ol>
             <li>Check order of POSCAR molecules for the potcreate command
-                <ul>
-                    <li>For example: <code>potcreate Si Fe Ce</code> in command
-                        line, which matches the order of molecules in the
-                        POSCAR file</li>
-                </ul>
-            <li>Check available element potentials like this: <code>potshow
-                    Si</code></li>
+            <ul>
+                <li>For example: <code>potcreate Si Fe Ce</code> in command
+                line, which matches the order of molecules in the
+                POSCAR file</li>
+            </ul>
+            </li>
+            <li>Check available element potentials like this: 
+            <code>potshow Si</code>
+            </li>
+            <li>You can also generate POTCAR files using VASPKIT:
+            <ul>
+                <li>Type <code>vaspkit</code> in the terminal</li>
+                <li>Type <code>01</code> for VASP Input-Files Generator</li>
+                <li>Type <code>103</code> to generate POTCAR file with default settings</li>
+                <li>Note: Your PBE directory must be set up correctly when installing VASP</li>
+            </ul>
+            </li>
+        </ol>
         </ol>
         </li>
         </ol>
 
         <h3>INCAR file</h3>
         <ol>
-            <li>Copy INCAR from this template below:
+            <li>Copy the INCAR from this template below, or download it <a href="assets/INCAR" download>here</a>.</li>
                 <ul>
                     <div style="border: 1px solid #ccc; padding: 10px;">
                         <code>
@@ -185,7 +196,7 @@
                             ENCUT = 500 # cutoff energy for the planewave basis
                             set
                             in eV.<br>
-                            EDIFF = 1E-6 # convergence condition for the
+                            EDIFF = 1E-8 # convergence condition for the
                             electronic
                             loop<br>
                             NELM = 150 # maximum number of electronic
@@ -196,7 +207,7 @@
                             NCORE = 4 # no. of cores per node<br>
                             #LWAVE = .FALSE.# Do not write WAVECAR<br>
                             ## Structure Optimization (or static for NSW=0)<br>
-                            EDIFFG = 1E-5 # convergence criterion for ionic
+                            EDIFFG = 1E-6 # convergence criterion for ionic
                             loops
                             (pos=energy; neg=forces)<br>
                             NSW = 1000 # number of ionic steps<br>
@@ -292,14 +303,8 @@
 
         <h3>KPOINTS file</h3>
         <ol>
-            <li>Copy KPOINTS from this template below:</li>
-            <code>
-                K-Points<br>
-                0<br>
-                Gamma<br>
-                8 2 8<br>
-                0 0 0<br>
-            </code>
+            <li>Generate the file using VASPKIT, as seen in the video here <a href="https://www.youtube.com/watch?v=AgqwACyBgGw&pp=0gcJCcwJAYcqIYzv" target="_blank" rel="noopener">.</a></li>
+            <li>You can also use VASPKIT by typing <code>vaspkit</code> in the terminal, then <code>01</code> for VASP Input-Files Generator, and <code>102</code> for KPOINTS file.</li>
             <li>This file is an attempt to solve Schrodinger's equation… which
                 is technically an infinite attempt as you have a guess and set
                 up the cutoff and wanted precision in POSCAR file
@@ -324,6 +329,26 @@
                 </ul>
             </li>
         </ol>
+    </section>
+
+    <section class="section" id="vaspkit-installation">
+        <h2>Installing VASPKIT</h2>
+        <div style="text-align:center; margin-bottom:1em;">
+            <a href="https://vaspkit.com/installation.html" target="_blank" rel="noopener">
+                <img src="https://i.ytimg.com/vi/RfVP3ue0gZo/hqdefault.jpg?sqp=-oaymwEjCNACELwBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLD9P7cXKKv0d5DbBlgBJYqU0pPq5A" alt="VASPKIT Installation Tutorial Thumbnail" style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+            </a>
+            <br>
+            <a href="https://vaspkit.com/installation.html" target="_blank" rel="noopener">
+                Installation instructions
+            </a>
+        </div>
+        <ol>
+            <li>Visit the <a href="https://vaspkit.com/installation.html" target="_blank" rel="noopener">VASPKIT installation page</a> for step-by-step instructions for Linux, macOS, and Windows.</li>
+            <li>Follow the guide to download, compile, and set up VASPKIT on your system.</li>
+            <li>For a visual walkthrough, see the tutorial video above.</li>
+            <li>Once installed, you can run VASPKIT by typing <code>vaspkit</code> in your terminal.</li>
+        </ol>
+        <div class="section-divider"></div>
     </section>
 
 
@@ -367,12 +392,40 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
 
     <section class="section" id="geometry-optimization">
         <h2>Geometry Optimization</h2>
+        <div style="text-align:center; margin-bottom:1em;">
+            <a href="https://www.youtube.com/watch?v=AgqwACyBgGw&pp=0gcJCcwJAYcqIYzv" target="_blank" rel="noopener">
+            <img src="https://img.youtube.com/vi/AgqwACyBgGw/0.jpg" alt="Structure Optimization for DFT with VASP YouTube Thumbnail" style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+            </a>
+            <br>
+            <a href="https://www.youtube.com/watch?v=AgqwACyBgGw&pp=0gcJCcwJAYcqIYzv" target="_blank" rel="noopener">
+            Tutorial video
+            </a>
+        </div>
         <ol>
+            <li>
+                <span style="color: red; font-weight: bold;">
+                    Note: <code>mpirun</code> is a command used to launch parallel programs written using the Message Passing Interface (MPI) standard.
+                </span>
+            </li>
+            <li>
+                <span style="color: red; font-weight: bold;">
+                    The Oliynyk lab uses SLURM for job scheduling, so you need a job file. See the template <a href="assets/job" target="_blank" rel="noopener">here</a>.
+                </span>
+            </li>
             <li>Once all the above files are created, you’re ready to go with
                 optimizing. You MUST do this before anything else. It is
                 pertinent to start any calculations with an optimized and most
                 thermodynamically stable geometry.</li>
-            <li>Run <code>mpirun -np 16 vasp_std&gt;1&amp;</code> in the
+            <li>
+                To run with SLURM, use:
+                <ul>
+                    <li><code>sbatch job</code></li>
+                    <li>Check status: <code>sq</code></li>
+                    <li>Cancel a job: <code>scancel [job no.]</code> (job number shown by <code>sq</code>)</li>
+                    <li><strong>Tip:</strong> Change the job name in your job file for each run so cancelling is easy.</li>
+                </ul>
+            </li>
+            <li>type <code>mpirun -np 16 vasp_std&gt;1&amp;</code> <span style="color: #2196F3; font-weight: bold;">(Oliynyk lab - use <code>sbatch job</code> after setting job file)</span> in the
                 command line while in the directory of the folder with your
                 files. "1" indicates the first run, "2" indicates the second,
                 and "3" indicates the third. I do this to keep track of
@@ -402,7 +455,7 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
             </li>
             <li>Continue with the second run:
                 <ul>
-                    <li><code>mpirun -np 4 vasp_std&gt;2&amp;</code></li>
+                    <li><code>mpirun -np 4 vasp_std&gt;2&amp;</code> <span style="color: #2196F3; font-weight: bold;">(Oliynyk lab - use <code>sbatch job</code> after setting job file)</span></li>
                 </ul>
             </li>
             <li>If ‘reached required accuracy - stopping structural energy
@@ -414,7 +467,7 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
             </li>
             <li>Continue with the third run:
                 <ul>
-                    <li><code>mpirun -np 4 vasp_std&gt;3&amp;</code></li>
+                    <li><code>mpirun -np 4 vasp_std&gt;3&amp;</code> <span style="color: #2196F3; font-weight: bold;">(Oliynyk lab - use <code>sbatch job</code> after setting job file)</span></li>
                 </ul>
             </li>
             <li>If ‘reached required accuracy - stopping structural energy
@@ -452,7 +505,7 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
             <li>
                 <strong>For free energy:</strong>
                 <ul>
-                    <li>While in the structure directory, run <code>grep TOTEN
+                    <li>While in the structure directory, type <code>grep TOTEN
                             OUTCAR</code> to see the final energy of the
                         optimized structure, which is the last iterated value
                         at the bottom.</li>
@@ -464,11 +517,11 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
             <li>
                 <strong>For optimized parameters:</strong>
                 <ul>
-                    <li>While in the structure directory, run <code>vim
+                    <li>While in the structure directory, type <code>vim
                             POSCAR</code></li>
-                    <li>This is why we run <code>cp CONTCAR POSCAR</code> at
+                    <li>This is why we type <code>cp CONTCAR POSCAR</code> at
                         the end of our third optimization iteration.</li>
-                    <li>One can also just run <code>vim CONTCAR</code>, but we
+                    <li>One can also just type <code>vim CONTCAR</code>, but we
                         want to export POSCAR later for further calculations –
                         so it’s best to do the first command in 1.</li>
                     <li>Looks like this:</li>
@@ -502,51 +555,55 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
         <div class="section-divider"></div>
     </section>
 
-
-
     <section class="section" id="2">
-        <h2>Density of States & Magnetic Moment</h2>
+        <h2>Density of States - DOSCAR</h2>
+        <div style="text-align:center; margin-bottom:1em;">
+            <a href="https://www.youtube.com/watch?v=EIuBtJcfXCE" target="_blank" rel="noopener">
+                <img src="https://img.youtube.com/vi/EIuBtJcfXCE/0.jpg" alt="DOSCAR Analysis YouTube Thumbnail" style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+            </a>
+            <br>
+            <a href="https://www.youtube.com/watch?v=EIuBtJcfXCE" target="_blank" rel="noopener">
+            Tutorial video
+            </a>
+        </div>
         <ol>
-            <li>To get a sense of what polarization DOS analysis looks like you
-                can check out <a
-                    href="https://www.degruyter.com/document/doi/10.1515/znb-2021-0143/html">this
-                    paper</a></li>
-            <li>I make a new folder entitled [structure group]+Mag_Dos_Elf as
-                all of the calculations after optimization can be done in the
-                same folder and you just adjust the INCAR.</li>
-            <li>I remake the filenames, then copy the POTCAR, INCAR, KPOINTS
-                and (optimized) POSCAR files over to this folder from the
-                [structure group]+opt folder</li>
-            <li>Uncomment </i>DOS & band structure</i> and </i>General
-                Parameters</i> (never <code>LWAVE = .FALSE.</code>) in INCAR
+            <li>Uncomment <i>DOS & band structure</i> and <i>General
+                Parameters</i> (never <code>LWAVE = .FALSE.</code>) in INCAR as we need the WAVECAR file for this.
             </li>
             <li>Non-spin polarized DOSCAR
-                <ul>
-                    <li>Add the following to the INCAR</li>
-                    <ul>
-                        <li>ISTART = 0</li>
-                    </ul>
-                    <li>Run with <code>mpirun -np 16
-                            vasp_std&gt;Dos1&amp;</code></li>
-                    <li>Copy DOSCAR files to local desktop for analysis
-                        when converged</li>
-                    <li>From here, import DOSCAR file into wxDragon and plot
-                        the following:</li>
-                    <ul>
-                        <li>Each iteration of the same elemental contributions
-                            (command + click for individuals or click + shift +
-                            click for multiple). In the case of ErCo2In, I
-                            verified the order with POSCAR and saved the
-                            following as</li>
+                        <li><strong>Spin-Polarized and Non-Spin-Polarized :</strong>
+                            <ul>
+                                <li><code>ISPIN=1</code> (non-spin-polarized) and <code>ISPIN=2</code> (spin-polarized) calculations.</li>
+                            </ul>
+                        </li>
+                        <li>Atomic orbital contribution settings:</li>
                         <ul>
-                            <li>DOS-Total (all atoms)</li>
-                            <li>DOS-Er (atoms 1-2)</li>
-                            <li>DOS-Co (atoms 3-6)</li>
-                            <li>DOS-In (atoms 7-8)</li>
+                            <li><code>LORBIT=11-14</code>: Individual orbitals are lm-resolved/decomposed (e.g., px, py, pz, etc.).</li>
+                            <li><code>LORBIT=0, 1, 2, 5, 10</code>: Orbitals are grouped (e.g., total p-orbital contributions).</li>
                         </ul>
                     </ul>
+                    </ul>
+                    <li>Run with <code>mpirun -np 16 vasp_std&gt;Dos1&amp;</code> <span style="color: #2196F3; font-weight: bold;">(Oliynyk lab - use <code>sbatch job</code> after setting job file)</span></li>
+                    <li>Copy DOSCAR files to local desktop for analysis
+                        when converged</li>
                 </ul>
             </li>
+            <li>
+                <strong>Plotting DOSCAR:</strong>
+                <ul>
+                    <li>You can plot the exported POSCAR and DOSCAR files using <a href="https://doscar-gui-9a48cc5d4e0d.herokuapp.com" target="_blank" rel="noopener">DOSCAR-GUI</a>.</li>
+                    <li>More information and settings can be found on <a href="https://github.com/EmilJaffal/doscar-gui/blob/main/README.md" target="_blank" rel="noopener">GitHub</a>.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ol>
+        <div class="section-divider"></div>
+    </section>
+
+    <section class="section" id="magnetic-moment">
+        <h2>Magnetic Moment Calculation</h2>
+        <ol>
             <li>Spin-polarized DOSCAR (only if magnetism is expected here,
                 otherwise you can ignore this)
                 <ul>
@@ -560,8 +617,7 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
                                 give you the software's guess</li>
                         </ul>
                     </ul>
-                    <li>Run with <code>mpirun -np 8
-                            vasp_std&gt;Dos2&amp;</code></li>
+                    <li>Run with <code>mpirun -np 8 vasp_std&gt;Dos2&amp;</code> <span style="color: #2196F3; font-weight: bold;">(Oliynyk lab - use <code>sbatch job</code> after setting job file)</span></li>
                     <ul>
                         <li>Rerun until the OUTCAR charges are the same as your
                             input MAGMOM prediction, as it gets better with
@@ -578,64 +634,52 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
                         wxDragon like before</li>
                 </ul>
             </li>
-            <li>From there, plot the same elemental contributions in wxDragon
-                like before</li>
         </ol>
         <div class="section-divider"></div>
     </section>
 
 
     <section class="section" id="3">
-        <h2>Electron Localization Function</h2>
+        <h2>Electron Localization Function - ELFCAR</h2>
+        <div style="text-align:center; margin-bottom:1em;">
+            <a href="https://www.youtube.com/watch?v=JSJb0Opa4u4" target="_blank" rel="noopener">
+            <img src="https://img.youtube.com/vi/JSJb0Opa4u4/0.jpg" alt="ELFCAR + Bader CHG Calculation YouTube Thumbnail" style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+            </a>
+            <br>
+            <a href="https://www.youtube.com/watch?v=JSJb0Opa4u4" target="_blank" rel="noopener">
+            Tutorial video
+            </a>
+        </div></a>
         <ol>
             <li>Uncomment <i>Bader Charge and Electron localization
                     function</i>
                 and <i>General Parameters</i> in INCAR</li>
-            <li>Run with <code>mpirun -np 16 vasp_std>Elf&</code></li>
+            <li>Run with <code>mpirun -np 16 vasp_std>Elf&amp;</code> <span style="color: #2196F3; font-weight: bold;">(Oliynyk lab - use <code>sbatch job</code> after setting job file)</span></li>
             <li>Import ELFCAR file into local computer and drag into VESPA to
-                view
-                <ul>
-                    <li>Adjust element colors
-                        <ul>
-                            <li>Transition metals – grey</li>
-                            <li>Post-transition metals – pink</li>
-                            <li>Rare earth metals – blue</li>
-                        </ul>
-                    </li>
-                    <li>Electron density settings
-                        <ul>
-                            <li>Isosurfaces, isosurface level = 0.55 (change
-                                based on your own discretion)</li>
-                        </ul>
-                    </li>
-                    <li>Export settings
-                        <ul>
-                            <li>X scale = 3</li>
-                            <li>Transparent background</li>
-                        </ul>
-                    </li>
-                    <li>Plane view information in <i>about ELFCAR and charges -
-                            part 2.mp4</i> timestamps:
-                        <ul>
-                            <li>3:45, 5:25, 7:10, 9:00</li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
+                view </li>
         </ol>
         <div class="section-divider"></div>
     </section>
 
     <section class="section" id="4">
         <h2>Bader Charges</h2>
+        <div style="text-align:center; margin-bottom:1em;">
+            <a href="https://www.youtube.com/watch?v=JSJb0Opa4u4" target="_blank" rel="noopener">
+            <img src="https://img.youtube.com/vi/JSJb0Opa4u4/0.jpg" alt="Bader Charges Tutorial YouTube Thumbnail" style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+            </a>
+            <br>
+            <a href="https://www.youtube.com/watch?v=JSJb0Opa4u4" target="_blank" rel="noopener">
+            Tutorial video
+            </a>
+        </div></a>
         <ol>
             <li>Uncomment Bader Charge and Electron localization function and
                 General Parameters in INCAR, comment out KPAR</li>
-            <li>Run with <code>-np 8 vasp_std>Bader&</code></li>
+            <li>Run with <code>-np 8 vasp_std>Bader&amp;</code> <span style="color: #2196F3; font-weight: bold;">(Oliynyk lab - use <code>sbatch job</code> after setting job file)</span></li>
             <li>When converged run <code>chgsum.pl AECCAR0 AECCAR2</code>
                 <ul><li>This combines core
                 and valence electrons</ul></li>
-            <li>Run bader CHGCAR -ref CHGCAR_sum
+            <li>type <code>bader CHGCAR -ref CHGCAR_sum</code>
                 <ul>
                     <li>Looks like this:</li>
                     <img src="images/bader_1.png"
@@ -661,10 +705,19 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
 
     <section class="section" id="6">
         <h2>Crystal Orbital Hamiltonian/Overlap Populations (COHP/COOP)</h2>
+        <div style="text-align:center; margin-bottom:1em;">
+            <a href="https://www.youtube.com/watch?v=RI_6urNMZIA" target="_blank" rel="noopener">
+            <img src="https://img.youtube.com/vi/RI_6urNMZIA/0.jpg" alt="COHP/COOP Tutorial YouTube Thumbnail" style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+            </a>
+            <br>
+            <a href="https://www.youtube.com/watch?v=RI_6urNMZIA" target="_blank" rel="noopener">
+            Tutorial video
+            </a>
+        </div>
         <ol>
             <li>Uncomment COHP Analysis (via LOBSTER) and General Parameters in
                 INCAR</li>
-            <li>Copy lobsterin template below</li>
+            <li>Copy the lobsterin file from this template below, or download it <a href="assets/lobsterin" download>here</a>. Note that you can only have a maximum of four interactions in one calculation. You can also add the lobsterin file after your calculation. lobsterin is not needed for the VASP calculation to run. Only for lobster to run.</li>
             <code>
                 ! First, enter the energetic window in eV (relative to the
                 Fermi level):<br>
@@ -695,30 +748,52 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
                 cohpGenerator from 1 to 2.5 type Si type Fe<br>
                 cohpGenerator from 1 to 3.3 type Gd type Si<br>
                 cohpGenerator from 1 to 3.3 type Gd type Fe<br>
-                cohpGenerator from 1 to 2.6 type Si type Si<br>
+                cohpGenerator from 1 to 2.6 type Si type Si<br> 
                 ! and in the latter case only between the specified
-                elements<br>
+                elements<br></code>
                 - of course adjust accordingly to your atomic interactions and
                 optimized structure's bond distances.<br>
-                - I like using VESTA (link to here
-                https://jp-minerals.org/vesta/en/) to visualize this<br>
-            </code>
-            <li>run <code>mpirun -np 20 vasp_std>COHP&</code></li>
-            <li>Export wavecar file if needed</li>
-            <li>Run <code>lobster-5.0.0</code></li>
-            <li>Import COOPCAR.lobster, COHPCAR.lobster, ICOOPLIST.lobster,
-                ICOHPLIST.lobster to local machine as needed for plotting</li>
-            <li>Open wxDragon, drag COOPCAR/COHPCAR files to analyze the files
-            </li>
-            <li>Plot and save each of the same pairwise elemental interaction,
-                following the same steps as before in the DOS steps. This time,
-                the pairwise interactions are labelled.</li>
+                - I like using VESTA to visualize this<br>
+            <li>type <code>mpirun -np 20 vasp_std>COHP&amp;</code> <span style="color: #2196F3; font-weight: bold;">(Oliynyk lab - use <code>sbatch job</code> after setting job file)</span></li>
+            <li>type <code>lobster</code></li>
+            <li>Note: If you do not set NBANDS or set it too low, you may see an NBANDS error in the output file. Check the required value, then set NBANDS to that value plus 20 for reliable results.</li>
+            <li>Import COOPCAR.lobster, COHPCAR.lobster, to local machine as needed for plotting</li>
+            <li>To plot COHP/COOP, save the files (COOPCAR.lobster, COHPCAR.lobster, etc.) in a <strong>.zip</strong> archive and upload to <a href="https://cohp-coop-gui-1de5a0643ceb.herokuapp.com" target="_blank" rel="noopener">COHP-COOP-GUI</a>.</li>
+            <li>See <a href="https://github.com/EmilJaffal/cohp-coop-gui/blob/main/README.md" target="_blank" rel="noopener">GitHub</a> for more info and settings.</li>
         </ol>
         <div class="section-divider"></div>
     </section>
 
     <section class="section" id="7">
         <h2>Band Structure</h2>
+        <div style="text-align:center; margin-bottom:1em;">
+            <a href="https://www.youtube.com/watch?v=9LmZQUKvUo4" target="_blank" rel="noopener">
+            <img src="https://img.youtube.com/vi/9LmZQUKvUo4/0.jpg" alt="Band Structure Tutorial YouTube Thumbnail" style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+            </a>
+            <br>
+            <a href="https://www.youtube.com/watch?v=9LmZQUKvUo4" target="_blank" rel="noopener">
+            Tutorial video
+            </a>
+        </div>
+        <ol>
+            <li>Uncomment <i>DOS & band structure</i> and <i>General
+                Parameters</i> (never <code>LWAVE = .FALSE.</code>) in INCAR as we need the WAVECAR file for this.
+            </li>
+            <li>Then we need to use VASPKIT to create a new KPOINTS using the symmetry. Follow these steps:</li>
+            <ul>
+                <li>Type <code>vaspkit</code> into the terminal/powershell</li>
+                <li>Type <code>03</code> to select K-Path for Band-Structure</li>
+                <li>Type <code>303</code> for bulk structure</li>
+                <li>Run <code>cp KPOINTS KPOINTS_old</code> to back up your old KPOINTS</li>
+                <li>Run <code>cp KPATH.in KPOINTS</code> to use the new K-path</li>
+                <li>This new <code>KPATH.in</code> will become your <code>KPOINTS</code> for the band structure only. VASPKIT automatically suggests a K-Path based on your structure's symmetry.</li>
+            </ul>
+        </ol>
+        <div class="section-divider"></div>
+    </section>
+
+    <section class="section" id="8">
+        <h2>Work function</h2>
         <ol>
           Check back soon!
         </ol>
@@ -761,18 +836,40 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
     </section>
 
     <section class="section" id="7">
-        <h2>Troubleshooting</h2>
+        <h2>Troubleshooting errors</h2>
         <ol>
-            <li>ERROR FEXCP: supplied exchange-correlation table is too small,
-                maximal index: 5536
+            <li>
+            <code>ERROR FEXCP: supplied exchange-correlation table is too small, maximal index: 5536</code>
+            <ul>
+                <li>Solved by adding the following to the INCAR:</li>
                 <ul>
-                    <li>Solved by adding the following to INCAR:</li>
-                    <ul>
-                        <li>IBRION=1</li>
-                        <li>ISIF=2</li>
-                    </ul>
+                <li>IBRION=1</li>
+                <li>ISIF=2</li>
                 </ul>
+            </ul>
             </li>
+            <li>
+            <code>internal error in FOCK_FCC: number of k-points incorrect 5 18 2 2 2</code>
+            <ul>
+                <li>Solved by ensuring KPOINTS are divisible by the grid reduction factors:</li>
+                <ul>
+                <li>NKREDX = 2</li>
+                <li>NKREDY = 2</li>
+                <li>NKREDZ = 2</li>
+                </ul>
+                <li>For example, a 5 x 5 x 5 mesh will not work. Use 4 x 4 x 4, etc.</li>
+                <li>Solution found <a href="https://www.vasp.at/forum/viewtopic.php?t=6556" target="_blank" rel="noopener">here</a>.</li>
+            </ul>
+            </li>
+        </ol>
+        <h3>Further debugging resources</h3>
+        <ul>
+            <li><a href="https://dannyvanpoucke.be/vasp-errors-en/" target="_blank" rel="noopener">Common VASP errors and solutions</a></li>
+            <li><a href="https://groups.google.com/g/matproj-develop/c/fJhMXmfpuBU" target="_blank" rel="noopener">Materials Project Google Group: VASP errors</a></li>
+            <li><a href="https://www.vasp.at/forum/viewtopic.php?f=4&t=18042" target="_blank" rel="noopener">VASP Forum: Error discussion 1</a></li>
+            <li><a href="https://w.vasp.at/forum/viewtopic.php?p=25228" target="_blank" rel="noopener">VASP Forum: Error discussion 2</a></li>
+            <li><a href="https://ww.vasp.at/forum/viewtopic.php?t=18319" target="_blank" rel="noopener">VASP Forum: Error discussion 3</a></li>
+        </ul>
             <li>To calculate NBANDS:
                 <ul>
                     <li># of bands = (# of electrons/2) + (# of ions*2)</li>
