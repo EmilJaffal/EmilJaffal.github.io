@@ -838,6 +838,154 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
     </section>
 
     <section class="section" id="8">
+        <h2>Calculating Hubbard U Correction For DFT+U (LSDA+U)</h2>
+        <div style="text-align:center; margin-bottom:1em;">
+        <a href="https://www.youtube.com/watch?v=n8UIL8rubbI" target="_blank" rel="noopener">
+            <img src="https://img.youtube.com/vi/n8UIL8rubbI/0.jpg" alt="Hubbard U Correction Tutorial YouTube Thumbnail"
+                style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+        </a>
+        <br>
+        <a href="https://www.youtube.com/watch?v=n8UIL8rubbI" target="_blank" rel="noopener">
+            Tutorial video
+        </a>
+        </div>
+
+        <ol>
+            <li><strong>Ground State Calculation</strong></li>
+            <p>Prepare the ground state <code>INCAR</code> file for your system (example shown for NiO, but applies similarly to <b>UGe₂</b>):</p>
+    <pre>
+    SYSTEM       = NiO AFM
+    PREC         = A
+    EDIFF        = 1E-6
+    ISMEAR       = 0
+    SIGMA        = 0.2
+    ISPIN        = 2
+    MAGMOM       = 1.0 -1.0  1.0 -1.0  \
+                1.0 -1.0  1.0 -1.0  \
+                1.0 -1.0  1.0 -1.0  \
+                1.0 -1.0  1.0 -1.0  \
+                16*0.0
+    LORBIT       = 11
+    LMAXMIX      = 4
+    </pre>
+
+            <p class="note">This run provides the reference ground state charge density and wavefunction (<code>CHGCAR</code>, <code>WAVECAR</code>).</p>
+
+            <li><strong>NSCF Step</strong></li>
+            <p>Copy the following from the ground state directory:</p>
+            <ul>
+                <li><code>POSCAR</code></li>
+                <li><code>POTCAR</code></li>
+                <li><code>INCAR</code></li>
+                <li><code>KPOINTS</code></li>
+                <li><code>WAVECAR</code> and <code>CHGCAR</code></li>
+            </ul>
+
+            <p>Then add the following line to <code>INCAR</code> for the NSCF step:</p>
+            <pre>ICHARG = 11</pre>
+
+            <p>Also append these <code>LDA+U</code> parameters (example for Ni with U and J = 0.10 eV):</p>
+    <pre>
+    LDAU         = .TRUE.
+    LDAUTYPE     = 3
+    LDAUL        = 2 -1 -1
+    LDAUU        = 0.10 0.00 0.00
+    LDAUJ        = 0.10 0.00 0.00
+    </pre>
+
+            <p>In this example, the correction is applied to the first atom (Ni, 3d orbital). Adjust accordingly for your system.</p>
+
+            <li><strong>SCF Step</strong></li>
+            <p>From the NSCF run, copy:</p>
+            <ul>
+                <li><code>POSCAR</code></li>
+                <li><code>POTCAR</code></li>
+                <li><code>INCAR</code></li>
+                <li><code>KPOINTS</code></li>
+                <li><code>WAVECAR</code></li>
+            </ul>
+
+            <p>Remove <code>ICHARG = 11</code> from <code>INCAR</code> for the SCF run.</p>
+
+            <li><strong>File Setup Note</strong></li>
+            <p>
+                Ensure your <code>POSCAR</code> and <code>POTCAR</code> files reflect atom-specific distinctions.
+                Even if there is one unique atom type (e.g., Ni), separate entries may be used to distinguish sites receiving the U correction.
+            </p>
+    <pre>
+    TITEL  = PAW Ni 02Aug2007
+    TITEL  = PAW Ni 02Aug2007
+    TITEL  = PAW O  22Mar2012
+    AFM  NiO
+    4.03500000 
+    2.0000000000   1.0000000000   1.0000000000 
+    1.0000000000   2.0000000000   1.0000000000 
+    1.0000000000   1.0000000000   2.0000000000 
+    1 15   16
+    </pre>
+
+            <li><strong>Parameter Sweep</strong></li>
+            <p>Repeat NSCF and SCF runs for the following U = J values:</p>
+            <pre>0.15, 0.20, 0.05, 0.00, -0.05, -0.10, -0.15, -0.20 eV</pre>
+
+            <li><strong>Analysis</strong></li>
+            <p>After obtaining the number of localized electrons (e.g., f or d orbital) for each run, perform linear response fitting using Python:</p>
+
+    <pre>
+    import numpy as np
+    import matplotlib.pyplot as plt
+
+    # Applied potential (eV)
+    J = np.array([-0.1, -0.05, 0, 0.05, 0.1, 0.15, 0.2])
+
+    # Number of f-electrons (example data)
+    NSCF = np.array([2.182, 2.345, 2.517, 2.697, 2.885, 3.08, 3.282])
+    SCF  = np.array([2.448, 2.461, 2.520, 2.533, 2.548, 2.563, 2.575])
+
+    # Fit linear response (n vs J)
+    s_n, intercept_n = np.polyfit(J, NSCF, 1)
+    s_s, intercept_s = np.polyfit(J, SCF, 1)
+
+    U = 1.0/s_s - 1.0/s_n
+
+    # Generate fits
+    J_fit = np.linspace(J.min(), J.max(), 200)
+    fit_NSCF = s_n * J_fit + intercept_n
+    fit_SCF  = s_s * J_fit + intercept_s
+
+    # Print results
+    print(f"chi0 (NSCF slope) = {s_n:.4f}")
+    print(f"chi  (SCF slope)  = {s_s:.4f}")
+    print(f"U (eV)            = {U:.4f}")
+
+    # Plot (like VASP wiki)
+    plt.figure(figsize=(7,5))
+    plt.scatter(J, NSCF, color='black', label='NSCF', marker='o', facecolors='none', s=70)
+    plt.scatter(J, SCF,  color='red', label='SCF',  marker='s', s=60)
+    plt.plot(J_fit, fit_NSCF, color='black', linestyle='-', label=f'NSCF fit (χ₀={s_n:.3f})')
+    plt.plot(J_fit, fit_SCF,  color='red', linestyle='-', label=f'SCF fit (χ={s_s:.3f})')
+    plt.xlabel("Applied potential J (eV)")
+    plt.ylabel("Number of f-electrons")
+    plt.title("Linear Response for Hubbard U Determination of UGe₂")
+    plt.grid(True, linestyle=':')
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
+    </pre>
+
+            <p><b>Example output:</b></p>
+            <pre>
+    chi0 (NSCF slope) = 3.6700
+    chi  (SCF slope)  = 0.4379
+    U (eV)            = 2.0114
+            </pre>
+
+            <p>This method extracts the on-site Coulomb interaction <b>U</b> via linear response by comparing self-consistent and non-self-consistent changes in orbital occupations with applied potential perturbations.</p>
+        </ol>
+        <div class="section-divider"></div>
+    </section>
+
+    <section class="section" id="8">
         <h2>Work function</h2>
         <ol>
             Check back soon!
