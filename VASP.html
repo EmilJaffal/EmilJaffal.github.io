@@ -994,6 +994,118 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
     </section>
 
     <section class="section" id="8">
+        <h2>Spin-Orbit Coupled LSDA+U/DFT+U Calculation</h2>
+                <div style="text-align:center; margin-bottom:1em;">
+        <a href="https://youtu.be/e4fTrMsPdyw" target="_blank" rel="noopener">
+            <img src="https://img.youtube.com/vi/e4fTrMsPdyw/0.jpg" alt="Hubbard U Correction Tutorial YouTube Thumbnail"
+                style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+        </a>
+        <br>
+        <a href="https://youtu.be/e4fTrMsPdyw" target="_blank" rel="noopener">
+            Tutorial video
+        </a>
+        </div>
+
+        <p>This tutorial demonstrates how to perform spin-orbit coupling (SOC) calculations with DFT+U corrections, particularly useful for heavy elements with strong spin-orbit interactions like actinides and lanthanides.</p>
+
+        <ol>
+            <li><strong>Step 1: Initial Collinear SCF Relaxation</strong></li>
+            <p>First, perform a standard collinear spin-polarized structural relaxation to obtain the optimized geometry. Use the standard INCAR settings for structure optimization with DFT+U parameters.</p>
+
+            <li><strong>Step 2: Collinear SCF Calculation for Reference</strong></li>
+            <p>Run a collinear spin-polarized calculation (e.g., DOS calculation) to obtain <code>CHGCAR</code> and <code>WAVECAR</code> files using <code>vasp_std</code>. Use the following INCAR template (example for UTe₂):</p>
+
+            <pre>
+# General Parameters/Electronic Relaxation
+PREC = Accurate  # Precision
+ENCUT = 500      # cutoff energy for the planewave basis set in eV
+EDIFF  = 1E-8    # convergence condition for the electronic loop
+NELM = 400       # maximum number of electronic iterations
+NELMIN = 4       # minimum number of electronic iterations
+KPAR = 1         # no. of nodes (max. no. of k-points)
+NCORE = 4        # no. of cores per node
+LWAVE = .TRUE.   # Write WAVECAR (needed for SOC step)
+ISPIN = 2        # Spin-polarized calculation (required for SOC)
+MAGMOM = 4*1 8*0 # Initial magnetic moments (adjust for your system)
+
+# DFT+U parameters (example for Uranium f-electrons)
+LDAU = .TRUE.
+LDAUTYPE = 1     # Liechtenstein method
+LDAUL = 3 -1     # 3 for U (f orbitals); -1 for Te (not applied)
+LDAUU = 3.42 0   # U parameter in eV
+LDAUJ = 0.51 0   # J parameter in eV
+LMAXMIX = 6      # For f-electrons
+
+# DOS calculation settings
+NEDOS = 1001     # number of DOS gridpoints
+LORBIT = 11      # DOSCAR and PROCAR are written
+ISMEAR = 1       # smearing for metals
+            </pre>
+
+            <li><strong>Step 3: Non-collinear SOC Calculation</strong></li>
+            <p>Perform the spin-orbit coupling calculation using <code>vasp_ncl</code> (non-collinear version of VASP). Copy the following files from Step 2:</p>
+            <ul>
+                <li><code>POSCAR</code></li>
+                <li><code>POTCAR</code></li>
+                <li><code>KPOINTS</code></li>
+                <li><code>CHGCAR</code></li>
+                <li><code>WAVECAR</code></li>
+            </ul>
+
+            <p>Modify the INCAR file by adding the following SOC parameters:</p>
+
+            <pre>
+# Add to existing INCAR from Step 2:
+MAGMOM = 1 0 0 1 0 0 1 0 0 1 0 0 24*0  # x y z components of magnetic moments
+LSORBIT = .TRUE.  # Enable spin-orbit coupling
+ISYM = 0          # Disable symmetry (recommended for SOC)
+SAXIS = 1 0 0     # Quantization axis (easy axis)
+ICHARG = 11       # Read charge density from collinear calculation
+            </pre>
+
+            <p class="note"><strong>Important:</strong> Remove <code>WAVECAR</code> before running the SOC calculation, as the spin density is read from <code>CHGCAR</code> but the wavefunctions need to be recalculated for the non-collinear case.</p>
+
+            <li><strong>Step 4: Probe Magnetic Anisotropy</strong></li>
+            <p>To investigate magnetic anisotropy, run separate SOC calculations with different quantization axes (<code>SAXIS</code>). Run three calculations with:</p>
+
+            <ul>
+                <li><code>SAXIS = 1 0 0</code> (a-axis, often the easy axis)</li>
+                <li><code>SAXIS = 0 1 0</code> (b-axis)</li>
+                <li><code>SAXIS = 0 0 1</code> (c-axis)</li>
+            </ul>
+
+            <p>Compare the total energies to determine the magnetic easy axis and anisotropy energy.</p>
+
+            <li><strong>Step 5: Running the Calculations</strong></li>
+            <p>Execute the calculations using the appropriate VASP executable:</p>
+            <ul>
+                <li>Collinear calculations: <code>mpirun -np [cores] vasp_std > output_collinear &</code></li>
+                <li>SOC calculations: <code>mpirun -np [cores] vasp_ncl > output_soc &</code></li>
+            </ul>
+
+            <li><strong>Step 6: Analysis</strong></li>
+            <p>After completing the calculations:</p>
+            <ul>
+                <li>Compare total energies between different <code>SAXIS</code> orientations</li>
+                <li>Analyze the magnetic moments from <code>OUTCAR</code></li>
+                <li>Check for changes in electronic structure via DOS analysis</li>
+                <li>Evaluate the impact of SOC on the ground state magnetic configuration</li>
+                <li>You can run DOS, band structure calculations with SOC tags enabled as above, just add necessary DOS/band structure tags as needed. Spin contributions are not included in the outputs.</li>
+            </ul>
+
+            <li><strong>Important Notes</strong></li>
+            <ul>
+                <li>SOC calculations require significantly more computational resources than collinear calculations</li>
+                <li>The <code>MAGMOM</code> tag in SOC calculations specifies x, y, z components of magnetic moments</li>
+                <li>Always start from a converged collinear calculation</li>
+                <li>For heavy elements, SOC can dramatically affect the electronic structure and magnetic properties</li>
+                <li>Consider using hybrid functionals if standard DFT+U doesn't capture the physics correctly</li>
+            </ul>
+        </ol>
+        <div class="section-divider"></div>
+    </section>
+
+    <section class="section" id="8">
         <h2>Phonons</h2>
         <ol>
             Check back soon!
