@@ -80,6 +80,52 @@
             margin-top: 2em;
             margin-bottom: 2em;
         }
+
+        .table-of-contents {
+            width: 80%;
+            margin: 2em auto;
+            background-color: #fff;
+            padding: 2em;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-of-contents h2 {
+            font-size: 1.8em;
+            margin-bottom: 1em;
+            color: black;
+            text-align: center;
+        }
+
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1em;
+            margin: 0;
+        }
+
+        .toc-item {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 0.8em 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .toc-item:hover {
+            background-color: #e8f4fd;
+        }
+
+        .toc-item a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            display: block;
+        }
+
+        .toc-item a:hover {
+            color: #2196F3;
+        }
     </style>
 </head>
 
@@ -89,6 +135,69 @@
         <h1 class="main-title">Using VASP for density functional theory (DFT)
         </h1>
     </header>
+
+    <section class="table-of-contents">
+        <h2>Quick Navigation</h2>
+        <div class="toc-grid">
+            <div class="toc-item">
+                <a href="#SSH-Notes">Handy Terminal Commands</a>
+            </div>
+            <div class="toc-item">
+                <a href="#files">Before You Start: Creating the Necessary Files</a>
+            </div>
+            <div class="toc-item">
+                <a href="#vaspkit-installation">Installing VASPKIT</a>
+            </div>
+            <div class="toc-item">
+                <a href="#geometry-optimization">Geometry Optimization</a>
+            </div>
+            <div class="toc-item">
+                <a href="#data-accrual">Data Accrual</a>
+            </div>
+            <div class="toc-item">
+                <a href="#2">Density of States</a>
+            </div>
+            <div class="toc-item">
+                <a href="#magnetic-moment">Magnetic Moment Calculation</a>
+            </div>
+            <div class="toc-item">
+                <a href="#3">Electron Localization Function</a>
+            </div>
+            <div class="toc-item">
+                <a href="#4">Bader Charges</a>
+            </div>
+            <div class="toc-item">
+                <a href="#6">Crystal Orbital Hamiltonian/Overlap Population</a>
+            </div>
+            <div class="toc-item">
+                <a href="#7">Band Structure</a>
+            </div>
+            <div class="toc-item">
+                <a href="#effective-mass">Effective Mass Calculation with VASPKIT</a>
+            </div>
+            <div class="toc-item">
+                <a href="#transport-properties">Boltzmann Transport Properties with VASPKIT</a>
+            </div>
+            <div class="toc-item">
+                <a href="#8">Calculating Hubbard U Correction For DFT+U (LSDA+U)</a>
+            </div>
+            <div class="toc-item">
+                <a href="#work-function">Work Function</a>
+            </div>
+            <div class="toc-item">
+                <a href="#soc-dftu">Spin-Orbit Coupled LSDA+U/DFT+U Calculation</a>
+            </div>
+            <div class="toc-item">
+                <a href="#phonons">Phonons</a>
+            </div>
+            <div class="toc-item">
+                <a href="#processor-considerations">Processor Considerations</a>
+            </div>
+            <div class="toc-item">
+                <a href="#troubleshooting">Troubleshooting Errors</a>
+            </div>
+        </div>
+    </section>
 
     <section class="section" id="SSH-Notes">
         <h2>Handy Terminal Commands</h2>
@@ -401,14 +510,11 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
         <h2>Geometry Optimization</h2>
         <div style="text-align:center; margin-bottom:1em;">
             <a href="https://www.youtube.com/watch?v=AgqwACyBgGw&pp=0gcJCcwJAYcqIYzv" target="_blank" rel="noopener">
-                <img src="https://img.youtube.com/vi/AgqwACyBgGw/0.jpg"
+                <img src="https://img.youtube.com/vi/AgqwACyBgGw/maxresdefault.jpg"
                     alt="Structure Optimization for DFT with VASP YouTube Thumbnail"
-                    style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+                    style="max-width:50%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
             </a>
             <br>
-            <a href="https://www.youtube.com/watch?v=AgqwACyBgGw&pp=0gcJCcwJAYcqIYzv" target="_blank" rel="noopener">
-                Tutorial video
-            </a>
         </div>
         <ol>
             <li>
@@ -570,16 +676,13 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
     </section>
 
     <section class="section" id="2">
-        <h2>Density of States - DOSCAR</h2>
+        <h2>Density of States</h2>
         <div style="text-align:center; margin-bottom:1em;">
             <a href="https://www.youtube.com/watch?v=EIuBtJcfXCE" target="_blank" rel="noopener">
-                <img src="https://img.youtube.com/vi/EIuBtJcfXCE/0.jpg" alt="DOSCAR Analysis YouTube Thumbnail"
-                    style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+                <img src="https://img.youtube.com/vi/EIuBtJcfXCE/maxresdefault.jpg" alt="DOSCAR Analysis YouTube Thumbnail"
+                    style="max-width:50%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
             </a>
             <br>
-            <a href="https://www.youtube.com/watch?v=EIuBtJcfXCE" target="_blank" rel="noopener">
-                Tutorial video
-            </a>
         </div>
         <ol>
             <li>Uncomment <i>DOS & band structure</i> and <i>General
@@ -665,17 +768,14 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
 
 
     <section class="section" id="3">
-        <h2>Electron Localization Function - ELFCAR</h2>
+        <h2>Electron Localization Function</h2>
         <div style="text-align:center; margin-bottom:1em;">
             <a href="https://www.youtube.com/watch?v=JSJb0Opa4u4" target="_blank" rel="noopener">
-                <img src="https://img.youtube.com/vi/JSJb0Opa4u4/0.jpg"
+                <img src="https://img.youtube.com/vi/JSJb0Opa4u4/maxresdefault.jpg"
                     alt="ELFCAR + Bader CHG Calculation YouTube Thumbnail"
-                    style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+                    style="max-width:50%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
             </a>
             <br>
-            <a href="https://www.youtube.com/watch?v=JSJb0Opa4u4" target="_blank" rel="noopener">
-                Tutorial video
-            </a>
         </div></a>
         <ol>
             <li>Uncomment <i>Bader Charge and Electron localization
@@ -694,13 +794,10 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
         <h2>Bader Charges</h2>
         <div style="text-align:center; margin-bottom:1em;">
             <a href="https://www.youtube.com/watch?v=JSJb0Opa4u4" target="_blank" rel="noopener">
-                <img src="https://img.youtube.com/vi/JSJb0Opa4u4/0.jpg" alt="Bader Charges Tutorial YouTube Thumbnail"
-                    style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+                <img src="https://img.youtube.com/vi/JSJb0Opa4u4/maxresdefault.jpg" alt="Bader Charges Tutorial YouTube Thumbnail"
+                    style="max-width:50%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
             </a>
             <br>
-            <a href="https://www.youtube.com/watch?v=JSJb0Opa4u4" target="_blank" rel="noopener">
-                Tutorial video
-            </a>
         </div></a>
         <ol>
             <li>Uncomment Bader Charge and Electron localization function and
@@ -737,23 +834,19 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
 
 
     <section class="section" id="6">
-        <h2>Crystal Orbital Hamiltonian/Overlap Populations (COHP/COOP)</h2>
+        <h2>Crystal Orbital Hamiltonian/Overlap Population</h2>
         <div style="text-align:center; margin-bottom:1em;">
             <a href="https://www.youtube.com/watch?v=RI_6urNMZIA" target="_blank" rel="noopener">
-                <img src="https://img.youtube.com/vi/RI_6urNMZIA/0.jpg" alt="COHP/COOP Tutorial YouTube Thumbnail"
-                    style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+                <img src="https://img.youtube.com/vi/RI_6urNMZIA/maxresdefault.jpg" alt="COHP/COOP Tutorial YouTube Thumbnail"
+                    style="max-width:50%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
             </a>
             <br>
-            <a href="https://www.youtube.com/watch?v=RI_6urNMZIA" target="_blank" rel="noopener">
-                Tutorial video
-            </a>
         </div>
         <ol>
             <li>Uncomment COHP Analysis (via LOBSTER) and General Parameters in
                 INCAR</li>
             <li>Copy the lobsterin file from this template below, or download it <a href="assets/lobsterin"
-                    download>here</a>. Note that you can only have a maximum of four interactions in one calculation.
-                You can also add the lobsterin file after your calculation. lobsterin is not needed for the VASP
+                    download>here</a>. You can also add the lobsterin file after your calculation. lobsterin is not needed for the VASP
                 calculation to run. Only for lobster to run.</li>
             <code>
                 ! First, enter the energetic window in eV (relative to the
@@ -811,13 +904,10 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
         <h2>Band Structure</h2>
         <div style="text-align:center; margin-bottom:1em;">
             <a href="https://www.youtube.com/watch?v=9LmZQUKvUo4" target="_blank" rel="noopener">
-                <img src="https://img.youtube.com/vi/9LmZQUKvUo4/0.jpg" alt="Band Structure Tutorial YouTube Thumbnail"
-                    style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+                <img src="https://img.youtube.com/vi/9LmZQUKvUo4/maxresdefault.jpg" alt="Band Structure Tutorial YouTube Thumbnail"
+                    style="max-width:50%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
             </a>
             <br>
-            <a href="https://www.youtube.com/watch?v=9LmZQUKvUo4" target="_blank" rel="noopener">
-                Tutorial video
-            </a>
         </div>
         <ol>
             <li>Uncomment <i>DOS & band structure</i> and <i>General
@@ -837,17 +927,284 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
         <div class="section-divider"></div>
     </section>
 
+
+    <section class="section" id="effective-mass">
+        <h2>Effective Mass Calculation with VASPKIT</h2>
+        <div style="text-align:center; margin-bottom:1em;">
+            <a href="https://youtu.be/3iutlAsZ-fM" target="_blank" rel="noopener">
+                <img src="https://img.youtube.com/vi/3iutlAsZ-fM/maxresdefault.jpg" alt="Effective Mass Tutorial YouTube Thumbnail"
+                    style="max-width:50%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
+            </a>
+            <br>
+            <br>
+            <a href="http://vaspkit.cn/index.php/52.html" target="_blank" rel="noopener">
+                Reference tutorial
+            </a>
+        </div>
+        <p>This section covers how to calculate effective masses for electrons and holes using VASPKIT, which is particularly useful for semiconductor materials and electronic transport properties.</p>
+
+        <ol>
+            <li><strong>Run Regular Relaxation</strong></li>
+            <p>First, perform a standard geometry optimization as described in the <a href="#geometry-optimization">Geometry Optimization</a> section to obtain the optimized structure.</p>
+
+            <li><strong>Run Band Structure Calculation (SCF)</strong></li>
+            <p>Perform a band structure calculation following the <a href="#7">Band Structure</a> section instructions. This provides the electronic band structure needed for effective mass calculations.</p>
+
+            <li><strong>Determine High-Symmetry Points of Interest</strong></li>
+            <p>Identify the high-symmetry points in your material's band structure where you want to calculate effective masses, typically at band extrema (valence band maximum and conduction band minimum).</p>
+
+            <li><strong>Use VASPKIT Option 911 for Band Edge Analysis</strong></li>
+            <p>VASPKIT option <code>911</code> can automatically determine band edge positions, namely VBM (Valence Band Maximum) and CBM (Conduction Band Minimum):</p>
+            <div style="border: 1px solid #ccc; padding: 10px; margin: 1em 0;">
+                <code>
+ +-------------------------- Warm Tips --------------------------+<br>
+           ONLY Reliable for Band-Structure Calculations!<br>
+ +---------------------------------------------------------------+<br>
+  -->> (01) Reading Input Parameters From INCAR File...<br>
+  -->> (02) Reading Energy-Levels From EIGENVAL File...<br>
+ +-------------------------- Summary ----------------------------+<br>
+          Band Character:    Direct<br>
+           Band Gap (eV):    1.7711<br>
+  Eigenvalue of VBM (eV):   -2.1236<br>
+  Eigenvalue of CBM (eV):   -0.3526<br>
+       HOMO & LUMO Bands:         9        10<br>
+         Location of VBM:  0.333333  0.333333  0.000000  <br>
+         Location of CBM:  0.333333  0.333333  0.000000  <br>
+ +---------------------------------------------------------------+
+                </code>
+            </div>
+
+            <li><strong>Prepare INPUT.in File for Effective Mass Calculation</strong></li>
+            <p>Next, calculate the effective mass of electrons and holes along specific directions (e.g., K → Γ and K → M at point K). Create an <code>INPUT.in</code> file with the following content:</p>
+            <div style="border: 1px solid #ccc; padding: 10px; margin: 1em 0;">
+                <code>
+1 # Setting it to 1 will generate a KPOINTS file for calculating the effective mass; setting it to 2 will calculate the effective mass.<br>
+6 # 6 indicates that we take 6 discrete points near K for polynomial fitting.<br>
+0.015 # k-cutoff, cutoff radius, typical value 0.015 1/Å<br>
+3 # 3 indicates there are three effective mass tasks.<br>
+<br>
+0.500000 0.500000 0.500000  0.000000 0.000000 0.500000  # A->Z   Calculate effective mass from A toward Z.<br>
+0.500000 0.500000 0.500000  0.000000 0.500000 0.500000  # A->R   Calculate effective mass from A toward R.<br>
+0.500000 0.500000 0.500000  0.500000 0.500000 0.000000  # A->M   Calculate effective mass from A toward M.<br> 
+                </code>
+            </div>
+            <p><strong>Parameters explained:</strong></p>
+            <ul>
+                <li><strong>Line 1:</strong> Mode selector (1 = generate KPOINTS, 2 = calculate effective mass)</li>
+                <li><strong>Line 2:</strong> Number of discrete k-points for polynomial fitting (typically 6-8)</li>
+                <li><strong>Line 3:</strong> k-cutoff radius in 1/Å (typical value: 0.015)</li>
+                <li><strong>Line 4:</strong> Number of k-path directions to analyze</li>
+                <li><strong>Lines 5-7:</strong> Start and end points for each k-path in fractional coordinates</li>
+            </ul>
+
+            <li><strong>Generate KPOINTS and Run VASP</strong></li>
+            <p>With the first line set to <code>1</code> in <code>INPUT.in</code>, run VASPKIT option <code>913</code> to generate the appropriate KPOINTS file, then run VASP with this new KPOINTS file. (It will overwrite <code>KPOINTS</code> in the VASP working directory, so save a backup of your old <code>KPOINTS</code> file.)</p>
+
+            <li><strong>Calculate Effective Mass</strong></li>
+            <p>After the VASP calculation is completed, modify the first line of <code>INPUT.in</code> from <code>1</code> to <code>2</code>, then run VASPKIT option <code>913</code> again to calculate the effective masses:</p>
+            <div style="border: 1px solid #ccc; padding: 10px; margin: 1em 0;">
+                <code>
+Band Index:                  LUMO =   10                  HOMO =   9<br>
+ Effective-Mass (in m0)      Electron (Prec.)              Hole (Prec.)<br>
+ K-PATH No.1: K->G           0.473 (0.3E-07)             -0.569 (0.1E-07)<br>
+ K-PATH No.2: K->M           0.524 (0.1E-06)             -0.691 (0.1E-06)
+                </code>
+            </div>
+
+            <li><strong>Results Interpretation</strong></li>
+            <ul>
+                <li><strong>Effective masses</strong> are given in units of free electron mass (m₀)</li>
+                <li><strong>Electron effective mass</strong> refers to the conduction band minimum</li>
+                <li><strong>Hole effective mass</strong> refers to the valence band maximum</li>
+                <li><strong>Precision values</strong> in parentheses indicate the fitting accuracy</li>
+                <li><strong>Lower effective mass</strong> indicates higher carrier mobility</li>
+            </ul>
+
+            <li><strong>Important Notes</strong></li>
+            <ul>
+                <li>Effective mass calculations require high-quality band structure data</li>
+                <li>The k-cutoff radius should be small enough to capture local curvature but large enough for accurate fitting</li>
+                <li>Results are only reliable near band extrema (VBM and CBM)</li>
+                <li>For anisotropic materials, calculate along different crystallographic directions</li>
+                <li>Always verify the band gap and band positions before calculating effective masses</li>
+            </ul>
+        </ol>
+        <div class="section-divider"></div>
+    </section>
+
+    <section class="section" id="transport-properties">
+        <h2>Boltzmann Transport Properties with VASPKIT</h2>
+        <div style="text-align:center; margin-bottom:1em;">
+            <a href="https://youtu.be/4zLXQ6BFIFA" target="_blank" rel="noopener">
+                <img src="https://img.youtube.com/vi/4zLXQ6BFIFA/maxresdefault.jpg" 
+                    alt="Boltzmann Transport Properties Tutorial YouTube Thumbnail"
+                    style="max-width:50%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
+            </a>
+            <br>
+            <a href="https://youtu.be/4zLXQ6BFIFA" target="_blank" rel="noopener">
+                Tutorial video
+            </a>
+            <br>
+            <a href="http://vaspkit.cn/index.php/67.html" target="_blank" rel="noopener">
+                Reference tutorial
+            </a>
+        </div>
+        <p>This section covers how to calculate electronic transport properties using the Boltzmann transport equation with VASPKIT, including electrical conductivity, Seebeck coefficient, power factor, and carrier concentration.</p>
+
+        <ol>
+            <li><strong>Run Regular Relaxation</strong></li>
+            <p>First, perform a standard geometry optimization as described in the <a href="#geometry-optimization">Geometry Optimization</a> section to obtain the optimized structure.</p>
+
+            <li><strong>Run Band Structure Calculation (SCF)</strong></li>
+            <p>Perform a band structure calculation following the <a href="#7">Band Structure</a> section instructions. This provides the electronic band structure needed for transport property calculations.</p>
+
+            <li><strong>Generate KPOINTS for Transport Properties</strong></li>
+            <p>Call the VASPKIT-681 command to generate a KPOINTS file specifically for the calculation of transport properties:</p>
+            <div style="border: 1px solid #ccc; padding: 10px; margin: 1em 0;">
+                <code>
+vaspkit<br>
+681
+                </code>
+            </div>
+            <p>This will generate the appropriate k-point mesh needed for accurate transport property calculations.</p>
+
+            <li><strong>Prepare INPUT.in File</strong></li>
+            <p>Create an <code>INPUT.in</code> file (note that <code>VASPKIT.in</code> will be renamed to <code>INPUT.in</code>) with the following parameters for calculating transport properties:</p>
+            <div style="border: 1px solid #ccc; padding: 10px; margin: 1em 0;">
+                <code>
+1           # 1 for gradient method with constant relaxation time approximation<br>
+3D          # 2D for slab, 3D for bulk<br>
+-2.0  2.0   # Minimum and maximum values of chemical potential with respect to Fermi energy<br>
+1000        # Number of intervals between the minimum and maximum chemical potential values<br>
+300.0       # Temperature (float type, in units of K)<br>
+1.0         # Relaxation time (float type, in units of s), Set 1.0 if you don't know the exact relaxation time<br>
+0.0         # Desired gap value in scissor correction (float type, in units of V), Zero means make no correction, available only non-spin-polarization calculation<br>
+1           # Finite difference method (integer type)
+                </code>
+            </div>
+            <p><strong>Parameters explained:</strong></p>
+            <ul>
+                <li><strong>Line 1:</strong> Calculation method (1 = gradient method with constant relaxation time)</li>
+                <li><strong>Line 2:</strong> System dimensionality (2D for slabs, 3D for bulk materials)</li>
+                <li><strong>Line 3:</strong> Chemical potential range in eV relative to Fermi energy</li>
+                <li><strong>Line 4:</strong> Number of energy intervals for integration</li>
+                <li><strong>Line 5:</strong> Temperature in Kelvin</li>
+                <li><strong>Line 6:</strong> Relaxation time in seconds (use 1.0 as default if unknown)</li>
+                <li><strong>Line 7:</strong> Scissor correction for band gap (0.0 = no correction)</li>
+                <li><strong>Line 8:</strong> Finite difference method selection</li>
+            </ul>
+
+            <li><strong>Calculate Transport Properties</strong></li>
+            <p>Call the VASPKIT-682 command to calculate the transport properties:</p>
+            <div style="border: 1px solid #ccc; padding: 10px; margin: 1em 0;">
+                <code>
+vaspkit<br>
+682<br>
+  -->> (01) Reading INPUT.in File...<br>
+  -->> (02) Reading Structural Parameters from POSCAR File...<br>
+  -->> (03) Reading Input Parameters From INCAR File...<br>
+ +---------------------------------------------------------------+<br>
+ |       >>> The Fermi Energy will be set to zero eV <<<         |<br>
+ +---------------------------------------------------------------+<br>
+  -->> (04) Reading Fermi-Energy from DOSCAR File...<br>
+  -->> (05) Reading Energy-Levels From EIGENVAL File...<br>
+ +-------------------------- Summary ----------------------------+<br>
+ Chemical Potential Range (eV):  -2.00  2.00<br>
+ Number of Intervals:   1000<br>
+ Temperature (K): 300.00<br>
+ Relaxation Time (s):  0.10E+01<br>
+ +---------------------------------------------------------------+<br>
+  -->> (06) Calculating Boltzmann Transport Properties...<br>
+            Percentage complete:  25.0%<br>
+            Percentage complete:  50.0%<br>
+            Percentage complete:  75.0%<br>
+            Percentage complete: 100.0%<br>
+  -->> (07) Written ELECTRONIC_CONDUCTIVITY.dat File!<br>
+  -->> (08) Written SEEBECK_COEFFICIENT.dat File!<br>
+  -->> (09) Written POWER_FACTOR.dat File!<br>
+  -->> (10) Written ELECTRONIC_THERMAL_CONDUCTIVITY.dat File!<br>
+  -->> (11) Written CARRIER_CONCENTRATION.dat File!
+                </code>
+            </div>
+
+            <li><strong>Output Files and Analysis</strong></li>
+            <p>The calculation will generate several output files:</p>
+            <ul>
+                <li><strong>ELECTRONIC_CONDUCTIVITY.dat</strong> - Electrical conductivity vs chemical potential</li>
+                <li><strong>SEEBECK_COEFFICIENT.dat</strong> - Seebeck coefficient vs chemical potential</li>
+                <li><strong>POWER_FACTOR.dat</strong> - Thermoelectric power factor vs chemical potential</li>
+                <li><strong>ELECTRONIC_THERMAL_CONDUCTIVITY.dat</strong> - Electronic thermal conductivity vs chemical potential</li>
+                <li><strong>CARRIER_CONCENTRATION.dat</strong> - Carrier concentration vs chemical potential</li>
+            </ul>
+
+            <li><strong>Data Visualization</strong></li>
+            <p>You can plot the results using Python. Here's a sample code to plot carrier concentration:</p>
+            <div style="border: 1px solid #ccc; padding: 10px; margin: 1em 0;">
+                <code>
+import numpy as np<br>
+import matplotlib.pyplot as plt<br>
+<br>
+# Read the data from CARRIER_CONCENTRATION.dat<br>
+data = np.loadtxt('CARRIER_CONCENTRATION.dat', skiprows=1)  # Skip the header row<br>
+<br>
+# Extract energy and carrier concentration<br>
+energy = data[:, 0]  # Energy in eV<br>
+carrier_concentration = data[:, 1]  # Carrier concentration in 10^20/cm³<br>
+<br>
+# Create the plot<br>
+plt.figure(figsize=(10, 6))<br>
+plt.plot(energy, carrier_concentration, 'b-', linewidth=2, label='Carrier Concentration')<br>
+plt.xlabel('Energy (eV)', fontsize=12)<br>
+plt.ylabel('Carrier Concentration (10²⁰/cm³)', fontsize=12)<br>
+plt.title('Carrier Concentration vs Energy', fontsize=14, fontweight='bold')<br>
+plt.grid(True, alpha=0.3)<br>
+plt.legend()<br>
+<br>
+# Add a horizontal line at y=0 for reference<br>
+plt.axhline(y=0, color='k', linestyle='--', alpha=0.5)<br>
+<br>
+# Improve layout<br>
+plt.tight_layout()<br>
+<br>
+# Show the plot<br>
+plt.show()<br>
+<br>
+# Optional: Save the plot<br>
+plt.savefig('carrier_concentration_plot.png', dpi=300, bbox_inches='tight')<br>
+print("Plot saved as 'carrier_concentration_plot.png'")
+                </code>
+            </div>
+            
+            <p><strong>Example Output:</strong></p>
+            <div style="text-align:center; margin: 1em 0;">
+                <img src="assets/carrier_concentration_plot.png" 
+                    alt="Example Carrier Concentration Plot"
+                    style="max-width:30%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+                <br>
+                <em>Example carrier concentration plot generated using the code above</em>
+            </div>
+
+            <li><strong>Important Notes</strong></li>
+            <ul>
+                <li>Transport properties are highly sensitive to the quality of the band structure calculation</li>
+                <li>Use dense k-point meshes for accurate results</li>
+                <li>The relaxation time parameter significantly affects absolute values but not trends</li>
+                <li>For thermoelectric applications, focus on the power factor and ZT calculations</li>
+                <li>Temperature-dependent calculations can reveal optimal operating conditions</li>
+                <li>Always validate results against experimental data when available</li>
+            </ul>
+        </ol>
+        <div class="section-divider"></div>
+    </section>
+
     <section class="section" id="8">
         <h2>Calculating Hubbard U Correction For DFT+U (LSDA+U)</h2>
         <div style="text-align:center; margin-bottom:1em;">
         <a href="https://www.youtube.com/watch?v=n8UIL8rubbI" target="_blank" rel="noopener">
-            <img src="https://img.youtube.com/vi/n8UIL8rubbI/0.jpg" alt="Hubbard U Correction Tutorial YouTube Thumbnail"
-                style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+            <img src="https://img.youtube.com/vi/n8UIL8rubbI/maxresdefault.jpg" alt="Hubbard U Correction Tutorial YouTube Thumbnail"
+                style="max-width:50%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
         </a>
         <br>
-        <a href="https://www.youtube.com/watch?v=n8UIL8rubbI" target="_blank" rel="noopener">
-            Tutorial video
-        </a>
         </div>
 
         <ol>
@@ -985,7 +1342,7 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
         <div class="section-divider"></div>
     </section>
 
-    <section class="section" id="8">
+    <section class="section" id="work-function">
         <h2>Work function</h2>
         <ol>
             Check back soon!
@@ -993,17 +1350,14 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
         <div class="section-divider"></div>
     </section>
 
-    <section class="section" id="8">
-        <h2>Spin-Orbit Coupled LSDA+U/DFT+U Calculation</h2>
+    <section class="section" id="soc-dftu">
+        <h2>Spin-Orbit Coupled DFT+U (LSDA+U) Calculation</h2>
                 <div style="text-align:center; margin-bottom:1em;">
         <a href="https://youtu.be/e4fTrMsPdyw" target="_blank" rel="noopener">
-            <img src="https://img.youtube.com/vi/e4fTrMsPdyw/0.jpg" alt="Hubbard U Correction Tutorial YouTube Thumbnail"
-                style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+            <img src="https://img.youtube.com/vi/e4fTrMsPdyw/maxresdefault.jpg" alt="Hubbard U Correction Tutorial YouTube Thumbnail"
+                style="max-width:50%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
         </a>
         <br>
-        <a href="https://youtu.be/e4fTrMsPdyw" target="_blank" rel="noopener">
-            Tutorial video
-        </a>
         </div>
 
         <p>This tutorial demonstrates how to perform spin-orbit coupling (SOC) calculations with DFT+U corrections, particularly useful for heavy elements with strong spin-orbit interactions like actinides and lanthanides.</p>
@@ -1105,7 +1459,7 @@ ICHARG = 11       # Read charge density from collinear calculation
         <div class="section-divider"></div>
     </section>
 
-    <section class="section" id="8">
+    <section class="section" id="phonons">
         <h2>Phonons</h2>
         <ol>
             Check back soon!
@@ -1113,7 +1467,7 @@ ICHARG = 11       # Read charge density from collinear calculation
         <div class="section-divider"></div>
     </section>
 
-    <section class="section" id="8">
+    <section class="section" id="processor-considerations">
         <h2>Processor Considerations</h2>
         <div class="section-divider"></div>
         <ol>
@@ -1140,7 +1494,7 @@ ICHARG = 11       # Read charge density from collinear calculation
         </ol>
     </section>
 
-    <section class="section" id="7">
+    <section class="section" id="troubleshooting">
         <h2>Troubleshooting errors</h2>
         <ol>
             <li>
