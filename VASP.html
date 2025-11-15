@@ -1409,7 +1409,7 @@ ISMEAR = 1       # smearing for metals
             <p>Modify the INCAR file by adding the following SOC parameters:</p>
 
             <pre>
-# Add to existing INCAR from Step 2:
+# Add to existing INCAR from Step 2 and comment out the DOS-specific tags (not optimizing here), although I'm not 100% certain if they must be enabled off before calculating for the energy:
 MAGMOM = 1 0 0 1 0 0 1 0 0 1 0 0 24*0  # x y z components of magnetic moments, adjust as per SAXIS
 LSORBIT = .TRUE.  # Enable spin-orbit coupling
 ISYM = 0          # Disable symmetry (recommended for SOC)
@@ -1420,7 +1420,7 @@ ICHARG = 11       # Read charge density from collinear calculation
             <p class="note"><strong>Important:</strong> Remove <code>WAVECAR</code> before running the SOC calculation, as the spin density is read from <code>CHGCAR</code> but the wavefunctions need to be recalculated for the non-collinear case.</p>
 
             <li><strong>Step 4: Probe Magnetic Anisotropy (optional)</strong></li>
-            <p>To investigate magnetic anisotropy, run separate SOC calculations with different quantization axes (<code>SAXIS</code>). Run three calculations with:</p>
+            <p>To investigate magnetic anisotropy, run separate SOC calculations with different quantization axes (<code>SAXIS</code>) and see which is most favorable (lowest energy). Run three calculations with:</p>
 
             <ul>
                 <li><code>SAXIS = 1 0 0</code> (a-axis, often the easy axis)</li>
@@ -1444,7 +1444,7 @@ ICHARG = 11       # Read charge density from collinear calculation
                 <li>Analyze the magnetic moments from <code>OUTCAR</code></li>
                 <li>Check for changes in electronic structure via DOS analysis</li>
                 <li>Evaluate the impact of SOC on the ground state magnetic configuration</li>
-                <li>You can run DOS, band structure calculations with SOC tags enabled as above, just add necessary DOS/band structure tags as needed. Spin contributions are not included in the outputs.</li>
+                <li>You can run DOS, band structure calculations with SOC tags enabled as above from step 3, just add necessary DOS/band structure tags as needed. Spin contributions are not included in the outputs.</li>
             </ul>
 
             <li><strong>Important Notes</strong></li>
