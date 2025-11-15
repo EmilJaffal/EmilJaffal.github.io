@@ -1223,7 +1223,7 @@ print("Plot saved as 'carrier_concentration_plot.png'")
                 1.0 -1.0  1.0 -1.0  \
                 16*0.0
     LORBIT       = 11
-    LMAXMIX      = 4
+    LMAXMIX      = 4 
     </pre>
 
             <p class="note">This run provides the reference ground state charge density and wavefunction (<code>CHGCAR</code>, <code>WAVECAR</code>).</p>
@@ -1399,18 +1399,18 @@ ISMEAR = 1       # smearing for metals
             <li><strong>Step 3: Non-collinear SOC Calculation</strong></li>
             <p>Perform the spin-orbit coupling calculation using <code>vasp_ncl</code> (non-collinear version of VASP). Copy the following files from Step 2:</p>
             <ul>
+                <li><code>INCAR</code></li>
                 <li><code>POSCAR</code></li>
                 <li><code>POTCAR</code></li>
                 <li><code>KPOINTS</code></li>
                 <li><code>CHGCAR</code></li>
-                <li><code>WAVECAR</code></li>
             </ul>
 
             <p>Modify the INCAR file by adding the following SOC parameters:</p>
 
             <pre>
 # Add to existing INCAR from Step 2:
-MAGMOM = 1 0 0 1 0 0 1 0 0 1 0 0 24*0  # x y z components of magnetic moments
+MAGMOM = 1 0 0 1 0 0 1 0 0 1 0 0 24*0  # x y z components of magnetic moments, adjust as per SAXIS
 LSORBIT = .TRUE.  # Enable spin-orbit coupling
 ISYM = 0          # Disable symmetry (recommended for SOC)
 SAXIS = 1 0 0     # Quantization axis (easy axis)
@@ -1419,7 +1419,7 @@ ICHARG = 11       # Read charge density from collinear calculation
 
             <p class="note"><strong>Important:</strong> Remove <code>WAVECAR</code> before running the SOC calculation, as the spin density is read from <code>CHGCAR</code> but the wavefunctions need to be recalculated for the non-collinear case.</p>
 
-            <li><strong>Step 4: Probe Magnetic Anisotropy</strong></li>
+            <li><strong>Step 4: Probe Magnetic Anisotropy (optional)</strong></li>
             <p>To investigate magnetic anisotropy, run separate SOC calculations with different quantization axes (<code>SAXIS</code>). Run three calculations with:</p>
 
             <ul>
@@ -1440,7 +1440,7 @@ ICHARG = 11       # Read charge density from collinear calculation
             <li><strong>Step 6: Analysis</strong></li>
             <p>After completing the calculations:</p>
             <ul>
-                <li>Compare total energies between different <code>SAXIS</code> orientations</li>
+                <li>Compare total energies between different <code>SAXIS</code> orientations (optional)</li>
                 <li>Analyze the magnetic moments from <code>OUTCAR</code></li>
                 <li>Check for changes in electronic structure via DOS analysis</li>
                 <li>Evaluate the impact of SOC on the ground state magnetic configuration</li>
