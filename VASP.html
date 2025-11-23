@@ -1366,7 +1366,7 @@ print("Plot saved as 'carrier_concentration_plot.png'")
             <li><strong>Step 1: Initial Collinear SCF Relaxation</strong></li>
             <p>First, perform a standard collinear spin-polarized structural relaxation to obtain the optimized geometry. Use the standard INCAR settings for structure optimization with DFT+U parameters.</p>
 
-            <li><strong>Step 2: Collinear SCF Calculation for Reference</strong></li>
+            <li><strong>Step 2: Collinear SCF Calculation</strong></li>
             <p>Run a collinear spin-polarized calculation (e.g., DOS calculation) to obtain <code>CHGCAR</code> and <code>WAVECAR</code> files using <code>vasp_std</code>. Use the following INCAR template (example for UTe₂):</p>
 
             <pre>
@@ -1396,7 +1396,7 @@ LORBIT = 11      # DOSCAR and PROCAR are written
 ISMEAR = 1       # smearing for metals
             </pre>
 
-            <li><strong>Step 3: Non-collinear SOC Calculation</strong></li>
+            <li><strong>Step 3: Non-collinear SOC Calculation (not relaxing)</strong></li>
             <p>Perform the spin-orbit coupling calculation using <code>vasp_ncl</code> (non-collinear version of VASP). Copy the following files from Step 2:</p>
             <ul>
                 <li><code>INCAR</code></li>
