@@ -81,123 +81,164 @@
             margin-bottom: 2em;
         }
 
-        .table-of-contents {
-            width: 80%;
-            margin: 2em auto;
-            background-color: #fff;
-            padding: 2em;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .table-of-contents h2 {
-            font-size: 1.8em;
-            margin-bottom: 1em;
-            color: black;
-            text-align: center;
-        }
-
-        .toc-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1em;
-            margin: 0;
-        }
-
-        .toc-item {
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
+        /* Left-side collapsible navigation */
+        .nav-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1002;
+            background-color: #2196F3;
+            color: white;
+            border: none;
             border-radius: 5px;
-            padding: 0.8em 1em;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
             transition: background-color 0.3s ease;
         }
 
-        .toc-item:hover {
-            background-color: #e8f4fd;
+        .nav-toggle:hover {
+            background-color: #1976D2;
         }
 
-        .toc-item a {
-            text-decoration: none;
+        .side-nav {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 320px;
+            height: 100vh;
+            background-color: #fff;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            z-index: 1001;
+            transition: left 0.3s ease;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .side-nav.open {
+            left: 0;
+        }
+
+        .side-nav-header {
+            padding: 20px 20px 10px 20px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+
+        .side-nav-header h3 {
+            margin: 0;
             color: #333;
-            font-weight: 500;
-            display: block;
+            font-size: 1.4em;
         }
 
-        .toc-item a:hover {
+        .side-nav-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            padding: 5px;
+        }
+
+        .side-nav-close:hover {
             color: #2196F3;
+        }
+
+        .side-nav-item {
+            display: block;
+            padding: 12px 20px;
+            color: #333;
+            text-decoration: none;
+            border-left: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .side-nav-item:hover {
+            background-color: #f5f5f5;
+            border-left-color: #2196F3;
+            color: #2196F3;
+        }
+
+        .side-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0,0,0,0.3);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .side-nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .side-nav {
+                width: 280px;
+                left: -280px;
+            }
+        }
+
+        /* Hide regular table of contents on smaller screens when side nav is available */
+        @media (max-width: 1200px) {
+            .table-of-contents {
+                display: none;
+            }
         }
     </style>
 </head>
 
 <body>
 
+    <!-- Navigation Toggle Button -->
+    <button class="nav-toggle" onclick="toggleSideNav()">☰ Quick Nav</button>
+
+    <!-- Side Navigation Overlay -->
+    <div class="side-nav-overlay" onclick="closeSideNav()"></div>
+
+    <!-- Side Navigation -->
+    <div class="side-nav" id="sideNav">
+        <div class="side-nav-header">
+            <h3>Quick Navigation</h3>
+            <button class="side-nav-close" onclick="closeSideNav()">&times;</button>
+        </div>
+        
+        <a href="#SSH-Notes" class="side-nav-item" onclick="closeSideNav()">Handy Terminal Commands</a>
+        <a href="#files" class="side-nav-item" onclick="closeSideNav()">Before You Start: Creating Files</a>
+        <a href="#vaspkit-installation" class="side-nav-item" onclick="closeSideNav()">Installing VASPKIT</a>
+        <a href="#geometry-optimization" class="side-nav-item" onclick="closeSideNav()">Geometry Optimization</a>
+        <a href="#data-accrual" class="side-nav-item" onclick="closeSideNav()">Data Accrual</a>
+        <a href="#2" class="side-nav-item" onclick="closeSideNav()">Density of States</a>
+        <a href="#magnetic-moment" class="side-nav-item" onclick="closeSideNav()">Magnetic Moment Calculation</a>
+        <a href="#3" class="side-nav-item" onclick="closeSideNav()">Electron Localization Function</a>
+        <a href="#4" class="side-nav-item" onclick="closeSideNav()">Bader Charges</a>
+        <a href="#6" class="side-nav-item" onclick="closeSideNav()">COHP/COOP Analysis</a>
+        <a href="#7" class="side-nav-item" onclick="closeSideNav()">Band Structure</a>
+        <a href="#effective-mass" class="side-nav-item" onclick="closeSideNav()">Effective Mass Calculation</a>
+        <a href="#transport-properties" class="side-nav-item" onclick="closeSideNav()">Boltzmann Transport Properties</a>
+        <a href="#8" class="side-nav-item" onclick="closeSideNav()">Hubbard U Correction</a>
+        <a href="#work-function" class="side-nav-item" onclick="closeSideNav()">Work Function</a>
+        <a href="#soc-dftu" class="side-nav-item" onclick="closeSideNav()">Spin-Orbit Coupled DFT+U</a>
+        <a href="#fermi-surface" class="side-nav-item" onclick="closeSideNav()">Fermi Surface</a>
+        <a href="#phonons" class="side-nav-item" onclick="closeSideNav()">Phonons</a>
+        <a href="#processor-considerations" class="side-nav-item" onclick="closeSideNav()">Processor Considerations</a>
+        <a href="#troubleshooting" class="side-nav-item" onclick="closeSideNav()">Troubleshooting Errors</a>
+    </div>
+
     <header>
         <h1 class="main-title">Using VASP for density functional theory (DFT)
         </h1>
     </header>
-
-    <section class="table-of-contents">
-        <h2>Quick Navigation</h2>
-        <div class="toc-grid">
-            <div class="toc-item">
-                <a href="#SSH-Notes">Handy Terminal Commands</a>
-            </div>
-            <div class="toc-item">
-                <a href="#files">Before You Start: Creating the Necessary Files</a>
-            </div>
-            <div class="toc-item">
-                <a href="#vaspkit-installation">Installing VASPKIT</a>
-            </div>
-            <div class="toc-item">
-                <a href="#geometry-optimization">Geometry Optimization</a>
-            </div>
-            <div class="toc-item">
-                <a href="#data-accrual">Data Accrual</a>
-            </div>
-            <div class="toc-item">
-                <a href="#2">Density of States</a>
-            </div>
-            <div class="toc-item">
-                <a href="#magnetic-moment">Magnetic Moment Calculation</a>
-            </div>
-            <div class="toc-item">
-                <a href="#3">Electron Localization Function</a>
-            </div>
-            <div class="toc-item">
-                <a href="#4">Bader Charges</a>
-            </div>
-            <div class="toc-item">
-                <a href="#6">Crystal Orbital Hamiltonian/Overlap Population</a>
-            </div>
-            <div class="toc-item">
-                <a href="#7">Band Structure</a>
-            </div>
-            <div class="toc-item">
-                <a href="#effective-mass">Effective Mass Calculation with VASPKIT</a>
-            </div>
-            <div class="toc-item">
-                <a href="#transport-properties">Boltzmann Transport Properties with VASPKIT</a>
-            </div>
-            <div class="toc-item">
-                <a href="#8">Calculating Hubbard U Correction For DFT+U (LSDA+U)</a>
-            </div>
-            <div class="toc-item">
-                <a href="#work-function">Work Function</a>
-            </div>
-            <div class="toc-item">
-                <a href="#soc-dftu">Spin-Orbit Coupled LSDA+U/DFT+U Calculation</a>
-            </div>
-            <div class="toc-item">
-                <a href="#phonons">Phonons</a>
-            </div>
-            <div class="toc-item">
-                <a href="#processor-considerations">Processor Considerations</a>
-            </div>
-            <div class="toc-item">
-                <a href="#troubleshooting">Troubleshooting Errors</a>
-            </div>
-        </div>
-    </section>
 
     <section class="section" id="SSH-Notes">
         <h2>Handy Terminal Commands</h2>
@@ -1459,6 +1500,73 @@ ICHARG = 11       # Read charge density from collinear calculation
         <div class="section-divider"></div>
     </section>
 
+    <section class="section" id="fermi-surface">
+        <h2>Fermi Surface</h2>
+        <div style="text-align:center; margin-bottom:1em;">
+            <a href="https://youtu.be/bVew3_On_LM" target="_blank" rel="noopener">
+                <img src="https://img.youtube.com/vi/bVew3_On_LM/maxresdefault.jpg" alt="Fermi Surface Tutorial YouTube Thumbnail"
+                    style="max-width:50%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
+            </a>
+            <br>
+            <a href="https://youtu.be/bVew3_On_LM" target="_blank" rel="noopener">
+                Tutorial video
+            </a>
+        </div>
+        
+        <p>This section covers how to calculate and visualize Fermi surfaces using VASPKIT and PyProcar, which is essential for understanding electronic transport properties and band topology in metals.</p>
+
+        <ol>
+            <li><strong>Step 1: Initial Collinear SCF Relaxation</strong></li>
+            <p>First, perform a standard collinear structural relaxation (can be spin-polarized) to obtain the optimized geometry. Use the standard INCAR settings for structure optimization (Can use DFT+U as well, see SOC).</p>
+
+            <li><strong>Step 2: Collinear SCF Calculation</strong></li>
+            <p>Run a collinear spin-polarized calculation (e.g., DOS calculation) to obtain <code>CHGCAR</code> and <code>CHG</code> (CHG may not be needed) files using <code>vasp_std</code>. Add the following to the INCAR's general parameters:</p>
+            <pre>
+ISMEAR = 0       # Gaussian smearing
+ICHARG = 11      # Read charge from CHGCAR
+LORBIT = 11      # Write orbital projections (for orbitals)
+            </pre>
+
+            <li><strong>Step 3: Generate KPOINTS for Fermi Surface Calculation</strong></li>
+            <p>Run VASPKIT to generate KPOINTS for the Fermi Surface calculation:</p>
+            <div style="border: 1px solid #ccc; padding: 10px; margin: 1em 0;">
+                <code>
+vaspkit<br>
+261  # Option for Fermi Surface KPOINTS generation
+                </code>
+            </div>
+
+            <li><strong>Step 4: Run the Calculation</strong></li>
+            <p>Execute the VASP calculation with the generated KPOINTS file to obtain the electronic structure data needed for Fermi surface visualization.</p>
+
+            <li><strong>Step 5: Export Required Files</strong></li>
+            <p>After the calculation completes, export the following files for Fermi surface analysis:</p>
+            <ul>
+                <li><code>PROCAR</code> - Contains orbital projections and band information</li>
+                <li><code>KPOINTS</code> - K-point mesh information</li>
+                <li><code>POSCAR</code> - Crystal structure (not needed for PROCAR but useful for reference)</li>
+                <li><code>OUTCAR</code> - Contains Fermi energy and other calculation details</li>
+            </ul>
+
+            <li><strong>Step 6: Visualization with PyProcar</strong></li>
+            <p>Use PyProcar to visualize the Fermi surface. See the following PROCAR tutorials for different visualization options:</p>
+            <ul>
+                <li><strong>3D Fermi Surface:</strong> <a href="https://pyprocar.readthedocs.io/en/latest/examples/04-fermi3d/00-Getting%20Started.html" target="_blank" rel="noopener">Getting Started with 3D Fermi Surfaces</a></li>
+                <li><strong>2D Fermi Surface:</strong> <a href="https://pyprocar.readthedocs.io/en/latest/examples/02-fermi2d/00-Getting%20Started.html" target="_blank" rel="noopener">Getting Started with 2D Fermi Surfaces</a></li>
+                <li><strong>2D Fermi Surface with Spin:</strong> <a href="https://pyprocar.readthedocs.io/en/latest/examples/02-fermi2d/01-Dealing%20with%20Spin.html" target="_blank" rel="noopener">Dealing with Spin in 2D Fermi Surfaces</a></li>
+            </ul>
+
+            <li><strong>Important Notes</strong></li>
+            <ul>
+                <li>Fermi surface calculations require dense k-point meshes for accurate results</li>
+                <li>The quality of the Fermi surface depends heavily on the k-point sampling</li>
+                <li>For spin-polarized systems, separate Fermi surfaces for spin-up and spin-down channels can be analyzed</li>
+                <li>Ensure that the Fermi energy is correctly identified from the OUTCAR file</li>
+            </ul>
+        </ol>
+        <div class="section-divider"></div>
+    </section>
+
     <section class="section" id="phonons">
         <h2>Phonons</h2>
         <ol>
@@ -1557,6 +1665,66 @@ ICHARG = 11       # Read charge density from collinear calculation
         <a href="https://emiljaffal.github.io" class="button">Go to the home
             page</a>
     </footer>
+
+    <script>
+        function toggleSideNav() {
+            const sideNav = document.getElementById('sideNav');
+            const overlay = document.querySelector('.side-nav-overlay');
+            
+            if (sideNav.classList.contains('open')) {
+                closeSideNav();
+            } else {
+                openSideNav();
+            }
+        }
+
+        function openSideNav() {
+            const sideNav = document.getElementById('sideNav');
+            const overlay = document.querySelector('.side-nav-overlay');
+            
+            sideNav.classList.add('open');
+            overlay.classList.add('active');
+        }
+
+        function closeSideNav() {
+            const sideNav = document.getElementById('sideNav');
+            const overlay = document.querySelector('.side-nav-overlay');
+            
+            sideNav.classList.remove('open');
+            overlay.classList.remove('active');
+        }
+
+        // Close side nav when pressing Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeSideNav();
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('.side-nav-item[href^="#"]');
+            
+            links.forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                    
+                    // Close side nav after clicking a link
+                    setTimeout(closeSideNav, 300);
+                });
+            });
+        });
+    </script>
 
 </body>
 
