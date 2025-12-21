@@ -1345,7 +1345,7 @@ NiO AFM
 1.0000000000   2.0000000000   1.0000000000 
 1.0000000000   1.0000000000   2.0000000000 
 Ni  Ni  O
-1   15   16 (adding one more Ni species to distinguish magnetic sites, so total 2 Ni species) 
+1   15   16 (adding one more Ni species to distinguish sites, so total 2 Ni species) 
 Direct
 ...atomic positions...
             </pre>
@@ -1386,13 +1386,13 @@ Direct
             <p>Then add the following line to <code>INCAR</code> for the NSCF step:</p>
             <pre>ICHARG = 11</pre>
 
-            <p>Also append these <code>LDA+U</code> parameters (example for Ni with U and J = 0.10 eV, where both Ni species receive the same correction):</p>
+            <p>Also append these <code>LDA+U</code> parameters (example for Ni with U and J = 0.10 eV, where only the first Ni species receives the correction):</p>
     <pre>
     LDAU         = .TRUE.
     LDAUTYPE     = 3
-    LDAUL        = 2 2 -1           # Apply to d-orbitals of both Ni species
-    LDAUU        = 0.10 0.10 0.00   # U parameter for both Ni species
-    LDAUJ        = 0.10 0.10 0.00   # J parameter for both Ni species
+    LDAUL        = 2 -1 -1           # Apply to d-orbitals of Ni 1
+    LDAUU        = 0.10 0.00 0.00   # U parameter for Ni 1
+    LDAUJ        = 0.10 0.00 0.00   # J parameter for Ni 1
     </pre>
 
             <p>In this example, the correction is applied to the first atom (Ni, 3d orbital). Adjust accordingly for your system.</p>
