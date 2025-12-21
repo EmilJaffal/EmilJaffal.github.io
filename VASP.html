@@ -195,6 +195,61 @@
                 display: none;
             }
         }
+
+        /* Video thumbnail with play button overlay */
+        .video-thumbnail {
+            position: relative;
+            display: inline-block;
+            text-decoration: none !important;
+            border: none !important;
+            border-bottom: none !important;
+            outline: none !important;
+        }
+
+        .video-thumbnail:hover,
+        .video-thumbnail:focus,
+        .video-thumbnail:active,
+        .video-thumbnail:visited {
+            text-decoration: none !important;
+            border: none !important;
+            border-bottom: none !important;
+            outline: none !important;
+        }
+
+        .video-thumbnail::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 68px;
+            height: 48px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 12px;
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .video-thumbnail::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-40%, -50%);
+            width: 0;
+            height: 0;
+            border-left: 20px solid #fff;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .video-thumbnail:hover::after {
+            opacity: 1;
+            background: rgba(255, 0, 0, 0.8);
+        }
     </style>
 </head>
 
@@ -488,15 +543,12 @@
     <section class="section" id="vaspkit-installation">
         <h2>Installing VASPKIT</h2>
         <div style="text-align:center; margin-bottom:1em;">
-            <a href="https://vaspkit.com/installation.html" target="_blank" rel="noopener">
-                <img src="https://i.ytimg.com/vi/RfVP3ue0gZo/hqdefault.jpg?sqp=-oaymwEjCNACELwBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLD9P7cXKKv0d5DbBlgBJYqU0pPq5A"
+            <a href="https://www.youtube.com/watch?v=RfVP3ue0gZo" target="_blank" rel="noopener" class="video-thumbnail">
+                <img src="https://img.youtube.com/vi/RfVP3ue0gZo/maxresdefault.jpg"
                     alt="VASPKIT Installation Tutorial Thumbnail"
-                    style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+                    style="max-width:40%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
             </a>
             <br>
-            <a href="https://vaspkit.com/installation.html" target="_blank" rel="noopener">
-                Installation instructions
-            </a>
         </div>
         <ol>
             <li>Visit the <a href="https://vaspkit.com/installation.html" target="_blank" rel="noopener">VASPKIT
@@ -550,10 +602,10 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
     <section class="section" id="geometry-optimization">
         <h2>Geometry Optimization</h2>
         <div style="text-align:center; margin-bottom:1em;">
-            <a href="https://www.youtube.com/watch?v=AgqwACyBgGw&pp=0gcJCcwJAYcqIYzv" target="_blank" rel="noopener">
+            <a href="https://www.youtube.com/watch?v=AgqwACyBgGw&pp=0gcJCcwJAYcqIYzv" target="_blank" rel="noopener" class="video-thumbnail">
                 <img src="https://img.youtube.com/vi/AgqwACyBgGw/maxresdefault.jpg"
                     alt="Structure Optimization for DFT with VASP YouTube Thumbnail"
-                    style="max-width:50%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
+                    style="max-width:40%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
             </a>
             <br>
         </div>
@@ -719,9 +771,9 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
     <section class="section" id="density-of-states">
         <h2>Density of States</h2>
         <div style="text-align:center; margin-bottom:1em;">
-            <a href="https://www.youtube.com/watch?v=EIuBtJcfXCE" target="_blank" rel="noopener">
+            <a href="https://www.youtube.com/watch?v=EIuBtJcfXCE" target="_blank" rel="noopener" class="video-thumbnail">
                 <img src="https://img.youtube.com/vi/EIuBtJcfXCE/maxresdefault.jpg" alt="DOSCAR Analysis YouTube Thumbnail"
-                    style="max-width:50%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
+                    style="max-width:40%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
             </a>
             <br>
         </div>
@@ -811,10 +863,10 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
     <section class="section" id="electron-localization-function">
         <h2>Electron Localization Function</h2>
         <div style="text-align:center; margin-bottom:1em;">
-            <a href="https://www.youtube.com/watch?v=JSJb0Opa4u4" target="_blank" rel="noopener">
+            <a href="https://www.youtube.com/watch?v=JSJb0Opa4u4" target="_blank" rel="noopener" class="video-thumbnail">
                 <img src="https://img.youtube.com/vi/JSJb0Opa4u4/maxresdefault.jpg"
                     alt="ELFCAR + Bader CHG Calculation YouTube Thumbnail"
-                    style="max-width:50%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
+                    style="max-width:40%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
             </a>
             <br>
         </div></a>
@@ -834,9 +886,9 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
     <section class="section" id="bader-charges">
         <h2>Bader Charges</h2>
         <div style="text-align:center; margin-bottom:1em;">
-            <a href="https://www.youtube.com/watch?v=JSJb0Opa4u4" target="_blank" rel="noopener">
+            <a href="https://www.youtube.com/watch?v=JSJb0Opa4u4" target="_blank" rel="noopener" class="video-thumbnail">
                 <img src="https://img.youtube.com/vi/JSJb0Opa4u4/maxresdefault.jpg" alt="Bader Charges Tutorial YouTube Thumbnail"
-                    style="max-width:50%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
+                    style="max-width:40%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
             </a>
             <br>
         </div></a>
@@ -877,9 +929,9 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
     <section class="section" id="cohp-coop">
         <h2>Crystal Orbital Hamiltonian/Overlap Population</h2>
         <div style="text-align:center; margin-bottom:1em;">
-            <a href="https://www.youtube.com/watch?v=RI_6urNMZIA" target="_blank" rel="noopener">
+            <a href="https://www.youtube.com/watch?v=RI_6urNMZIA" target="_blank" rel="noopener" class="video-thumbnail">
                 <img src="https://img.youtube.com/vi/RI_6urNMZIA/maxresdefault.jpg" alt="COHP/COOP Tutorial YouTube Thumbnail"
-                    style="max-width:50%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
+                    style="max-width:40%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
             </a>
             <br>
         </div>
@@ -944,9 +996,9 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
     <section class="section" id="band-structure">
         <h2>Band Structure</h2>
         <div style="text-align:center; margin-bottom:1em;">
-            <a href="https://www.youtube.com/watch?v=9LmZQUKvUo4" target="_blank" rel="noopener">
+            <a href="https://www.youtube.com/watch?v=9LmZQUKvUo4" target="_blank" rel="noopener" class="video-thumbnail">
                 <img src="https://img.youtube.com/vi/9LmZQUKvUo4/maxresdefault.jpg" alt="Band Structure Tutorial YouTube Thumbnail"
-                    style="max-width:50%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
+                    style="max-width:40%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
             </a>
             <br>
         </div>
@@ -972,15 +1024,11 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
     <section class="section" id="effective-mass">
         <h2>Effective Mass Calculation with VASPKIT</h2>
         <div style="text-align:center; margin-bottom:1em;">
-            <a href="https://youtu.be/3iutlAsZ-fM" target="_blank" rel="noopener">
+            <a href="https://youtu.be/3iutlAsZ-fM" target="_blank" rel="noopener" class="video-thumbnail">
                 <img src="https://img.youtube.com/vi/3iutlAsZ-fM/maxresdefault.jpg" alt="Effective Mass Tutorial YouTube Thumbnail"
-                    style="max-width:50%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
+                    style="max-width:40%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
             </a>
             <br>
-            <br>
-            <a href="http://vaspkit.cn/index.php/52.html" target="_blank" rel="noopener">
-                Reference tutorial
-            </a>
         </div>
         <p>This section covers how to calculate effective masses for electrons and holes using VASPKIT, which is particularly useful for semiconductor materials and electronic transport properties.</p>
 
@@ -1076,14 +1124,10 @@ Band Index:                  LUMO =   10                  HOMO =   9<br>
     <section class="section" id="transport-properties">
         <h2>Boltzmann Transport Properties with VASPKIT</h2>
         <div style="text-align:center; margin-bottom:1em;">
-            <a href="https://youtu.be/4zLXQ6BFIFA" target="_blank" rel="noopener">
+            <a href="https://youtu.be/4zLXQ6BFIFA" target="_blank" rel="noopener" class="video-thumbnail">
                 <img src="https://img.youtube.com/vi/4zLXQ6BFIFA/maxresdefault.jpg" 
                     alt="Boltzmann Transport Properties Tutorial YouTube Thumbnail"
-                    style="max-width:50%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
-            </a>
-            <br>
-            <a href="https://youtu.be/4zLXQ6BFIFA" target="_blank" rel="noopener">
-                Tutorial video
+                    style="max-width:40%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
             </a>
             <br>
             <a href="http://vaspkit.cn/index.php/67.html" target="_blank" rel="noopener">
@@ -1241,9 +1285,9 @@ print("Plot saved as 'carrier_concentration_plot.png'")
     <section class="section" id="hubbard-u-correction">
         <h2>Calculating Hubbard U Correction For DFT+U (LSDA+U)</h2>
         <div style="text-align:center; margin-bottom:1em;">
-        <a href="https://www.youtube.com/watch?v=n8UIL8rubbI" target="_blank" rel="noopener">
+        <a href="https://www.youtube.com/watch?v=n8UIL8rubbI" target="_blank" rel="noopener" class="video-thumbnail">
             <img src="https://img.youtube.com/vi/n8UIL8rubbI/maxresdefault.jpg" alt="Hubbard U Correction Tutorial YouTube Thumbnail"
-                style="max-width:50%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
+                style="max-width:40%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
         </a>
         <br>
         </div>
@@ -1452,10 +1496,10 @@ Direct
 
     <section class="section" id="soc-dftu">
         <h2>Spin-Orbit Coupled DFT+U (LSDA+U) Calculation</h2>
-                <div style="text-align:center; margin-bottom:1em;">
-        <a href="https://youtu.be/e4fTrMsPdyw" target="_blank" rel="noopener">
-            <img src="https://img.youtube.com/vi/e4fTrMsPdyw/maxresdefault.jpg" alt="Hubbard U Correction Tutorial YouTube Thumbnail"
-                style="max-width:50%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
+        <div style="text-align:center; margin-bottom:1em;">
+        <a href="https://youtu.be/e4fTrMsPdyw" target="_blank" rel="noopener" class="video-thumbnail">
+            <img src="https://img.youtube.com/vi/e4fTrMsPdyw/maxresdefault.jpg" alt="SOC DFT+U Tutorial YouTube Thumbnail"
+                style="max-width:40%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
         </a>
         <br>
         </div>
@@ -1562,14 +1606,11 @@ ICHARG = 11       # Read charge density from collinear calculation
     <section class="section" id="fermi-surface">
         <h2>Fermi Surface</h2>
         <div style="text-align:center; margin-bottom:1em;">
-            <a href="https://youtu.be/bVew3_On_LM" target="_blank" rel="noopener">
+            <a href="https://youtu.be/bVew3_On_LM" target="_blank" rel="noopener" class="video-thumbnail">
                 <img src="https://img.youtube.com/vi/bVew3_On_LM/maxresdefault.jpg" alt="Fermi Surface Tutorial YouTube Thumbnail"
-                    style="max-width:50%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
+                    style="max-width:40%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
             </a>
             <br>
-            <a href="https://youtu.be/bVew3_On_LM" target="_blank" rel="noopener">
-                Tutorial video
-            </a>
         </div>
         
         <p>This section covers how to calculate and visualize Fermi surfaces using VASPKIT and PyProcar, which is essential for understanding electronic transport properties and band topology in metals.</p>
@@ -1702,7 +1743,7 @@ vaspkit<br>
             <li><a href="https://ww.vasp.at/forum/viewtopic.php?t=18319" target="_blank" rel="noopener">VASP Forum:
                     Error discussion 3</a></li>
         </ul>
-        <li>To calculate NBANDS:
+        <li>To calculate NBANDS (for metals):
             <ul>
                 <li># of bands = (# of electrons/2) + (# of ions*2)</li>
                 <ul>
