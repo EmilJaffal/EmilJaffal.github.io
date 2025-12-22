@@ -284,6 +284,7 @@
         <a href="#hubbard-u-correction" class="side-nav-item">Hubbard U Correction</a>
         <a href="#work-function" class="side-nav-item">Work Function</a>
         <a href="#soc-dftu" class="side-nav-item">Spin-Orbit Coupled DFT+U</a>
+        <a href="#soc-dftu-case-study" class="side-nav-item">URhGe Case Study</a>
         <a href="#fermi-surface" class="side-nav-item">Fermi Surface</a>
         <a href="#phonons" class="side-nav-item">Phonons</a>
         <a href="#processor-considerations" class="side-nav-item" onclick="closeSideNav()">Processor Considerations</a>
@@ -1600,6 +1601,49 @@ ICHARG = 11       # Read charge density from collinear calculation
                 <li>Consider using hybrid functionals if standard DFT+U doesn't capture the physics correctly</li>
             </ul>
         </ol>
+        <div class="section-divider"></div>
+    </section>
+
+    <section class="section" id="soc-dftu-case-study">
+        <h2>Case study: Spin-orbit coupled DFT+U calculation of highly correlated uranium ferromagnetic superconductor system URhGe</h2>
+
+        <p>This case study demonstrates the calculation of a highly correlated uranium ferromagnetic superconductor system URhGe using spin-orbit coupling combined with DFT+U methods. This is particularly important for actinide compounds where both strong electron correlation and spin-orbit coupling effects are significant.</p>
+
+        <h3>Pseudopotentials</h3>
+        <p>For this calculation, I used standard pseudopotentials</p>
+
+        <h3>Part 1: Rh (<em>d</em>) U Correction</h3>
+        <div style="text-align:center; margin-bottom:1em;">
+            <a href="https://youtu.be/kir0Fl6ygIA" target="_blank" rel="noopener" class="video-thumbnail">
+                <img src="https://img.youtube.com/vi/kir0Fl6ygIA/maxresdefault.jpg"
+                    alt="Rh (d) U Correction for URhGe YouTube Thumbnail"
+                    style="max-width:40%;height:auto;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);object-fit:cover;">
+            </a>
+            <br>
+        </div>
+        <p>This part covers the calculation of Hubbard U correction for Rh d-electrons in the URhGe system. The tutorial video above demonstrates the methodology for determining the appropriate U value for Rh atoms.</p>
+
+        <h3>Part 2: U (<em>f</em>) U Correction - <em>Coming soon!</em></h3>
+        <p>This section will cover the calculation of Hubbard U correction specifically for uranium f-electrons, which is crucial for accurately describing the strong electron correlation effects in actinide compounds.</p>
+
+        <h3>Part 3: DFT+U Collinear Calculation - <em>Coming soon!</em></h3>
+        <p>Perform standard DFT+U calculations using the determined U values from Parts 1 and 2. This includes:</p>
+        <ul>
+            <li>Structural relaxation with DFT+U corrections</li>
+            <li>Electronic structure calculations (DOS, band structure)</li>
+            <li>Magnetic moment analysis</li>
+        </ul>
+
+        <h3>Part 4: DFT+U SOC Noncollinear Calculation - <em>Coming soon!</em></h3>
+        <p>Final calculations incorporating both DFT+U corrections and spin-orbit coupling effects:</p>
+        <ul>
+            <li>Noncollinear magnetic calculations with SOC</li>
+            <li>Magnetic anisotropy analysis</li>
+            <li>Final electronic structure with full relativistic effects</li>
+        </ul>
+
+        <p><strong>Note:</strong> For detailed steps on implementing Hubbard U correction, refer to the <a href="#hubbard-u-correction">Hubbard U Correction</a> section above. For spin-orbit coupling methodology, see the <a href="#soc-dftu">Spin-Orbit Coupled DFT+U</a> section.</p>
+
         <div class="section-divider"></div>
     </section>
 
