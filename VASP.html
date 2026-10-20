@@ -1318,17 +1318,41 @@ NPAR     = 1</code></pre>
                 </ul>
             <li>Import ACF.dat to local machine or just view it in the terminal with <code>vim</code> command</li>
             </li>
-            <li>Run <code>grep ZVAL POTCAR</code>
+            <li>Run <code>grep ZVAL POTCAR</code> to get the number of valence electrons (ZVAL) of each element
                 <ul>
                     <li>Looks like this:</li>
                     <img src="images/bader_2.png" alt="Bader Charges Image Placeholder">
+                    <li>ZVAL values are listed in the POTCAR order, which is the same as the element order in
+                        POSCAR</li>
                 </ul>
-            <li>Run <code>vim POSCAR</code> if you forget the order of the molecules to
-                determine which charge is which molecule</li>
             </li>
-            <li>Use above values as the initial charge, see the VASP output in
-                ACF.dat to determine difference, or actual charge</li>
+            <li>Match each row of <code>ACF.dat</code> to its atom. Rows are in the same order as the atoms in POSCAR
+                (<code>vim POSCAR</code> if you forget). For example, if POSCAR lists <code>Dy Ru Ga</code> with counts
+                <code>4 4 4</code>, rows 1&ndash;4 are Dy, rows 5&ndash;8 are Ru and rows 9&ndash;12 are Ga.</li>
+            <li>For each atom, subtract the Bader <code>CHARGE</code> from that element's ZVAL:
+                <strong>net charge = ZVAL &minus; CHARGE</strong>. A positive result means the atom lost electrons
+                (cation-like); a negative result means it gained them (anion-like).</li>
         </ol>
+
+        <h3>Worked example</h3>
+        <p>Row 1 of <code>ACF.dat</code>:</p>
+        <pre><code>    #         X           Y           Z       CHARGE      MIN DIST   ATOMIC VOL
+ --------------------------------------------------------------------------------
+    1    1.8293      1.8293      1.9646      7.8550      1.3155     17.8112</code></pre>
+        <p>Atom 1 is the first atom in POSCAR, Dy, and <code>grep ZVAL POTCAR</code> gives ZVAL = 9 for the
+            <code>Dy_3</code> potential. Read the <code>CHARGE</code> column (the fifth number), not Z:</p>
+        <table class="cmd-table">
+            <tbody>
+                <tr><td>Atom (ACF.dat row)</td><td>1</td></tr>
+                <tr><td>Element (from POSCAR order)</td><td>Dy</td></tr>
+                <tr><td>ZVAL (from POTCAR)</td><td>9</td></tr>
+                <tr><td>Bader CHARGE (from ACF.dat)</td><td>7.8550</td></tr>
+                <tr><td><strong>Net charge = ZVAL &minus; CHARGE</strong></td><td><strong>9 &minus; 7.8550 = +1.1450</strong></td></tr>
+            </tbody>
+        </table>
+        <p>So Dy has given away about 1.15 electrons. Repeat this for every row, using the ZVAL of that row's element.
+            As a check, <code>NUMBER OF ELECTRONS</code> at the bottom of <code>ACF.dat</code> should equal the sum of
+            ZVAL over all atoms.</p>
         <div class="section-divider"></div>
     </section>
 
