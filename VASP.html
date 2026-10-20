@@ -277,6 +277,104 @@
             opacity: 1;
             background: rgba(255, 0, 0, 0.8);
         }
+        /* Terminal command reference */
+        .cmd-intro {
+            color: #555;
+        }
+
+        .section h3.cmd-heading {
+            color: #222;
+            font-size: 1.15em;
+            font-weight: 600;
+            margin: 1.8em 0 0.6em 0;
+            padding-bottom: 0.35em;
+            border-bottom: 2px solid #2196F3;
+        }
+
+        .section h4.cmd-subheading {
+            color: #444;
+            font-size: 1em;
+            font-weight: 600;
+            margin: 1.4em 0 0.5em 0;
+        }
+
+        table.cmd-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 0 1em 0;
+            border: 1px solid #e6e6e6;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        table.cmd-table tbody tr {
+            border: 0;
+            border-bottom: 1px solid #eee;
+            background: #fff;
+        }
+
+        table.cmd-table tbody tr:nth-child(2n + 1) {
+            background: #fafbfc;
+        }
+
+        table.cmd-table tbody tr:last-child {
+            border-bottom: 0;
+        }
+
+        table.cmd-table td {
+            padding: 0.55em 0.9em;
+            vertical-align: middle;
+            line-height: 1.5;
+        }
+
+        table.cmd-table td:first-child {
+            width: 42%;
+            overflow-wrap: anywhere;
+        }
+
+        table.cmd-table td:first-child code {
+            white-space: normal;
+        }
+
+        kbd {
+            display: inline-block;
+            min-width: 1.4em;
+            padding: 0.05em 0.45em;
+            margin: 0 0.1em;
+            font-family: "Courier New", monospace;
+            font-size: 0.85em;
+            text-align: center;
+            color: #333;
+            background: #fff;
+            border: 1px solid #c9c9c9;
+            border-bottom-width: 2px;
+            border-radius: 4px;
+        }
+
+        .cmd-tip strong {
+            color: #222;
+        }
+
+        .cmd-tip {
+            background-color: #fff8e6;
+            border-left: 4px solid #f0b429;
+            border-radius: 4px;
+            padding: 0.6em 1em;
+            margin: 0 0 1em 0;
+        }
+
+        @media (max-width: 768px) {
+            table.cmd-table td {
+                display: block;
+                width: auto !important;
+                padding: 0.4em 0.8em;
+            }
+
+            table.cmd-table td:first-child {
+                padding-bottom: 0;
+            }
+        }
+
         .incar-note {
             background-color: #eef6fc;
             border-left: 4px solid #2196F3;
@@ -343,48 +441,106 @@
 
     <section class="section" id="SSH-Notes">
         <h2>Handy Terminal Commands</h2>
+        <p class="cmd-intro">The commands you'll use every day on the server. Keys to press look like
+            <kbd>Esc</kbd>; commands to type look like <code>ls</code>. Anything in [brackets] is a placeholder.</p>
 
-        <p>Login: <code>ssh [username]@[serverIP]</code></p>
-        <p>Password: <code>[password]</code></p>
+        <h3 class="cmd-heading">Connecting and moving files</h3>
+        <table class="cmd-table">
+            <tbody>
+                <tr><td><code>ssh [username]@[serverIP]</code></td><td>Log in. Enter your password when asked; nothing shows on screen as you type it</td></tr>
+                <tr><td><code>scp ~/[local file path] [username]@[serverIP]:~</code></td><td>Copy a file from your computer to the server</td></tr>
+                <tr><td><code>scp [username]@[serverIP]:~/[server file path] ~/[local file path]</code></td><td>Copy a file from the server to your computer</td></tr>
+                <tr><td><code>scp -r ~/[local folder path] [username]@[serverIP]:~</code></td><td>Copy a whole folder to the server</td></tr>
+            </tbody>
+        </table>
+        <p class="cmd-tip">Run <code>scp</code> in a terminal on your own computer, <strong>not</strong> while logged
+            into the server.</p>
 
-        <h3>Moving files between your computer and the server</h3>
-        <p>Run these in a terminal on your own computer, <strong>not</strong> while logged into the server.</p>
-        <ul>
-            <li>Local file to server: <code>scp ~/[local file path] [username]@[serverIP]:~</code></li>
-            <li>Server file to local: <code>scp [username]@[serverIP]:~/[server file path] ~/[local file path]</code></li>
-            <li>Local folder to server: <code>scp -r ~/[local file path] [username]@[serverIP]:~</code></li>
-        </ul>
+        <h3 class="cmd-heading">Navigating and managing files</h3>
+        <table class="cmd-table">
+            <tbody>
+                <tr><td><code>pwd</code></td><td>Show which folder you're in</td></tr>
+                <tr><td><code>ls</code> &nbsp;/&nbsp; <code>ls -lt</code></td><td>List files / with sizes and dates, newest first</td></tr>
+                <tr><td><code>cd [foldername]</code></td><td>Move into a folder</td></tr>
+                <tr><td><code>cd ..</code> &nbsp;/&nbsp; <code>cd ~</code> &nbsp;/&nbsp; <code>cd -</code></td><td>Up one level / home folder / back to the previous folder</td></tr>
+                <tr><td><code>mkdir [foldername]</code></td><td>Make a folder</td></tr>
+                <tr><td><code>cp [filename] [destination]</code></td><td>Copy a file</td></tr>
+                <tr><td><code>cp -r [foldername] [destination]</code></td><td>Copy a folder and its contents</td></tr>
+                <tr><td><code>mv [oldname] [newname]</code></td><td>Rename (or move) a file</td></tr>
+                <tr><td><code>rm [filename]</code> &nbsp;/&nbsp; <code>rm -r [foldername]</code></td><td>Delete a file / a folder and its contents</td></tr>
+            </tbody>
+        </table>
+        <p class="cmd-tip"><code>cp</code> and <code>mv</code> overwrite files without asking, and <code>rm</code> is
+            permanent (there's no trash). Names are case-sensitive: VASP reads <code>INCAR</code>, not
+            <code>incar</code>.</p>
 
-        <h3>Navigating and managing files</h3>
-        <ul>
-            <li>Show which folder you are in: <code>pwd</code></li>
-            <li>Move into a folder: <code>cd [foldername]</code> (up one level: <code>cd ..</code>)</li>
-            <li>See files in the working directory: <code>ls</code></li>
-            <li>Make a directory: <code>mkdir [foldername]</code></li>
-            <li>Copy a file: <code>cp [filename] [destination]</code></li>
-            <li>Copy folders + contents: <code>cp -r [foldername] [destinationfolder]</code></li>
-            <li>Rename a file: <code>mv [oldfilename] [newfilename]</code></li>
-            <li>Delete files: <code>rm [filename]</code></li>
-            <li>Delete folders + contents: <code>rm -r [foldername]</code></li>
-            <li>Show the last lines of a file: <code>tail [filename]</code>. Follow it live as it grows:
-                <code>tail -f [filename]</code> (Ctrl+C stops watching; the job keeps running)</li>
-        </ul>
+        <h3 class="cmd-heading">Reading files</h3>
+        <table class="cmd-table">
+            <tbody>
+                <tr><td><code>cat [filename]</code></td><td>Print the whole file</td></tr>
+                <tr><td><code>head [filename]</code> &nbsp;/&nbsp; <code>tail [filename]</code></td><td>First / last few lines</td></tr>
+                <tr><td><code>tail -f [filename]</code></td><td>Follow a file live as it grows; <kbd>Ctrl</kbd>+<kbd>C</kbd> stops watching</td></tr>
+                <tr><td><code>less [filename]</code></td><td>Scroll through a file; <kbd>/</kbd> to search, <kbd>q</kbd> to quit</td></tr>
+                <tr><td><code>grep [text] [filename]</code></td><td>Find lines containing text, e.g. <code>grep TOTEN OUTCAR</code></td></tr>
+            </tbody>
+        </table>
 
-        <h3>Monitoring the server</h3>
-        <ul>
-            <li>Check CPU% of server and status of jobs: <code>top</code> or <code>htop</code></li>
-            <li>Find a job's directory from its PID #: <code>pwdx [PID#]</code></li>
-        </ul>
+        <h3 class="cmd-heading">Running jobs and monitoring the server</h3>
+        <table class="cmd-table">
+            <tbody>
+                <tr><td><code>sbatch job</code></td><td>Submit a job (run it from the calculation folder)</td></tr>
+                <tr><td><code>sq</code></td><td>Check your jobs (same as <code>squeue -u [username]</code>)</td></tr>
+                <tr><td><code>scancel [job no.]</code></td><td>Cancel a job, using the number shown by <code>sq</code></td></tr>
+                <tr><td><code>tail -f out</code></td><td>Watch VASP's output live</td></tr>
+                <tr><td><code>top</code> &nbsp;/&nbsp; <code>htop</code></td><td>CPU use of the server and running processes</td></tr>
+                <tr><td><code>pwdx [PID#]</code></td><td>Find a process's folder from its PID</td></tr>
+            </tbody>
+        </table>
 
-        <h3>Editing files with vim</h3>
-        <ul>
-            <li>Open (or create) a file: <code>vim [filename]</code></li>
-            <li>Press <code>i</code> to enter insert mode, then type or paste</li>
-            <li>Press <code>Esc</code> to leave insert mode</li>
-            <li>Save and exit: <code>Esc</code>, then <code>:wq</code> + Enter</li>
-            <li>Exit without saving: <code>Esc</code>, then <code>:q!</code> + Enter</li>
-            <li>Delete the whole line under the cursor: <code>Esc</code>, then <code>dd</code></li>
-        </ul>
+        <h3 class="cmd-heading">Editing files with vim</h3>
+        <p class="cmd-tip">vim opens in <strong>normal mode</strong>, where keys are commands. Press <kbd>i</kbd> for
+            <strong>insert mode</strong> to type or paste, and <kbd>Esc</kbd> to go back. If keys start doing strange
+            things, press <kbd>Esc</kbd>. Commands starting with <code>:</code> are typed in normal mode and appear at
+            the bottom of the screen; press <kbd>Enter</kbd> to run them.</p>
+        <table class="cmd-table">
+            <tbody>
+                <tr><td><code>vim [filename]</code></td><td>Open (or create) a file</td></tr>
+                <tr><td><kbd>i</kbd></td><td>Insert mode: type or paste</td></tr>
+                <tr><td><kbd>Esc</kbd></td><td>Back to normal mode</td></tr>
+                <tr><td><code>:wq</code></td><td>Save and exit</td></tr>
+                <tr><td><code>:w</code></td><td>Save without exiting</td></tr>
+                <tr><td><code>:q!</code></td><td>Exit without saving. Use this if <code>:q</code> says <em>"E37: No write since last change"</em> and you want to discard your edits</td></tr>
+            </tbody>
+        </table>
+
+        <h4 class="cmd-subheading">Moving around and editing (normal mode)</h4>
+        <table class="cmd-table">
+            <tbody>
+                <tr><td><kbd>g</kbd><kbd>g</kbd> &nbsp;/&nbsp; <kbd>G</kbd></td><td>Jump to the top / bottom of the file</td></tr>
+                <tr><td><code>:set number</code> &nbsp;/&nbsp; <code>:42</code></td><td>Show line numbers / jump to line 42</td></tr>
+                <tr><td><code>/ENCUT</code> then <kbd>n</kbd></td><td>Search for text, then go to the next match</td></tr>
+                <tr><td><kbd>x</kbd></td><td>Delete the character under the cursor</td></tr>
+                <tr><td><kbd>d</kbd><kbd>d</kbd> &nbsp;/&nbsp; <kbd>5</kbd><kbd>d</kbd><kbd>d</kbd></td><td>Delete the current line / 5 lines</td></tr>
+                <tr><td><kbd>y</kbd><kbd>y</kbd> then <kbd>p</kbd></td><td>Copy the line, then paste it below the cursor</td></tr>
+                <tr><td><kbd>u</kbd> &nbsp;/&nbsp; <kbd>Ctrl</kbd>+<kbd>r</kbd></td><td>Undo / redo</td></tr>
+                <tr><td><kbd>x</kbd> on the <code>#</code></td><td>Uncomment an INCAR line</td></tr>
+                <tr><td><kbd>I</kbd> <kbd>#</kbd> <kbd>Esc</kbd></td><td>Comment out an INCAR line (<kbd>I</kbd> is capital i: insert at the start of the line)</td></tr>
+            </tbody>
+        </table>
+        <p class="cmd-tip"><strong>"Found a swap file"</strong> when opening a file means it's open somewhere else, or
+            vim closed badly last time. If nobody else is editing it, choose <kbd>E</kbd> (Edit anyway) or
+            <kbd>D</kbd> (Delete it).</p>
+
+        <h3 class="cmd-heading">General terminal tips</h3>
+        <table class="cmd-table">
+            <tbody>
+                <tr><td><kbd>Tab</kbd></td><td>Autocomplete file and folder names (press twice to list options). Saves typing and typos</td></tr>
+                <tr><td><kbd>&uarr;</kbd> &nbsp;/&nbsp; <code>history</code></td><td>Bring back previous commands / list them</td></tr>
+                <tr><td><kbd>Ctrl</kbd>+<kbd>C</kbd></td><td>Stop whatever is running in the terminal. It does <em>not</em> cancel a submitted job; use <code>scancel</code></td></tr>
+                <tr><td><code>clear</code> &nbsp;/&nbsp; <kbd>Ctrl</kbd>+<kbd>L</kbd></td><td>Clear the screen</td></tr>
+                <tr><td><kbd>Cmd</kbd>+<kbd>C</kbd> / <kbd>Cmd</kbd>+<kbd>V</kbd></td><td>Copy / paste on a Mac. In Windows terminals: <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd> / <kbd>V</kbd>, or right-click</td></tr>
+            </tbody>
+        </table>
 
         <div class="section-divider"></div>
     </section>
