@@ -187,6 +187,33 @@
                 width: 280px;
                 left: -280px;
             }
+
+            /* Full-width cards on phones; leave room above the first card for the Quick Nav button */
+            header {
+                padding-top: 4em;
+            }
+
+            .section {
+                box-sizing: border-box;
+                width: auto;
+                margin-left: 16px;
+                margin-right: 16px;
+                padding: 1.25em;
+            }
+
+            .section img {
+                max-width: 100% !important;
+            }
+
+            .section pre,
+            .incar-table {
+                max-width: 100%;
+                overflow-x: auto;
+            }
+
+            .incar-table {
+                display: block;
+            }
         }
 
         /* Hide regular table of contents on smaller screens when side nav is available */
@@ -250,6 +277,24 @@
             opacity: 1;
             background: rgba(255, 0, 0, 0.8);
         }
+        .incar-note {
+            background-color: #eef6fc;
+            border-left: 4px solid #2196F3;
+            border-radius: 4px;
+            padding: 0.6em 1em;
+            margin: 0 0 1em 0;
+        }
+
+        pre.incar-snippet code {
+            line-height: 1.5em;
+            font-size: 0.95em;
+            white-space: pre;
+        }
+
+        .incar-table td,
+        .incar-table th {
+            vertical-align: top;
+        }
     </style>
 </head>
 
@@ -300,82 +345,109 @@
         <h2>Handy Terminal Commands</h2>
 
         <p>Login: <code>ssh [username]@[serverIP]</code></p>
-
         <p>Password: <code>[password]</code></p>
 
-        <p>Copying a file from your local machine to the destination server:
-            <code>scp ~/[local file path] [username]@[serverIP]:~</code>
+        <h3>Moving files between your computer and the server</h3>
+        <p>Run these in a terminal on your own computer, <strong>not</strong> while logged into the server.</p>
         <ul>
-            <li>Note that moving files between your local computer and the server
-                must be done within a terminal without being logged into the server</li>
-            </p>
+            <li>Local file to server: <code>scp ~/[local file path] [username]@[serverIP]:~</code></li>
+            <li>Server file to local: <code>scp [username]@[serverIP]:~/[server file path] ~/[local file path]</code></li>
+            <li>Local folder to server: <code>scp -r ~/[local file path] [username]@[serverIP]:~</code></li>
+        </ul>
 
-            <p>Copying a file from the server to your local machine:
-                <code>scp [username]@[serverIP]:~/[server file path]
-                ~/[local file path]</code>
-            </p>
+        <h3>Navigating and managing files</h3>
+        <ul>
+            <li>Show which folder you are in: <code>pwd</code></li>
+            <li>Move into a folder: <code>cd [foldername]</code> (up one level: <code>cd ..</code>)</li>
+            <li>See files in the working directory: <code>ls</code></li>
+            <li>Make a directory: <code>mkdir [foldername]</code></li>
+            <li>Copy a file: <code>cp [filename] [destination]</code></li>
+            <li>Copy folders + contents: <code>cp -r [foldername] [destinationfolder]</code></li>
+            <li>Rename a file: <code>mv [oldfilename] [newfilename]</code></li>
+            <li>Delete files: <code>rm [filename]</code></li>
+            <li>Delete folders + contents: <code>rm -r [foldername]</code></li>
+            <li>Show the last lines of a file: <code>tail [filename]</code>. Follow it live as it grows:
+                <code>tail -f [filename]</code> (Ctrl+C stops watching; the job keeps running)</li>
+        </ul>
 
-            <p>Copying a folder from your local machine to the destination
-                server: <code>scp -r ~/[local file path] [username]@[serverIP]:~
-            </code></p>
+        <h3>Monitoring the server</h3>
+        <ul>
+            <li>Check CPU% of server and status of jobs: <code>top</code> or <code>htop</code></li>
+            <li>Find a job's directory from its PID #: <code>pwdx [PID#]</code></li>
+        </ul>
 
-            <p>Check CPU% of server and status of files: <code>top</code> or
-                <code>htop</code>
-            </p>
+        <h3>Editing files with vim</h3>
+        <ul>
+            <li>Open (or create) a file: <code>vim [filename]</code></li>
+            <li>Press <code>i</code> to enter insert mode, then type or paste</li>
+            <li>Press <code>Esc</code> to leave insert mode</li>
+            <li>Save and exit: <code>Esc</code>, then <code>:wq</code> + Enter</li>
+            <li>Exit without saving: <code>Esc</code>, then <code>:q!</code> + Enter</li>
+            <li>Delete the whole line under the cursor: <code>Esc</code>, then <code>dd</code></li>
+        </ul>
 
-            <p>Finding a job directory from PID #: <code>pwdx [PID#]</code> </p>
-
-            <p>See files in the working directory: <code>ls</code></p>
-            <p>Delete files: <code>rm [filename]</code></p>
-            <p>Delete folders + contents: <code>rm -r [foldername]</code></p>
-            <p>Make a directory: <code>mkdir [foldername]</code></p>
-            <p>Copy folders + contents: <code>cp [foldername] [destinationfolder]</code></p>
-            <p>View & edit a file: <code>vim [filename]</code></p>
-            <p>Rename a file: <code>mv [oldfilename] [newfilename]</code></p>
-            <ul>
-                <li>To enter insert mode, click esc</li>
-                <li>To save and exit, type esc (to leave insert mode) + <code>:wq</code> + enter</li>
-                <li>To exit without saving after typing, type esc (to leave insert mode) + :q! + enter</li>
-            </ul>
-
-            <div class="section-divider"></div>
+        <div class="section-divider"></div>
     </section>
 
     <section class="section" id="files">
         <h2>Before You Start: Creating the Necessary Files</h2>
 
-        <h3>POSCAR file</h3>
+        <h3>Setting up your calculation folder</h3>
+        <p>Every calculation gets its own folder holding five files: <code>POSCAR</code>, <code>POTCAR</code>,
+            <code>INCAR</code>, <code>KPOINTS</code> and <code>job</code>. VASP reads them from the folder you submit
+            the job from.</p>
         <ol>
-            <li>Open CIF files with VESTA, which you can download <a
-                    href="https://jp-minerals.org/vesta/en/download.html" target="_blank" rel="noopener">here</a>.</li>
-            <li>Export structure as fractional coordinate (rename the files as
-                POSCAR in a folder with whatever naming convention you prefer)
-                <ul>
-                    <li>On Macbook, it can only saved as POSCAR.vasp so you can't just delete it. You can
-                        only remove the .vasp with the command <code>mv POSCAR.vasp POSCAR</code></li>
-                </ul>
-            <li>Move POSCAR files from local computer to your folder on the destination
-                server with terminal/powershell using the above keys
+            <li>Log in and move into your working directory, e.g. <code>cd DFT</code>. Right after logging in you are
+                in your home folder, one level too high. Run <code>pwd</code> to check where you are.</li>
+            <li>Make a folder for the compound and move into it, e.g. <code>mkdir DyRuGa</code>, then
+                <code>cd DyRuGa</code>.</li>
+            <li>Create each file inside that folder with <code>vim [filename]</code>: press <code>i</code>, paste,
+                then <code>Esc</code> + <code>:wq</code>. Don't paste file contents straight into the terminal prompt;
+                the shell will try to run each line as a command.</li>
             <li>I name the first folder as [composition-structure] and will have
                 the specific composition named as composition or structure
                 type, depending on what I’m doing, such as CeRuSi2-CeNiSi2. However,
                 everyone works their own way, just make sure to keep detailed notes.</li>
-            </li>
         </ol>
-        </li>
+
+        <h3>POSCAR file</h3>
+        <ol>
+            <li>Open CIF files with VESTA, which you can download <a
+                    href="https://jp-minerals.org/vesta/en/download.html" target="_blank" rel="noopener">here</a>.</li>
+            <li>Export the structure in VASP format with fractional coordinates and name the file POSCAR.
+                <ul>
+                    <li>On a Mac, VESTA saves it as POSCAR.vasp. Remove the extension with
+                        <code>mv POSCAR.vasp POSCAR</code></li>
+                </ul>
+            </li>
+            <li>Move POSCAR into your calculation folder on the server with <code>scp</code> (see
+                <a href="#SSH-Notes">Handy Terminal Commands</a>).</li>
+            <li>Note the order of the elements on line 6 of POSCAR (e.g. <code>Dy Ru Ga</code>). The POTCAR must
+                follow the same order.</li>
         </ol>
 
         <h3>POTCAR file</h3>
         <ol>
-            <li>Check order of POSCAR molecules for the potcreate command
+            <li>List the potentials available for an element with <code>potshow</code>, e.g. <code>potshow Dy</code>.
+                Most elements have several versions, marked by a suffix (e.g. <code>Dy</code> and <code>Dy_3</code>;
+                <code>_pv</code> and <code>_sv</code> also treat semicore states as valence). The VASP
+                <a href="https://www.vasp.at/wiki/index.php/Available_PAW_potentials" target="_blank"
+                    rel="noopener">list of available PAW potentials</a> explains which electrons each one treats
+                as valence.</li>
+            <li>Use the potentials chosen for your project. For example, for DyRuGa we use <code>Dy_3</code>,
+                <code>Ru</code> and <code>Ga</code>.
                 <ul>
-                    <li>For example: <code>potcreate Si Fe Ce</code> in command
-                        line, which matches the order of molecules in the
-                        POSCAR file</li>
+                    <li><code>Dy_3</code> vs <code>Dy</code>: the <code>_3</code> lanthanide potentials treat the atom
+                        as trivalent and freeze the 4<em>f</em> electrons in the core. This is cheaper and converges
+                        more easily, but the <em>f</em> electrons aren't described explicitly, so the results are more
+                        qualitative.</li>
                 </ul>
             </li>
-            <li>Check available element potentials like this:
-                <code>potshow Si</code>
+            <li>Build the POTCAR with <code>potcreate</code>, listing each element's potential once, in the same order
+                as POSCAR. Only the potential names go in, not the number of atoms:
+                <ul>
+                    <li>POSCAR elements <code>Dy Ru Ga</code> &rarr; <code>potcreate Dy_3 Ru Ga</code></li>
+                </ul>
             </li>
             <li>You can also generate POTCAR files using VASPKIT:
                 <ul>
@@ -385,160 +457,223 @@
                     <li>Note: Your PBE directory must be set up correctly when installing VASP</li>
                 </ul>
             </li>
-        </ol>
-        </ol>
-        </li>
+            <li>Check the result with <code>grep TITEL POTCAR</code>: the potentials should be listed in the same order
+                as the elements in POSCAR.</li>
         </ol>
 
-        <h3>INCAR file</h3>
+        <h3 id="incar-file">INCAR file</h3>
+        <p>The INCAR tells VASP which calculation to run. The template below is split into numbered sections. VASP
+            ignores anything after a <code>#</code>, so you pick a calculation by uncommenting (deleting the
+            <code>#</code> in front of) the tags in the sections you need, and leaving everything else commented.</p>
         <ol>
-            <li>Copy the INCAR from this template below, or download it <a href="assets/INCAR" download>here</a>.</li>
-            <ul>
-                <div style="border: 1px solid #ccc; padding: 10px;">
-                    <code>
-                            ### INCAR-Template for VASP Calculations - Martin
-                            Changed 2015-12-22<br>
-                            ## General Parameters/Electronic Relaxation<br>
-                            PREC =Accurate # Precision<br>
-                            ENCUT = 500 # cutoff energy for the planewave basis
-                            set
-                            in eV.<br>
-                            EDIFF = 1E-8 # convergence condition for the
-                            electronic
-                            loop<br>
-                            NELM = 150 # maximum number of electronic
-                            iterations<br>
-                            NELMIN = 4 # minimum number of electronic
-                            iterations<br>
-                            KPAR = 2 # no. of nodes (max. no. of k-points)<br>
-                            NCORE = 4 # no. of cores per node<br>
-                            #LWAVE = .FALSE.# Do not write WAVECAR<br>
-                            ## Structure Optimization (or static for NSW=0)<br>
-                            EDIFFG = 1E-6 # convergence criterion for ionic
-                            loops
-                            (pos=energy; neg=forces)<br>
-                            NSW = 1000 # number of ionic steps<br>
-                            IBRION = 1 # ionic update: 1:QN, 2:CG (for bad
-                            guesses)<br>
-                            ISIF = 3 # freedom: 2=ions; 4=ions,shape;
-                            3=ions,shape,vol<br>
-                            MAXMIX = 80 # max number steps stored in Broyden
-                            mixer,
-                            when negative: resets after ionic step<br>
-                            ISMEAR = 1 # smearing: -5-insul/scond/DOS 0-large
-                            systems (with SIGMA 0.05) 1-metals (with SIGMA
-                            0.2)<br>
-                            ## DOS and Band Structure Calcuations (for
-                            ICHARG=11
-                            prev. CHGCAR required)<br>
-                            #NEDOS = 1001 # number of DOS gridpoints<br>
-                            #LORBIT = 10 # DOSCAR and PROCAR are written<br>
-                            #ISMEAR = -5 # smearing: -5-insul/scond/DOS 0-large
-                            systems 1-metals (with SIGMA)<br>
-                            ## Bader Charge and Electron localization
-                            function<br>
-                            #LAECHG = .TRUE.<br>
-                            #LELF=.TRUE.<br>
-                            #NPAR = 1<br>
-                            ## COHP Analysis (via LOBSTER)<br>
-                            #LWAVE = .TRUE.<br>
-                            #NSW = 0<br>
-                            #ISYM = -1<br>
-                            #NBANDS = 600 ! should equal the total number of
-                            orbitals<br>
-                            #LORBIT = 12<br>
-                            #ISTART = 0<br>
-                            ## Phonon Dispersion via finite displacements<br>
-                            #EDIFF = 1E-8 # delete other EDIFF tags!!!<br>
-                            #ISMEAR = 0<br>
-                            #SIGMA = 0.01<br>
-                            #ADDGRID = .TRUE.<br>
-                            ## Hybrid Calculations<br>
-                            LHFCALC=.TRUE. # use of HF/DFT hybrid
-                            functionals<br>
-                            AEXX = 0.25 # fraction of exact exchange<br>
-                            AGGAX = 0.75 # fraction of GGA<br>
-                            ALGO = Damped # electronic minimisation algorithm
-                            (damped velocity friction algo.)<br>
-                            TIME = 0.05 # time step for ALGO<br>
-                            PRECFOCK = FAST # controls FFT grid for the exact
-                            exchange<br>
-                            HFSCREEN = 0.2 # determines the range separation
-                            parameter<br>
-                            NKREDX = 2 # grid reduction factors<br>
-                            NKREDY = 2 # grid reduction factors<br>
-                            NKREDZ = 2 # grid reduction factors<br>
-                            ## Stress Tensor Calculation<br>
-                            #ENCUT = 600 # delete other ENCUT tags!!!<br>
-                            #IBRION = 6<br>
-                            #ISIF = 6<br>
-                            #NSW = 1<br>
-                            #NFREE = 2<br>
-                            ## additionally for DFPT:<br>
-                            #IBRION = 8<br>
-                            #NWRITE = 3<br>
-                            #NSW = 1<br>
-                            ## Supercell (band offset) calculations<br>
-                            #LVHAR = .TRUE.<br>
-                            #AMIN = 0.1<br>
-                            ## Born Effective Charge<br>
-                            #LEPSILON = .TRUE. ! dielectric matrix<br>
-                            #LOPTICS = .TRUE. ! DFPT including empty bands for
-                            hybrid functionals<br>
-                            ## Spin-orbing Coupling<br>
-                            #LSORBIT = .TRUE.<br>
-                            #LNONCOLLINEAR = .TRUE.<br>
-                            ##GGA+U, Coulomb interaction energy<br>
-                            #LDAU = .TRUE.<br>
-                            #LDAUTYPE = 1 !1 = Liechtenstein et al.; 2 =
-                            Dudarev's
-                            approach, only the difference (U-J) is
-                            meaningfull<br>
-                            #LDAUPRINT = 0<br>
-                            #LDAUU = 0 3.71 0 0<br>
-                            #LDAUJ = 0 0 0 0<br>
-                            #LASPH = .TRUE.<br>
-                        </code>
-                </div>
-                <li>Adjust accordingly per your calculation of course. The
-                    above template indicates a structure optimization, as
-                    it's not commented out with '#'</li>
-            </ul>
-            </li>
+            <li><strong>[1] General Parameters</strong> is always active.</li>
+            <li>Activate <strong>one</strong> task section, [2]&ndash;[9], and comment out the others. [2] Structure
+                Optimization is active in the template, so for any other task you must comment it out. With [2] off,
+                VASP does a single static run (<code>NSW</code> defaults to 0).</li>
+            <li>The add-ons [10]&ndash;[13] (spin polarization, hybrid functionals, spin&ndash;orbit coupling, DFT+U)
+                go on top of a task section when your system needs them.</li>
+            <li>Never leave the same tag active twice (e.g. two <code>ISMEAR</code> lines). Comment out the copy you
+                aren't using.</li>
+            <li>Each calculation section on this page starts with a blue <strong>INCAR:</strong> note and the
+                ready-to-use INCAR for that calculation ([1] plus the relevant sections). The table below summarizes
+                them.</li>
         </ol>
 
+        <table class="incar-table">
+            <thead>
+                <tr>
+                    <th>Calculation</th>
+                    <th>Active sections</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><a href="#geometry-optimization">Geometry optimization</a></td><td>[1] + [2]</td><td>Template as written</td></tr>
+                <tr><td><a href="#hybrid-calculations">Hybrid optimization</a></td><td>[1] + [2] + [11]</td><td>Only if [1] + [2] won't converge</td></tr>
+                <tr><td><a href="#density-of-states">Density of states</a></td><td>[1] + [3]</td><td>Keep <code>LWAVE = .FALSE.</code> commented</td></tr>
+                <tr><td><a href="#magnetic-moment">Magnetic moment</a></td><td>[1] + [3] + [10]</td><td>Set <code>MAGMOM</code> for your atoms</td></tr>
+                <tr><td><a href="#band-structure">Band structure</a></td><td>[1] + [3]</td><td>KPOINTS from the VASPKIT k-path</td></tr>
+                <tr><td><a href="#electron-localization-function">ELF</a> and <a href="#bader-charges">Bader charges</a></td><td>[1] + [4]</td><td>One run gives both; comment out <code>KPAR</code></td></tr>
+                <tr><td><a href="#cohp-coop">COHP/COOP</a></td><td>[1] + [5]</td><td>Set <code>NBANDS</code></td></tr>
+                <tr><td><a href="#phonons">Phonons</a></td><td>[1] + [6]</td><td></td></tr>
+                <tr><td>Stress tensor</td><td>[1] + [7]</td><td>Comment out <code>ENCUT</code> in [1]</td></tr>
+                <tr><td>Supercell band offset</td><td>[1] + [8]</td><td></td></tr>
+                <tr><td>Born effective charge</td><td>[1] + [9]</td><td></td></tr>
+                <tr><td><a href="#hubbard-u-correction">DFT+U</a> / <a href="#soc-dftu">SOC</a></td><td>add [13] and/or [12]</td><td>SOC runs with <code>vasp_ncl</code></td></tr>
+            </tbody>
+        </table>
 
-        <h3>KPOINTS file</h3>
+        <p>Copy the template below, or download it <a href="assets/INCAR" download>here</a>. As written, it runs a
+            geometry optimization ([1] + [2]).</p>
+        <pre class="incar-snippet"><code>### INCAR template for VASP calculations (adapted from Martin, 2015-12-22)
+###
+### HOW TO USE THIS TEMPLATE
+###  - [1] General Parameters is ALWAYS active.
+###  - Activate ONE task section [2]-[9] by deleting the # in front of its tags,
+###    and comment out (#) every other task section, including [2].
+###    With [2] commented out, NSW defaults to 0 (a static run).
+###  - Add-ons [10]-[13] can be combined with a task section when needed.
+###  - Never leave the same tag active twice (e.g. two ISMEAR lines).
+###    Comment out the copy you are not using.
+###  - As written, this file runs a geometry optimization ([1] + [2]).
+
+## [1] General Parameters / Electronic Relaxation -- ALWAYS ACTIVE
+PREC   = Accurate  # precision
+ENCUT  = 500       # plane-wave cutoff energy (eV)
+EDIFF  = 1E-8      # convergence criterion for the electronic loop
+NELM   = 150       # maximum number of electronic iterations
+NELMIN = 4         # minimum number of electronic iterations
+KPAR   = 2         # k-points run in parallel (comment out for Bader)
+NCORE  = 4         # cores working on each orbital
+#LWAVE = .FALSE.   # skips writing WAVECAR; keep commented for DOS, band structure and COHP
+
+## [2] Structure Optimization -- ACTIVE BY DEFAULT (comment out for any other task)
+EDIFFG = 1E-6      # convergence criterion for the ionic loop (pos = energy; neg = forces)
+NSW    = 1000      # maximum number of ionic steps
+IBRION = 1         # ionic update: 1 = quasi-Newton, 2 = conjugate gradient (for bad guesses)
+ISIF   = 3         # freedom: 2 = ions; 4 = ions + shape; 3 = ions + shape + volume
+MAXMIX = 80        # max steps stored in Broyden mixer (negative: resets after each ionic step)
+ISMEAR = 1         # smearing: -5 = insulators/semiconductors/DOS; 0 = large systems (SIGMA = 0.05); 1 = metals (SIGMA = 0.2)
+
+## [3] DOS and Band Structure
+#NEDOS  = 1001     # number of DOS grid points
+#LORBIT = 10       # write DOSCAR and PROCAR (11 for lm-decomposed orbitals)
+#ISMEAR = -5       # tetrahedron method for DOS
+# if you add ICHARG = 11, a previous CHGCAR must be in the folder
+
+## [4] Bader Charges and Electron Localization Function
+#LAECHG = .TRUE.   # write AECCAR0 + AECCAR2 (core + valence charge) for Bader
+#LELF   = .TRUE.   # write ELFCAR
+#NPAR   = 1
+
+## [5] COHP Analysis (via LOBSTER)
+#LWAVE  = .TRUE.   # LOBSTER needs the WAVECAR
+#NSW    = 0        # static run
+#ISYM   = -1       # symmetry off
+#NBANDS = 600      # should equal the total number of orbitals (see Troubleshooting)
+#LORBIT = 12
+#ISTART = 0
+
+## [6] Phonon Dispersion via finite displacements
+#EDIFF   = 1E-8    # replaces EDIFF in [1] -- don't leave both active
+#ISMEAR  = 0
+#SIGMA   = 0.01
+#ADDGRID = .TRUE.
+
+## [7] Stress Tensor
+#ENCUT  = 600      # replaces ENCUT in [1] -- comment that one out
+#IBRION = 6
+#ISIF   = 6
+#NSW    = 1
+#NFREE  = 2
+## additionally for DFPT (replaces IBRION = 6 above):
+#IBRION = 8
+#NWRITE = 3
+
+## [8] Supercell (band offset) calculations
+#LVHAR = .TRUE.
+#AMIN  = 0.1
+
+## [9] Born Effective Charge
+#LEPSILON = .TRUE. # dielectric matrix
+#LOPTICS  = .TRUE. # DFPT including empty bands for hybrid functionals
+
+## ---------- ADD-ONS (combine with a task section above) ----------
+
+## [10] Spin Polarization / Magnetism
+#ISPIN  = 2        # spin-polarized calculation
+#MAGMOM = 4*0 4*1  # starting moment per atom, in POSCAR order (here 4 atoms at 0, then 4 at 1)
+
+## [11] Hybrid Calculations -- ONLY add to [2] if a normal optimization won't converge (very slow)
+#LHFCALC  = .TRUE. # use HF/DFT hybrid functionals
+#AEXX     = 0.25   # fraction of exact exchange
+#AGGAX    = 0.75   # fraction of GGA exchange
+#ALGO     = Damped # electronic minimization algorithm (damped velocity friction)
+#TIME     = 0.05   # time step for ALGO = Damped (lower it if convergence fails)
+#PRECFOCK = FAST   # FFT grid for the exact exchange
+#HFSCREEN = 0.2    # range-separation parameter
+#NKREDX   = 2      # grid reduction factors: each KPOINTS number must be divisible by these
+#NKREDY   = 2
+#NKREDZ   = 2
+
+## [12] Spin-Orbit Coupling -- run with vasp_ncl, not vasp_std
+#LSORBIT       = .TRUE.
+#LNONCOLLINEAR = .TRUE.
+
+## [13] GGA+U, Coulomb interaction energy (see Hubbard U Correction)
+#LDAU      = .TRUE.
+#LDAUTYPE  = 1     # 1 = Liechtenstein et al.; 2 = Dudarev (only U - J is meaningful)
+#LDAUPRINT = 0
+#LDAUL     = -1 2 -1 -1  # orbital to correct, one per species in POSCAR order: -1 = none, 2 = d, 3 = f
+#LDAUU     = 0 3.71 0 0  # U (eV), one per species
+#LDAUJ     = 0 0 0 0     # J (eV), one per species
+#LASPH     = .TRUE.</code></pre>
+
+        <h3 id="kpoints-file">KPOINTS file</h3>
+        <p>KPOINTS sets how finely VASP samples reciprocal space (the Brillouin zone). A denser mesh (bigger numbers)
+            gives more accurate results but takes longer. Longer lattice vectors need fewer k-points along that
+            direction.</p>
         <ol>
-            <li>Generate the file using VASPKIT, as seen in the video here <a
+            <li>Generate the file with VASPKIT: type <code>vaspkit</code>, then <code>01</code> (VASP Input-Files
+                Generator), then <code>102</code> (KPOINTS). When asked for the k-point resolution, use the
+                <strong>Fine</strong> level, <code>0.02</code>. See the <a
                     href="https://www.youtube.com/watch?v=AgqwACyBgGw&pp=0gcJCcwJAYcqIYzv" target="_blank"
-                    rel="noopener">.</a></li>
-            <li>You can also use VASPKIT by typing <code>vaspkit</code> in the terminal, then <code>01</code> for VASP
-                Input-Files Generator, and <code>102</code> for KPOINTS file.</li>
-            <li>This file is an attempt to solve Schrodinger's equation… which
-                is technically an infinite attempt as you have a guess and set
-                up the cutoff and wanted precision in POSCAR file
+                    rel="noopener">geometry optimization video</a> for a walkthrough.</li>
+            <li>Inspect the generated file with <code>cat KPOINTS</code> (or <code>vim KPOINTS</code>). It looks like
+                this:
+                <pre><code>K-Points
+0
+Gamma
+8 2 8
+0 0 0</code></pre>
                 <ul>
-                    <li><strong>K-Points:</strong> This line indicates the type
-                        of k-points generation scheme being used. In this case,
-                        it's set to "Gamma", meaning a single k-point at the
-                        center of the Brillouin zone.</li>
-                    <li><strong>0:</strong> This value typically denotes the
-                        number of k-points to be generated. Here, "0" implies a
-                        single k-point.</li>
-                    <li><strong>Gamma:</strong> Specifies the center of the
-                        Brillouin zone where the k-point is placed.</li>
-                    <li><strong>8 2 8:</strong> Defines the mesh size, i.e.,
-                        the number of k-points along each reciprocal lattice
-                        vector direction. "8 2 8" indicates 8 k-points along
-                        the first lattice vector, 2 along the second, and 8
-                        along the third.</li>
-                    <li><strong>0 0 0:</strong> Specifies any fractional shifts
-                        applied to the k-point grid. In this example, there are
-                        no shifts applied.</li>
+                    <li><strong>Line 1 (K-Points):</strong> a comment; any text works.</li>
+                    <li><strong>Line 2 (0):</strong> 0 tells VASP to generate the mesh automatically.</li>
+                    <li><strong>Line 3 (Gamma):</strong> the mesh is centered on the &Gamma; point, the center of the
+                        Brillouin zone (<code>Monkhorst-Pack</code> is the alternative).</li>
+                    <li><strong>Line 4 (8 2 8):</strong> the number of k-points along each reciprocal lattice vector:
+                        8 along the first, 2 along the second and 8 along the third.</li>
+                    <li><strong>Line 5 (0 0 0):</strong> an optional shift of the mesh; here none.</li>
                 </ul>
             </li>
+            <li><strong>Make sure all three mesh numbers on line 4 are even.</strong> We run with
+                <code>KPAR = 2</code>, which splits the k-points into two groups, so an even mesh divides evenly
+                between them. If VASPKIT gives an odd number, round it up in vim (e.g. <code>7 3 7</code> &rarr;
+                <code>8 4 8</code>). Even numbers are also divisible by the <code>NKRED</code> factors used in hybrid
+                calculations ([11]; see <a href="#troubleshooting">Troubleshooting</a>).</li>
         </ol>
+
+        <h3 id="job-file">job file (SLURM)</h3>
+        <ol>
+            <li>Copy the <a href="assets/job" target="_blank" rel="noopener">job template</a> into your calculation
+                folder, or copy one from a previous calculation: <code>cp ../[otherfolder]/job .</code></li>
+            <li>Edit it with <code>vim job</code>:
+                <ul>
+                    <li><code>#SBATCH -J</code>: give each run its own job name so it's easy to find in
+                        <code>sq</code> and cancel.</li>
+                    <li><code>#SBATCH -n</code>: the number of cores. Use the number you've been given (e.g. 16),
+                        not the template's 32.</li>
+                </ul>
+            </li>
+            <li><code>#!/bin/sh</code> must be the very first line of the file. Copy-pasting often adds a blank or
+                stray line above it, and <code>sbatch</code> then refuses the file with an error like
+                <em>"This does not look like a batch script. The first line must start with #!"</em>. Open the file
+                with <code>vim job</code>, put the cursor on the extra line, press <code>dd</code>, then
+                <code>:wq</code>.</li>
+            <li>VASP's output goes to a file called <code>out</code> (from the last line,
+                <code>srun vasp_std &gt; out</code>). After submitting with <code>sbatch job</code>, follow it with
+                <code>tail -f out</code>.</li>
+        </ol>
+
+        <h3>Final check before submitting</h3>
+        <ul>
+            <li><code>ls</code> in your folder shows <code>INCAR&nbsp; job&nbsp; KPOINTS&nbsp; POSCAR&nbsp; POTCAR</code>.</li>
+            <li>The POTCAR order matches POSCAR line 6 (<code>grep TITEL POTCAR</code>).</li>
+            <li>Only the INCAR sections for your calculation are active. [11] Hybrid Calculations stays commented out
+                unless you need it.</li>
+            <li>All KPOINTS mesh numbers are even.</li>
+            <li>If you're new, have someone look over your files before you run.</li>
+        </ul>
     </section>
 
     <section class="section" id="vaspkit-installation">
@@ -610,6 +745,27 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
             </a>
             <br>
         </div>
+        <p class="incar-note"><strong>INCAR:</strong> keep [1] General Parameters and [2] Structure Optimization active (the template as written). Every other section stays commented out; in particular, make sure [11] Hybrid Calculations is commented out.</p>
+        <pre class="incar-snippet"><code># INCAR for geometry optimization: [1] + [2]
+# (all other template sections commented out or deleted)
+
+## [1] General Parameters
+PREC     = Accurate    # precision
+ENCUT    = 500         # plane-wave cutoff energy (eV)
+EDIFF    = 1E-8        # convergence criterion for the electronic loop
+NELM     = 150         # maximum number of electronic iterations
+NELMIN   = 4           # minimum number of electronic iterations
+KPAR     = 2           # k-points run in parallel (comment out for Bader)
+NCORE    = 4           # cores working on each orbital
+#LWAVE = .FALSE.   # skips writing WAVECAR; keep commented for DOS, band structure and COHP
+
+## [2] Structure Optimization
+EDIFFG   = 1E-6        # convergence criterion for the ionic loop (pos = energy; neg = forces)
+NSW      = 1000        # maximum number of ionic steps
+IBRION   = 1           # ionic update: 1 = quasi-Newton, 2 = conjugate gradient (for bad guesses)
+ISIF     = 3           # freedom: 2 = ions; 4 = ions + shape; 3 = ions + shape + volume
+MAXMIX   = 80          # max steps stored in Broyden mixer (negative: resets after each ionic step)
+ISMEAR   = 1           # smearing: -5 = insulators/semiconductors/DOS; 0 = large systems (SIGMA = 0.05); 1 = metals (SIGMA = 0.2)</code></pre>
         <ol>
             <li>
                 <span style="color: red; font-weight: bold;">
@@ -620,7 +776,8 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
             <li>
                 <span style="color: red; font-weight: bold;">
                     The Oliynyk lab uses SLURM for job scheduling, so you need a job file. See the template <a
-                        href="assets/job" target="_blank" rel="noopener">here</a>.
+                        href="assets/job" target="_blank" rel="noopener">here</a> and the <a href="#job-file">job
+                        file</a> notes above.
                 </span>
             </li>
             <li>Once all the above files are created, you’re ready to go with
@@ -651,6 +808,7 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
                     <li><code>Vim + 1</code></li>
                     <li><code>tail 1</code> (only displays last couple of
                         lines)</li>
+                    <li>With <code>sbatch job</code>, the output file is <code>out</code>: <code>tail -f out</code></li>
                 </ul>
             </li>
             <li>Can view energy with the following command:
@@ -660,8 +818,8 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
             </li>
             <li>If ‘reached required accuracy - stopping structural energy
                 minimisation’ is displayed at the bottom of file 1, this
-                indicates it has reached your threshold of accuracy, indicated
-                by EDIFF in the INCAR file. Copy the optimized structure to the
+                indicates it has reached your threshold of accuracy, set
+                by EDIFFG in [2] of the INCAR file. Copy the optimized structure to the
                 structure input file with:
                 <ul>
                     <li><code>cp CONTCAR POSCAR</code></li>
@@ -697,19 +855,54 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
             </li>
         </ol>
 
-        <h3>For hybrid calculations</h3>
+        <h3 id="hybrid-calculations">For hybrid calculations</h3>
+        <p class="incar-note"><strong>INCAR:</strong> [1] General Parameters + [2] Structure Optimization + [11] Hybrid Calculations.</p>
+        <pre class="incar-snippet"><code># INCAR for hybrid optimization: [1] + [2] + [11]
+# (all other template sections commented out or deleted)
+
+## [1] General Parameters
+PREC     = Accurate    # precision
+ENCUT    = 500         # plane-wave cutoff energy (eV)
+EDIFF    = 1E-8        # convergence criterion for the electronic loop
+NELM     = 150         # maximum number of electronic iterations
+NELMIN   = 4           # minimum number of electronic iterations
+KPAR     = 2           # k-points run in parallel (comment out for Bader)
+NCORE    = 4           # cores working on each orbital
+#LWAVE = .FALSE.   # skips writing WAVECAR; keep commented for DOS, band structure and COHP
+
+## [2] Structure Optimization
+EDIFFG   = 1E-6        # convergence criterion for the ionic loop (pos = energy; neg = forces)
+NSW      = 1000        # maximum number of ionic steps
+IBRION   = 1           # ionic update: 1 = quasi-Newton, 2 = conjugate gradient (for bad guesses)
+ISIF     = 3           # freedom: 2 = ions; 4 = ions + shape; 3 = ions + shape + volume
+MAXMIX   = 80          # max steps stored in Broyden mixer (negative: resets after each ionic step)
+ISMEAR   = 1           # smearing: -5 = insulators/semiconductors/DOS; 0 = large systems (SIGMA = 0.05); 1 = metals (SIGMA = 0.2)
+
+## [11] Hybrid Calculations
+LHFCALC  = .TRUE.      # use HF/DFT hybrid functionals
+AEXX     = 0.25        # fraction of exact exchange
+AGGAX    = 0.75        # fraction of GGA exchange
+ALGO     = Damped      # electronic minimization algorithm (damped velocity friction)
+TIME     = 0.05        # time step for ALGO = Damped (lower it if convergence fails)
+PRECFOCK = FAST        # FFT grid for the exact exchange
+HFSCREEN = 0.2         # range-separation parameter
+NKREDX   = 2           # grid reduction factors: each KPOINTS number must be divisible by these
+NKREDY   = 2
+NKREDZ   = 2</code></pre>
         <ol>
-            <li>If a certain potential cannot converge no matter what, you need
-                to enable the section for the hybrid calculations in the INCAR
-                file. The optimization will take much longer, up to weeks in
-                some cases.
+            <li>If a certain potential cannot converge no matter what, uncomment
+                [11] Hybrid Calculations on top of [1] + [2]. The optimization will
+                take much longer, up to weeks in some cases.
             </li>
-            <li>In case there’s a problem with convergence, the way to fix that
-                would be changing TIME = 0.2 to 0.1 in the INCAR file.
+            <li>Each KPOINTS mesh number must be divisible by <code>NKREDX</code>,
+                <code>NKREDY</code> and <code>NKREDZ</code> (2), i.e. even.
             </li>
-            <li>Setting an easier convergence criterion, namely 10^-6 and 10^-5
-                for electronic and ionic loop respectively may help with
-                stubborn structures.
+            <li>In case there’s a problem with convergence, lower <code>TIME</code>
+                in [11], e.g. halve it from 0.05 to 0.025.
+            </li>
+            <li>Setting an easier convergence criterion may help with stubborn
+                structures: <code>EDIFF = 1E-6</code> in [1] (electronic loop) and
+                <code>EDIFFG = 1E-5</code> in [2] (ionic loop).
             </li>
         </ol>
 
@@ -778,10 +971,26 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
             </a>
             <br>
         </div>
+        <p class="incar-note"><strong>INCAR:</strong> [1] General Parameters + [3] DOS and Band Structure. Comment out [2] Structure Optimization. Keep <code>LWAVE = .FALSE.</code> commented, as we need the WAVECAR file.</p>
+        <pre class="incar-snippet"><code># INCAR for density of states: [1] + [3]
+# (all other template sections commented out or deleted)
+
+## [1] General Parameters
+PREC     = Accurate    # precision
+ENCUT    = 500         # plane-wave cutoff energy (eV)
+EDIFF    = 1E-8        # convergence criterion for the electronic loop
+NELM     = 150         # maximum number of electronic iterations
+NELMIN   = 4           # minimum number of electronic iterations
+KPAR     = 2           # k-points run in parallel (comment out for Bader)
+NCORE    = 4           # cores working on each orbital
+#LWAVE = .FALSE.   # skips writing WAVECAR; keep commented for DOS, band structure and COHP
+
+## [3] DOS and Band Structure
+NEDOS    = 1001        # number of DOS grid points
+LORBIT   = 10          # write DOSCAR and PROCAR (11 for lm-decomposed orbitals)
+ISMEAR   = -5          # tetrahedron method for DOS
+# if you add ICHARG = 11, a previous CHGCAR must be in the folder</code></pre>
         <ol>
-            <li>Uncomment <i>DOS & band structure</i> and <i>General
-                    Parameters</i> (never <code>LWAVE = .FALSE.</code>) in INCAR as we need the WAVECAR file for this.
-            </li>
             <li>Non-spin polarized DOSCAR
             <li><strong>Spin-Polarized and Non-Spin-Polarized :</strong>
                 <ul>
@@ -827,12 +1036,35 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
             <li>Spin-polarized DOSCAR (only if magnetism is expected here,
                 otherwise you can ignore this)
                 <ul>
-                    <li>Add the following to the INCAR:</li>
+                    <li>INCAR: the DOS setup ([1] + [3]) plus [10] Spin Polarization:</li>
+                    <pre class="incar-snippet"><code># INCAR for spin-polarized DOS: [1] + [3] + [10]
+# (all other template sections commented out or deleted)
+
+## [1] General Parameters
+PREC     = Accurate    # precision
+ENCUT    = 500         # plane-wave cutoff energy (eV)
+EDIFF    = 1E-8        # convergence criterion for the electronic loop
+NELM     = 150         # maximum number of electronic iterations
+NELMIN   = 4           # minimum number of electronic iterations
+KPAR     = 2           # k-points run in parallel (comment out for Bader)
+NCORE    = 4           # cores working on each orbital
+#LWAVE = .FALSE.   # skips writing WAVECAR; keep commented for DOS, band structure and COHP
+
+## [3] DOS and Band Structure
+NEDOS    = 1001        # number of DOS grid points
+LORBIT   = 10          # write DOSCAR and PROCAR (11 for lm-decomposed orbitals)
+ISMEAR   = -5          # tetrahedron method for DOS
+# if you add ICHARG = 11, a previous CHGCAR must be in the folder
+
+## [10] Spin Polarization / Magnetism
+ISPIN    = 2           # spin-polarized calculation
+MAGMOM   = 4*0 4*1     # starting moment per atom, in POSCAR order (here 4 atoms at 0, then 4 at 1)</code></pre>
                     <ul>
-                        <li>ISPIN = 2</li>
-                        <li>MAGMOM = ie.) 4*0 4*1 OR 0 0 0 0 1 1 1 1</li>
+                        <li><code>ISPIN = 2</code> turns on spin polarization</li>
+                        <li><code>MAGMOM</code> gives a starting moment for each atom, in POSCAR order:
+                            <code>4*0 4*1</code> is the same as <code>0 0 0 0 1 1 1 1</code></li>
                         <ul>
-                            <li>This can only be full integers</li>
+                            <li>Whole numbers are fine as a starting guess</li>
                             <li>This is your prediction, the OUTCAR file will
                                 give you the software's guess</li>
                         </ul>
@@ -852,8 +1084,6 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
                         </ul>
                     </ul>
                     <li>Retrieve DOSCAR file when converged</li>
-                    <li>From there, plot the same elemental contributions in
-                        wxDragon like before</li>
                 </ul>
             </li>
         </ol>
@@ -871,15 +1101,35 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
             </a>
             <br>
         </div></a>
+        <p class="incar-note"><strong>INCAR:</strong> [1] General Parameters + [4] Bader Charges and ELF. Comment out [2] Structure Optimization and <code>KPAR</code> in [1].</p>
+        <pre class="incar-snippet"><code># INCAR for ELF and Bader: [1] + [4]
+# (all other template sections commented out or deleted)
+
+## [1] General Parameters
+PREC     = Accurate    # precision
+ENCUT    = 500         # plane-wave cutoff energy (eV)
+EDIFF    = 1E-8        # convergence criterion for the electronic loop
+NELM     = 150         # maximum number of electronic iterations
+NELMIN   = 4           # minimum number of electronic iterations
+#KPAR     = 2          # commented out for Bader
+NCORE    = 4           # cores working on each orbital
+#LWAVE = .FALSE.   # skips writing WAVECAR; keep commented for DOS, band structure and COHP
+
+## [4] Bader Charges and Electron Localization Function
+LAECHG   = .TRUE.      # write AECCAR0 + AECCAR2 (core + valence charge) for Bader
+LELF     = .TRUE.      # write ELFCAR
+NPAR     = 1</code></pre>
+        <p><strong>ELF and Bader use the same run.</strong> [4] writes the <code>ELFCAR</code> (from
+            <code>LELF</code>) and the <code>AECCAR0</code>/<code>AECCAR2</code> files Bader needs (from
+            <code>LAECHG</code>) at the same time, so there's no need to run VASP twice. Run it once, then do whichever
+            post-processing you need: open <code>ELFCAR</code> for the ELF (below), or follow the
+            <a href="#bader-charges">Bader Charges</a> steps to get <code>ACF.dat</code>.</p>
         <ol>
-            <li>Uncomment <i>Bader Charge and Electron localization
-                    function</i>
-                and <i>General Parameters</i> in INCAR</li>
             <li>Run with <code>mpirun -np 16 vasp_std>Elf&amp;</code> <span
                     style="color: #2196F3; font-weight: bold;">(Oliynyk lab - use <code>sbatch job</code> after setting
                     job file)</span></li>
-            <li>Import ELFCAR file into local computer and drag into VESPA to
-                view </li>
+            <li>No extra commands are needed for the ELF: import the ELFCAR file into your local computer and drag it
+                into VESTA to view</li>
         </ol>
         <div class="section-divider"></div>
     </section>
@@ -893,19 +1143,19 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
             </a>
             <br>
         </div></a>
+        <p class="incar-note"><strong>INCAR:</strong> same as ELF: [1] General Parameters + [4] Bader Charges and ELF, with [2] Structure Optimization and <code>KPAR</code> commented out (see the INCAR in <a href="#electron-localization-function">Electron Localization Function</a>). If you already did the ELF run, skip straight to <code>chgsum.pl</code> below in that folder.</p>
         <ol>
-            <li>Uncomment Bader Charge and Electron localization function and
-                General Parameters in INCAR, comment out KPAR</li>
-            <li>Run with <code>-np 8 vasp_std>Bader&amp;</code> <span
+            <li>Run with <code>mpirun -np 8 vasp_std>Bader&amp;</code> <span
                     style="color: #2196F3; font-weight: bold;">(Oliynyk lab - use <code>sbatch job</code> after setting
                     job file)</span></li>
-            <li>When converged run <code>chgsum.pl AECCAR0 AECCAR2</code>
+            <li>Unlike the ELF, Bader needs two post-processing commands to produce <code>ACF.dat</code>.
+                When converged, run <code>chgsum.pl AECCAR0 AECCAR2</code>
                 <ul>
                     <li>This combines core
                         and valence electrons
                 </ul>
             </li>
-            <li>type <code>bader CHGCAR -ref CHGCAR_sum</code>
+            <li>type <code>bader CHGCAR -ref CHGCAR_sum</code>, which writes <code>ACF.dat</code>
                 <ul>
                     <li>Looks like this:</li>
                     <img src="images/bader_1.png" alt="Bader Charges Image Placeholder">
@@ -936,9 +1186,28 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
             </a>
             <br>
         </div>
+        <p class="incar-note"><strong>INCAR:</strong> [1] General Parameters + [5] COHP Analysis. Comment out [2] Structure Optimization. Set <code>NBANDS</code> for your system (see the note below and <a href="#nbands">calculating NBANDS</a>).</p>
+        <pre class="incar-snippet"><code># INCAR for COHP/COOP: [1] + [5]
+# (all other template sections commented out or deleted)
+
+## [1] General Parameters
+PREC     = Accurate    # precision
+ENCUT    = 500         # plane-wave cutoff energy (eV)
+EDIFF    = 1E-8        # convergence criterion for the electronic loop
+NELM     = 150         # maximum number of electronic iterations
+NELMIN   = 4           # minimum number of electronic iterations
+KPAR     = 2           # k-points run in parallel (comment out for Bader)
+NCORE    = 4           # cores working on each orbital
+#LWAVE = .FALSE.   # skips writing WAVECAR; keep commented for DOS, band structure and COHP
+
+## [5] COHP Analysis
+LWAVE    = .TRUE.      # LOBSTER needs the WAVECAR
+NSW      = 0           # static run
+ISYM     = -1          # symmetry off
+NBANDS   = 600         # should equal the total number of orbitals (see Troubleshooting)
+LORBIT   = 12
+ISTART   = 0</code></pre>
         <ol>
-            <li>Uncomment COHP Analysis (via LOBSTER) and General Parameters in
-                INCAR</li>
             <li>Copy the lobsterin file from this template below, or download it <a href="assets/lobsterin"
                     download>here</a>. You can also add the lobsterin file after your calculation. lobsterin is not needed for the VASP
                 calculation to run. Only for lobster to run.</li>
@@ -982,8 +1251,8 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
                     style="color: #2196F3; font-weight: bold;">(Oliynyk lab - use <code>sbatch job</code> after setting
                     job file)</span></li>
             <li>type <code>lobster</code></li>
-            <li>Note: If you do not set NBANDS or set it too low, you may see an NBANDS error in the output file. Check
-                the required value, then set NBANDS to that value plus 20 for reliable results.</li>
+            <li>Note: If you do not set NBANDS in [5] or set it too low, you may see an NBANDS error in the output
+                file. Check the required value, then set NBANDS to that value plus 20 for reliable results.</li>
             <li>Import COOPCAR.lobster, COHPCAR.lobster, to local machine as needed for plotting</li>
             <li>To plot COHP/COOP, save the files (COOPCAR.lobster, COHPCAR.lobster, etc.) in a <strong>.zip</strong>
                 archive and upload to <a href="https://cohp-coop-gui-1de5a0643ceb.herokuapp.com" target="_blank"
@@ -1003,11 +1272,27 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
             </a>
             <br>
         </div>
+        <p class="incar-note"><strong>INCAR:</strong> same as DOS: [1] General Parameters + [3] DOS and Band Structure. Comment out [2] Structure Optimization. Keep <code>LWAVE = .FALSE.</code> commented, as we need the WAVECAR file.</p>
+        <pre class="incar-snippet"><code># INCAR for band structure: [1] + [3]
+# (all other template sections commented out or deleted)
+
+## [1] General Parameters
+PREC     = Accurate    # precision
+ENCUT    = 500         # plane-wave cutoff energy (eV)
+EDIFF    = 1E-8        # convergence criterion for the electronic loop
+NELM     = 150         # maximum number of electronic iterations
+NELMIN   = 4           # minimum number of electronic iterations
+KPAR     = 2           # k-points run in parallel (comment out for Bader)
+NCORE    = 4           # cores working on each orbital
+#LWAVE = .FALSE.   # skips writing WAVECAR; keep commented for DOS, band structure and COHP
+
+## [3] DOS and Band Structure
+NEDOS    = 1001        # number of DOS grid points
+LORBIT   = 10          # write DOSCAR and PROCAR (11 for lm-decomposed orbitals)
+ISMEAR   = -5          # tetrahedron method for DOS
+# if you add ICHARG = 11, a previous CHGCAR must be in the folder</code></pre>
         <ol>
-            <li>Uncomment <i>DOS & band structure</i> and <i>General
-                    Parameters</i> (never <code>LWAVE = .FALSE.</code>) in INCAR as we need the WAVECAR file for this.
-            </li>
-            <li>Then we need to use VASPKIT to create a new KPOINTS using the symmetry. Follow these steps:</li>
+            <li>We need to use VASPKIT to create a new KPOINTS using the symmetry. Follow these steps:</li>
             <ul>
                 <li>Type <code>vaspkit</code> into the terminal/powershell</li>
                 <li>Type <code>03</code> to select K-Path for Band-Structure</li>
@@ -1038,7 +1323,7 @@ https://www.researchgate.net/post/Is_there_an_optimum_number_of_k_points_in_the_
             <p>First, perform a standard geometry optimization as described in the <a href="#geometry-optimization">Geometry Optimization</a> section to obtain the optimized structure.</p>
 
             <li><strong>Run Band Structure Calculation (SCF)</strong></li>
-            <p>Perform a band structure calculation following the <a href="#7">Band Structure</a> section instructions. This provides the electronic band structure needed for effective mass calculations.</p>
+            <p>Perform a band structure calculation following the <a href="#band-structure">Band Structure</a> section instructions. This provides the electronic band structure needed for effective mass calculations.</p>
 
             <li><strong>Determine High-Symmetry Points of Interest</strong></li>
             <p>Identify the high-symmetry points in your material's band structure where you want to calculate effective masses, typically at band extrema (valence band maximum and conduction band minimum).</p>
@@ -1142,7 +1427,7 @@ Band Index:                  LUMO =   10                  HOMO =   9<br>
             <p>First, perform a standard geometry optimization as described in the <a href="#geometry-optimization">Geometry Optimization</a> section to obtain the optimized structure.</p>
 
             <li><strong>Run Band Structure Calculation (SCF)</strong></li>
-            <p>Perform a band structure calculation following the <a href="#7">Band Structure</a> section instructions. This provides the electronic band structure needed for transport property calculations.</p>
+            <p>Perform a band structure calculation following the <a href="#band-structure">Band Structure</a> section instructions. This provides the electronic band structure needed for transport property calculations.</p>
 
             <li><strong>Generate KPOINTS for Transport Properties</strong></li>
             <p>Call the VASPKIT-681 command to generate a KPOINTS file specifically for the calculation of transport properties:</p>
@@ -1509,7 +1794,42 @@ Direct
 
         <ol>
             <li><strong>1: Initial Collinear SCF Relaxation</strong></li>
-            <p>First, perform a standard collinear spin-polarized structural relaxation to obtain the optimized geometry. Use the standard INCAR settings for structure optimization with DFT+U parameters.</p>
+            <p>First, perform a standard collinear spin-polarized structural relaxation to obtain the optimized geometry.</p>
+            <p class="incar-note"><strong>INCAR:</strong> [1] General Parameters + [2] Structure Optimization + [10] Spin Polarization + [13] GGA+U. Adjust <code>MAGMOM</code> and the <code>LDAU</code> lists to your species.</p>
+            <pre class="incar-snippet"><code># INCAR for SOC step 1: [1] + [2] + [10] + [13]
+# (all other template sections commented out or deleted)
+
+## [1] General Parameters
+PREC     = Accurate    # precision
+ENCUT    = 500         # plane-wave cutoff energy (eV)
+EDIFF    = 1E-8        # convergence criterion for the electronic loop
+NELM     = 150         # maximum number of electronic iterations
+NELMIN   = 4           # minimum number of electronic iterations
+KPAR     = 2           # k-points run in parallel (comment out for Bader)
+NCORE    = 4           # cores working on each orbital
+#LWAVE = .FALSE.   # skips writing WAVECAR; keep commented for DOS, band structure and COHP
+
+## [2] Structure Optimization
+EDIFFG   = 1E-6        # convergence criterion for the ionic loop (pos = energy; neg = forces)
+NSW      = 1000        # maximum number of ionic steps
+IBRION   = 1           # ionic update: 1 = quasi-Newton, 2 = conjugate gradient (for bad guesses)
+ISIF     = 3           # freedom: 2 = ions; 4 = ions + shape; 3 = ions + shape + volume
+MAXMIX   = 80          # max steps stored in Broyden mixer (negative: resets after each ionic step)
+ISMEAR   = 1           # smearing: -5 = insulators/semiconductors/DOS; 0 = large systems (SIGMA = 0.05); 1 = metals (SIGMA = 0.2)
+
+## [10] Spin Polarization / Magnetism
+ISPIN    = 2           # spin-polarized calculation
+MAGMOM   = 4*0 4*1     # starting moment per atom, in POSCAR order (here 4 atoms at 0, then 4 at 1)
+
+## [13] GGA+U
+LDAU     = .TRUE.
+LDAUTYPE = 1           # 1 = Liechtenstein et al.; 2 = Dudarev (only U - J is meaningful)
+LDAUPRINT = 0
+LDAUL    = -1 2 -1 -1  # orbital to correct, one per species in POSCAR order: -1 = none, 2 = d, 3 = f
+LDAUU    = 0 3.71 0 0  # U (eV), one per species
+LDAUJ    = 0 0 0 0     # J (eV), one per species
+LASPH    = .TRUE.</code></pre>
+
 
             <li><strong>2: Collinear SCF Calculation</strong></li>
             <p>Run a collinear spin-polarized calculation (e.g., DOS calculation) to obtain <code>CHGCAR</code> and <code>WAVECAR</code> files using <code>vasp_std</code>. Use the following INCAR template (example for UTe₂):</p>
@@ -1661,15 +1981,33 @@ ICHARG = 11       # Read charge density from collinear calculation
 
         <ol>
             <li><strong>1: Initial Collinear SCF Relaxation</strong></li>
-            <p>First, perform a standard collinear structural relaxation (can be spin-polarized) to obtain the optimized geometry. Use the standard INCAR settings for structure optimization (Can use DFT+U as well, see SOC).</p>
+            <p>First, perform a standard collinear structural relaxation (can be spin-polarized) to obtain the optimized geometry: [1] + [2], optionally with [10] Spin Polarization and [13] GGA+U (see SOC).</p>
 
             <li><strong>2: Collinear SCF Calculation</strong></li>
-            <p>Run a collinear spin-polarized calculation (e.g., DOS calculation) to obtain <code>CHGCAR</code> and <code>CHG</code> (CHG may not be needed) files using <code>vasp_std</code>. Add the following to the INCAR's general parameters:</p>
-            <pre>
-ISMEAR = 0       # Gaussian smearing
-ICHARG = 11      # Read charge from CHGCAR
-LORBIT = 11      # Write orbital projections (for orbitals)
-            </pre>
+            <p>Run a collinear spin-polarized calculation (e.g., DOS calculation) to obtain <code>CHGCAR</code> and <code>CHG</code> (CHG may not be needed) files using <code>vasp_std</code>.</p>
+            <p class="incar-note"><strong>INCAR:</strong> the DOS setup ([1] + [3], [2] commented out), plus the three tags below. Comment out <code>ISMEAR</code> and <code>LORBIT</code> in [3] so they aren't set twice.</p>
+            <pre class="incar-snippet"><code># INCAR for Fermi surface step 2: [1] + [3]
+# (all other template sections commented out or deleted)
+
+## [1] General Parameters
+PREC     = Accurate    # precision
+ENCUT    = 500         # plane-wave cutoff energy (eV)
+EDIFF    = 1E-8        # convergence criterion for the electronic loop
+NELM     = 150         # maximum number of electronic iterations
+NELMIN   = 4           # minimum number of electronic iterations
+KPAR     = 2           # k-points run in parallel (comment out for Bader)
+NCORE    = 4           # cores working on each orbital
+#LWAVE = .FALSE.   # skips writing WAVECAR; keep commented for DOS, band structure and COHP
+
+## [3] DOS and Band Structure
+NEDOS    = 1001        # number of DOS grid points
+# if you add ICHARG = 11, a previous CHGCAR must be in the folder
+
+## added to [1] for the Fermi surface
+ISMEAR   = 0           # Gaussian smearing
+ICHARG   = 11          # Read charge from CHGCAR
+LORBIT   = 11          # Write orbital projections (for orbitals)</code></pre>
+
 
             <li><strong>3: Generate KPOINTS for Fermi Surface Calculation</strong></li>
             <p>Run VASPKIT to generate KPOINTS for the Fermi Surface calculation:</p>
@@ -1752,7 +2090,7 @@ vaspkit<br>
             <li>
                 <code>ERROR FEXCP: supplied exchange-correlation table is too small, maximal index: 5536</code>
                 <ul>
-                    <li>Solved by adding the following to the INCAR:</li>
+                    <li>Solved by setting the following in [2] Structure Optimization (replacing the values there):</li>
                     <ul>
                         <li>IBRION=1</li>
                         <li>ISIF=2</li>
@@ -1787,7 +2125,9 @@ vaspkit<br>
             <li><a href="https://ww.vasp.at/forum/viewtopic.php?t=18319" target="_blank" rel="noopener">VASP Forum:
                     Error discussion 3</a></li>
         </ul>
-        <li>To calculate NBANDS (for metals):
+        <h3 id="nbands">Calculating NBANDS (for metals)</h3>
+        <ul>
+            <li>Set this in [5] COHP Analysis of the INCAR.
             <ul>
                 <li># of bands = (# of electrons/2) + (# of ions*2)</li>
                 <ul>
@@ -1799,8 +2139,8 @@ vaspkit<br>
                     </li>
                 </ul>
             </ul>
-        </li>
-        </ol>
+            </li>
+        </ul>
         <div class="section-divider"></div>
     </section>
 

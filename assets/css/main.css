@@ -3100,7 +3100,7 @@ input, select, textarea {
 		/* Main */
 
 			#main {
-				margin-left: 15%;
+				margin-left: 25%; /* must match #header width so content never slides under the sidebar */
 				max-width: none;
 				padding: 6em 3em 3em 3em;
 				width: calc(100% - 25%);

@@ -1,84 +1,103 @@
-### INCAR-Template for VASP Calculations - Martin Changed 2015-12-22
-## General Parameters/Electronic Relaxation
-PREC = Accurate # Precision
-ENCUT = 500    # cutoff energy for the planewave basis set in eV.
-EDIFF  = 1E-8  # convergence condition for the electronic loop
-NELM = 150     # maximum number of electronic iterations 
-NELMIN = 4     # minimum number of electronic iterations
-NPAR = 2 
-KPAR = 2       # no. of nodes (max. no. of k-points) 
-NCORE = 4      # no. of cores per node
-LWAVE = .FALSE. # Do not write WAVECAR = .FALSE. - set to .TRUE. for WAVECAR
+### INCAR template for VASP calculations (adapted from Martin, 2015-12-22)
+###
+### HOW TO USE THIS TEMPLATE
+###  - [1] General Parameters is ALWAYS active.
+###  - Activate ONE task section [2]-[9] by deleting the # in front of its tags,
+###    and comment out (#) every other task section, including [2].
+###    With [2] commented out, NSW defaults to 0 (a static run).
+###  - Add-ons [10]-[13] can be combined with a task section when needed.
+###  - Never leave the same tag active twice (e.g. two ISMEAR lines).
+###    Comment out the copy you are not using.
+###  - As written, this file runs a geometry optimization ([1] + [2]).
 
-## Structure Optimization (or static for NSW=0)
-#EDIFFG = 1E-6  # convergence criterion for ionic loops (pos=energy; neg=forces)
-#NSW = 1000     # number of ionic steps
-#IBRION = 1     # ionic update: 1:QN, 2:CG (for bad guesses)
-#ISIF = 3       # freedom: 2=ions; 4=ions,shape; 3=ions,shape,vol
-#MAXMIX = 80    # max number steps stored in Broyden mixer, when negative: resets after ionic step
-#ISMEAR = 1    # smearing: -5-insul/scond/DOS 0-large systems (with SIGMA 0.05) 1-metals (with SIGMA 0.2)
+## [1] General Parameters / Electronic Relaxation -- ALWAYS ACTIVE
+PREC   = Accurate  # precision
+ENCUT  = 500       # plane-wave cutoff energy (eV)
+EDIFF  = 1E-8      # convergence criterion for the electronic loop
+NELM   = 150       # maximum number of electronic iterations
+NELMIN = 4         # minimum number of electronic iterations
+KPAR   = 2         # k-points run in parallel (comment out for Bader)
+NCORE  = 4         # cores working on each orbital
+#LWAVE = .FALSE.   # skips writing WAVECAR; keep commented for DOS, band structure and COHP
 
-## DOS and Band Structure Calcuations (for ICHARG=11 prev. CHGCAR required)
-NEDOS = 1001  # number of DOS gridpoints
-LORBIT = 11   # DOSCAR and PROCAR are written
-ISMEAR = 1   # smearing: -5-insul/scond/DOS 0-large systems 1-metals (with SIGMA)
+## [2] Structure Optimization -- ACTIVE BY DEFAULT (comment out for any other task)
+EDIFFG = 1E-6      # convergence criterion for the ionic loop (pos = energy; neg = forces)
+NSW    = 1000      # maximum number of ionic steps
+IBRION = 1         # ionic update: 1 = quasi-Newton, 2 = conjugate gradient (for bad guesses)
+ISIF   = 3         # freedom: 2 = ions; 4 = ions + shape; 3 = ions + shape + volume
+MAXMIX = 80        # max steps stored in Broyden mixer (negative: resets after each ionic step)
+ISMEAR = 1         # smearing: -5 = insulators/semiconductors/DOS; 0 = large systems (SIGMA = 0.05); 1 = metals (SIGMA = 0.2)
 
-## Bader Charge and Electron localization function
-#LAECHG = .TRUE.
-#LELF=.TRUE. 
-#NPAR = 1 
+## [3] DOS and Band Structure
+#NEDOS  = 1001     # number of DOS grid points
+#LORBIT = 10       # write DOSCAR and PROCAR (11 for lm-decomposed orbitals)
+#ISMEAR = -5       # tetrahedron method for DOS
+# if you add ICHARG = 11, a previous CHGCAR must be in the folder
 
-## COHP Analysis (via LOBSTER)
-#LWAVE  = .TRUE.
-#NSW = 0
-#ISYM = -1
-#NBANDS = 600  ! should equal the total number of orbitals
+## [4] Bader Charges and Electron Localization Function
+#LAECHG = .TRUE.   # write AECCAR0 + AECCAR2 (core + valence charge) for Bader
+#LELF   = .TRUE.   # write ELFCAR
+#NPAR   = 1
+
+## [5] COHP Analysis (via LOBSTER)
+#LWAVE  = .TRUE.   # LOBSTER needs the WAVECAR
+#NSW    = 0        # static run
+#ISYM   = -1       # symmetry off
+#NBANDS = 600      # should equal the total number of orbitals (see Troubleshooting)
 #LORBIT = 12
 #ISTART = 0
 
-## Phonon Dispersion via finite displacements 
-#EDIFF = 1E-8   # delete other EDIFF tags!!!
-#ISMEAR = 0
-#SIGMA = 0.01
+## [6] Phonon Dispersion via finite displacements
+#EDIFF   = 1E-8    # replaces EDIFF in [1] -- don't leave both active
+#ISMEAR  = 0
+#SIGMA   = 0.01
 #ADDGRID = .TRUE.
 
-## Hybrid Calculations
-#LHFCALC=.TRUE. # use of HF/DFT hybrid functionals 
-#AEXX = 0.25    # fraction of exact exchange
-#AGGAX = 0.75   # fraction of GGA
-#ALGO = Damped  # electronic minimisation algorithm (damped velocity friction algo.)
-#TIME = 0.1     # time step for ALGO 
-#PRECFOCK = FAST # controls FFT grid for the exact exchange 
-#HFSCREEN = 0.2 # determines the range separation parameter
-#NKREDX = 2     # grid reduction factors 
-#NKREDY = 2     # grid reduction factors
-#NKREDZ = 2     # grid reduction factors
-
-## Stress Tensor Calculation
-#ENCUT = 600 # delete other ENCUT tags!!!
+## [7] Stress Tensor
+#ENCUT  = 600      # replaces ENCUT in [1] -- comment that one out
 #IBRION = 6
-#ISIF = 6
-#NSW = 1
-#NFREE = 2
-## additionally for DFPT:
+#ISIF   = 6
+#NSW    = 1
+#NFREE  = 2
+## additionally for DFPT (replaces IBRION = 6 above):
 #IBRION = 8
 #NWRITE = 3
-#NSW = 1
 
-## Supercell (band offset) calculations
+## [8] Supercell (band offset) calculations
 #LVHAR = .TRUE.
-#AMIN = 0.1
+#AMIN  = 0.1
 
-## Born Effective Charge
-#LEPSILON = .TRUE. ! dielectric matrix
-#LOPTICS = .TRUE. ! DFPT including empty bands for hybrid functionals
-## Spin-orbing Coupling
-#LSORBIT = .TRUE.
+## [9] Born Effective Charge
+#LEPSILON = .TRUE. # dielectric matrix
+#LOPTICS  = .TRUE. # DFPT including empty bands for hybrid functionals
+
+## ---------- ADD-ONS (combine with a task section above) ----------
+
+## [10] Spin Polarization / Magnetism
+#ISPIN  = 2        # spin-polarized calculation
+#MAGMOM = 4*0 4*1  # starting moment per atom, in POSCAR order (here 4 atoms at 0, then 4 at 1)
+
+## [11] Hybrid Calculations -- ONLY add to [2] if a normal optimization won't converge (very slow)
+#LHFCALC  = .TRUE. # use HF/DFT hybrid functionals
+#AEXX     = 0.25   # fraction of exact exchange
+#AGGAX    = 0.75   # fraction of GGA exchange
+#ALGO     = Damped # electronic minimization algorithm (damped velocity friction)
+#TIME     = 0.05   # time step for ALGO = Damped (lower it if convergence fails)
+#PRECFOCK = FAST   # FFT grid for the exact exchange
+#HFSCREEN = 0.2    # range-separation parameter
+#NKREDX   = 2      # grid reduction factors: each KPOINTS number must be divisible by these
+#NKREDY   = 2
+#NKREDZ   = 2
+
+## [12] Spin-Orbit Coupling -- run with vasp_ncl, not vasp_std
+#LSORBIT       = .TRUE.
 #LNONCOLLINEAR = .TRUE.
-##GGA+U, Coulomb interaction energy
-#LDAU = .TRUE.
-#LDAUTYPE = 1 !1 = Liechtenstein et al.; 2 = Dudarev's approach, only the difference (U-J) is meaningfull
+
+## [13] GGA+U, Coulomb interaction energy (see Hubbard U Correction)
+#LDAU      = .TRUE.
+#LDAUTYPE  = 1     # 1 = Liechtenstein et al.; 2 = Dudarev (only U - J is meaningful)
 #LDAUPRINT = 0
-#LDAUU = 0 3.71 0 0
-#LDAUJ = 0 0 0 0
-#LASPH = .TRUE.
+#LDAUL     = -1 2 -1 -1  # orbital to correct, one per species in POSCAR order: -1 = none, 2 = d, 3 = f
+#LDAUU     = 0 3.71 0 0  # U (eV), one per species
+#LDAUJ     = 0 0 0 0     # J (eV), one per species
+#LASPH     = .TRUE.
